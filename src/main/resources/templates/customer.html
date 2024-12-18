@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/all.min.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link th:href="@{/css/font.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        /* Style for the profile image */
+        .profile-img {
+            width: 40px; /* Adjust size as needed */
+            height: 40px; /* Adjust size as needed */
+            border-radius: 50%; /* Makes it circular */
+            object-fit: cover; /* Ensures the image fills the circle */
+            margin-left: 10px; /* Space between the login button and the profile image */
+            cursor: pointer; /* Makes it interactive (optional) */
+            border: 2px solid #ddd; /* Optional: Add a border for style */
+        }
+
+        /* Optional: Hover effect */
+        .profile-img:hover {
+            border-color: #007BFF; /* Change the border color on hover */
+            box-shadow: 0 0 5px #007BFF; /* Add a shadow for effect */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div>
+                <p id="name">Khine Myanmar</p>
+            </div>
+            <ul>
+                <li class="active">Home</li>
+                <li>Products</li>
+                <li>Shops</li>
+                <li>About us</li>
+            </ul>
+            <div class="icons">
+                <div class="search-container">
+                    <input type="text" placeholder="Search..." id="search-input" />
+                    <i class="fas fa-search lens-icon"></i> <!-- Moved the icon inside the input container -->
+               </div>
+           </div>
+           
+           <div class="buttons">
+            <div class="extra-icons">
+                <div class="icon-container cart">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="icon-container profile">
+                    <i class="fas fa-user"></i>
+                </div>
+               <img class="profile-img" th:src="@{img/profiles/default-profile.jpg}" alt="Profile"/>
+            </div>
+           </div>
+       </nav>
+    </header>
+    <h2>Customer</h2>
+</body>
+</html>

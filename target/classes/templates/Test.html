@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Card Slider</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        #section3 {
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .slider-container {
+            display: flex;
+            overflow-x: auto;
+            flex-wrap: nowrap;
+            scroll-behavior: smooth;
+            gap: 20px;
+            padding: 20px;
+            margin: 0 auto;
+        }
+
+        .slider-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .card {
+            position: relative;
+            min-width: 300px;
+            height: 400px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .card:hover .card-hover {
+            transform: translateX(0);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 60%;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #555;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            color: #666;
+            font-size: 1em;
+        }
+
+        .card-hover {
+            position: absolute;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .order-button {
+            padding: 10px 20px;
+            background-color: #f5a623;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .order-button:hover {
+            background-color: #d48d20;
+        }
+    </style>
+</head>
+<body>
+    <section id="section3">
+        <h1>Hello Myanmar</h1>
+        <div class="slider-container" id="slider">
+            <div class="card">
+                <div class="card-image">Image 1</div>
+                <div class="card-content">
+                    <h2 class="card-title">Product 1</h2>
+                    <p class="card-description">This is a description of Product 1.</p>
+                </div>
+                <div class="card-hover">
+                    <h2>Product 1</h2>
+                    <p>This product is great for your needs!</p>
+                    <button class="order-button">Order Now</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-image">Image 2</div>
+                <div class="card-content">
+                    <h2 class="card-title">Product 2</h2>
+                    <p class="card-description">This is a description of Product 2.</p>
+                </div>
+                <div class="card-hover">
+                    <h2>Product 2</h2>
+                    <p>This product is great for your needs!</p>
+                    <button class="order-button">Order Now</button>
+                </div>
+            </div>
+            <div class="card">
+              <div class="card-image">Image 2</div>
+              <div class="card-content">
+                  <h2 class="card-title">Product 2</h2>
+                  <p class="card-description">This is a description of Product 2.</p>
+              </div>
+              <div class="card-hover">
+                  <h2>Product 2</h2>
+                  <p>This product is great for your needs!</p>
+                  <button class="order-button">Order Now</button>
+              </div>
+          </div>
+          <div class="card">
+            <div class="card-image">Image 2</div>
+            <div class="card-content">
+                <h2 class="card-title">Product 2</h2>
+                <p class="card-description">This is a description of Product 2.</p>
+            </div>
+            <div class="card-hover">
+                <h2>Product 2</h2>
+                <p>This product is great for your needs!</p>
+                <button class="order-button">Order Now</button>
+            </div>
+        </div>
+        <div class="card">
+          <div class="card-image">Image 2</div>
+          <div class="card-content">
+              <h2 class="card-title">Product 2</h2>
+              <p class="card-description">This is a description of Product 2.</p>
+          </div>
+          <div class="card-hover">
+              <h2>Product 2</h2>
+              <p>This product is great for your needs!</p>
+              <button class="order-button">Order Now</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-image">Image 2</div>
+          <div class="card-content">
+              <h2 class="card-title">Product 2</h2>
+              <p class="card-description">This is a description of Product 2.</p>
+          </div>
+          <div class="card-hover">
+              <h2>Product 2</h2>
+              <p>This product is great for your needs!</p>
+              <button class="order-button">Order Now</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-image">Image 2</div>
+          <div class="card-content">
+              <h2 class="card-title">Product 2</h2>
+              <p class="card-description">This is a description of Product 2.</p>
+          </div>
+          <div class="card-hover">
+              <h2>Product 2</h2>
+              <p>This product is great for your needs!</p>
+              <button class="order-button">Order Now</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-image">Image 2</div>
+          <div class="card-content">
+              <h2 class="card-title">Product 2</h2>
+              <p class="card-description">This is a description of Product 2.</p>
+          </div>
+          <div class="card-hover">
+              <h2>Product 2</h2>
+              <p>This product is great for your needs!</p>
+              <button class="order-button">Order Now</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-image">Image 2</div>
+          <div class="card-content">
+              <h2 class="card-title">Product 2</h2>
+              <p class="card-description">This is a description of Product 2.</p>
+          </div>
+          <div class="card-hover">
+              <h2>Product 2</h2>
+              <p>This product is great for your needs!</p>
+              <button class="order-button">Order Now</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-image">Image 2</div>
+          <div class="card-content">
+              <h2 class="card-title">Product 2</h2>
+              <p class="card-description">This is a description of Product 2.</p>
+          </div>
+          <div class="card-hover">
+              <h2>Product 2</h2>
+              <p>This product is great for your needs!</p>
+              <button class="order-button">Order Now</button>
+          </div>
+        </div>
+      
+            <!-- Add more cards as needed -->
+        </div>
+    </section>
+
+    <script>
+        const slider = document.getElementById('slider');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            slider.classList.add('active');
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.classList.remove('active');
+        });
+
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.classList.remove('active');
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2; //scroll-fast
+            slider.scrollLeft = scrollLeft - walk;
+        });
+    </script>
+</body>
+</html>

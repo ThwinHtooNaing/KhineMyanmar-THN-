@@ -1,0 +1,501 @@
+
+/* General reset for consistent alignment */
+* {
+    margin: 0;
+    padding: 0;
+    /* font-family: 'Opensans','Open Sans',sans-serif; */
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+header {
+    width: 100%;
+    font-size: 18px;
+    padding: 10px 0;
+    /* background-color: #97816a; Optional */
+}
+
+header nav {
+    display: flex;
+    align-items: center; /* Vertically align all items */
+    justify-content: space-between;
+    padding: 10px 20px; /* Add some padding for spacing */
+    box-shadow: 0px 5px 15px rgba(194, 192, 192, 0.3);
+}
+
+#name {
+    font-weight: bold;
+    font-size: 22px;
+    margin-left: 30px;
+}
+
+header nav ul {
+    display: flex;
+    gap: 15px;
+    list-style: none; /* Remove default bullet points */
+}
+
+header nav ul li {
+    position: relative; /* Required for the positioning of the pseudo-element */
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+header nav ul li::after {
+    content: "";
+    position: absolute;
+    bottom: -15.5px; /* Adjust this value to control the distance between the text and the line */
+    left: 0;
+    width: 0;
+    height: 3px; /* Thickness of the line */
+    background-color: #f5a623; /* Color of the line */
+    transition: width 0.3s ease-in-out; /* Smooth animation */
+}
+
+/* Permant effect when `.active` class is added */
+header nav ul li.active::after {
+    width: 100%; /* Full width */
+}
+header nav ul li.active {
+    color: #f5a623; /* Text color matches hover state */
+}
+
+header nav ul li:hover{
+	color: #f5a623;
+}
+.icons {
+    display: flex;
+    gap: 15px;
+}
+
+.icons .icon {
+    width: 24px; /* Set a consistent width for icons */
+    height: 24px; /* Set a consistent height for icons */
+    background-color: gray; /* Placeholder for icon background */
+    border-radius: 50%; /* Make icons circular */
+}
+
+.buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.buttons a {
+    position: relative; /* Add this to enable positioning of the ::after element */
+    text-decoration: none; /* Optional: Remove underline for links */
+    transition: color 0.3s ease-in-out; /* Optional: Smooth color transition */
+}
+
+/* Optional: Add hover effects */
+#close-modal:hover {
+    color: #f5a623;
+    cursor: pointer;
+}
+
+/*#login-btn:hover::after {
+    width: 100%; /* The line will expand to the full width of the text */
+/*}*/
+
+
+#section1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Add spacing between text and slider */
+    padding: 60px 100px 20px 20px; /* Add padding for spacing */
+    position: relative; /* Set relative positioning */
+}
+#section1 #letter{
+    width: 60%;
+    /* background-color: aquamarine; */
+    padding-bottom: 80px;
+}
+
+#section1 #letter h1{
+	padding: 0 20px 0 0;
+    font-size: 45px;
+    padding-bottom:35px;
+}
+#section1 #letter p{
+	padding-bottom:50px;
+	width:64%;
+}
+
+#section1 #letter h1,#section1 #letter p{
+	padding-left:35px;
+}
+#section1 #slider {
+    display: flex;
+    justify-content: center; /* Center the slider */
+    align-items: center;
+    width: 40%;
+    margin: 0 auto; /* Center slider horizontally */
+}
+
+
+
+  /* Add the carousel-specific CSS */
+.carousel {
+    width: 80%; /* Adjust width as needed */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 50%; /* Make the entire carousel circular */
+    overflow: hidden; /* Hide overflowing parts */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 1s ease-in-out;
+}
+
+.carousel-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    overflow: hidden; /* Ensure no image spills out */
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; /* Make images circular */
+    object-fit: cover; /* Ensure images fit within the circle */
+    display: block;
+}
+#slider{
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center-align all elements horizontally */
+    margin-top: 10px;
+}
+/* Adjusting the h2 tag for a better fit */
+#slider div h2 {
+    font-size: 32px; /* Adjust font size for better balance */
+    color: #fff; /* White text for better contrast */
+    margin: -60px 0 20px 0; /* Adjusted margin to place the text closer */
+    text-align: center;
+}
+
+/* Example slide background colors */
+
+/* Updated carousel-indicators styling */
+.carousel-indicators {
+    position: absolute;
+    bottom: 30px; /* Distance from the bottom of the section */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 16px;
+    z-index: 10; /* Ensure it stays above other elements */
+}
+
+.indicator {
+    width: 40px;
+    height: 5px;
+    background-color: #ccc;
+    /* border-radius: 5px; */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.indicator.active {
+    background-color: #f5a623;
+    transform: scaleX(1.2);
+    width: 55px;
+}
+
+/* Modal styling */
+#login-modal {
+    position: fixed;
+    top: 60px; /* Appears below the button */
+    right: 0px;
+    width: 300px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: none;
+    z-index: 1000;
+    overflow: auto;
+}
+
+#login-modal h2 {
+    margin-bottom: 22px;
+    font-size: 23px;
+    text-align: center;
+    color:#ab8052;
+}
+#login-modal form{
+    padding-bottom: 12px;
+}
+#login-modal form label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+#login-modal form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#login-modal form button {
+	margin-top:10px;
+    width: 100%;
+    padding: 10px;
+    background-color: #ab8052;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#login-modal form button:hover {
+    background-color: #91693d;
+}
+
+#close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 999;
+}
+
+#login-modal form input:focus{
+	border:2px solid #855a15;
+    outline: none;
+}
+
+#search-input {
+    padding: 8px 35px 8px 10px; /* Space on the right for the icon */
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 20px; /* Rounded corners */
+    width: 250px; /* Increase the width to make the input field longer */
+    outline: none;
+    font-family: Arial, sans-serif;
+    text-indent: 5px; /* Indent the text/cursor position */
+}
+
+/* Make sure the search container adjusts to the new width */
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    
+}
+
+#search-input::placeholder {
+    padding-left: 5px; /* Further adjusts the position of the placeholder */
+    color: #999; /* Optional: change the color of the placeholder */
+    text-indent: 0;
+}
+/* Change border color when input is focused */
+#search-input:focus {
+    border-color: #b48a47; /* Set border color to your custom color */
+    box-shadow: 0 0 8px rgba(244, 191, 105, 0.6); /* Add a glowing effect with the same color */
+}
+
+/* Styling the Font Awesome magnifying glass */
+.lens-icon {
+    position: absolute; /* Position it inside the search input */
+    right: 10px; /* Align the icon to the right side of the input field */
+    color: #666; /* Icon color */
+    font-size: 16px; /* Icon size */
+    pointer-events: none; /* Prevent icon from interfering with input clicks */
+}
+
+#login-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 85px;
+    height: 35px;
+}
+#login-btn,#section1 #letter button{
+    color: #ffffff;
+    border: none;
+    background-color: #f5a623;
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+#login-btn:hover,#section1 #letter button:hover{
+    cursor: pointer;
+    background-color: #8e7040;
+}
+
+/* Styling for Cart and Profile Icons */
+.extra-icons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.icon-container {
+    font-size: 20px;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.icon-container.cart:hover {
+    color: #f5a623; /* Hover color for the cart icon */
+}
+
+.icon-container.profile:hover {
+    color: #f5a623; /* Hover color for the profile icon */
+}
+
+#section1 #letter button{
+	margin-left:35px;
+    font-size:18px;
+    padding:10px 30px;
+} 
+/* Ribbon styling */
+.ribbon {
+    --angle: 0deg; /* HSL color degree */
+    --color1: hsl(var(--angle), 50%, 50%); /* Main ribbon color */
+    --color2: hsl(var(--angle), 50%, 40%); /* Darker shade for fold effect */
+    --color3: hsl(var(--angle), 50%, 25%); /* Darkest shade for fold effect */
+    --color4: #fff; /* Text color */
+    --size1: 3.5rem; /* Adjust size for more balanced look */
+    --size2: calc(var(--size1) * 0.75); /* Slightly smaller for better fit */
+    --size3: calc(var(--size1) * 0.2); /* Adjust this to avoid too much spacing */
+    background:
+        /* main */
+        linear-gradient(var(--color1) 0 0) 50% 0 / calc(100% - var(--size2) * 2) calc(100% - var(--size3)),
+        /* fold */
+        linear-gradient(to top right, #0000 50%, var(--color3) 0) var(--size2) 100% / var(--size3) var(--size3),
+        linear-gradient(to top left, #0000 50%, var(--color3) 0) calc(100% - var(--size2)) 100% / var(--size3) var(--size3),
+        /* back */
+        linear-gradient(to top right, #0000 50%, var(--color2) 0) 0 100% / var(--size1) var(--size2),
+        linear-gradient(to bottom right, #0000 50%, var(--color2) 0) 0 100% / var(--size1) var(--size2),
+        linear-gradient(to top left, #0000 50%, var(--color2) 0) 100% 100% / var(--size1) var(--size2),
+        linear-gradient(to bottom left, #0000 50%, var(--color2) 0) 100% 100% / var(--size1) var(--size2);
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    color: var(--color4);
+    font-weight: normal;
+    margin: 0;
+    margin-bottom: var(--size3);
+    min-height: var(--size1);
+    padding: var(--size3) var(--size1) var(--size3) var(--size1);
+    font-size: 32px; /* Adjust font size for better balance */
+    color: #fff; /* White text for better contrast */
+    margin: -60px 0 20px 0; /* Adjusted margin to place the text closer */
+    text-align: center;
+    display: flex;
+    justify-content: center; /* Horizontally center the text */
+    align-items: center; /* Vertically center the text */
+    /* text-transform: uppercase; */
+}
+
+
+/* section 2 */
+#section2{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding-bottom: 20px;
+}
+
+#section2 h1 {
+	margin-left:45px;
+    font-size: 2.0rem;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.cat-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.box {
+    text-align: center;
+	display:flex;
+    flex-direction: column;
+    color: #fff;
+    width:180px;
+    padding:20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    gap: 10px; /* Space between icon and text */
+}
+
+.box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.box i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.box p {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+}
+
+.cat-container .box:nth-child(1) {
+    background-color: #3fa344; /* Softer Green */
+}
+
+.cat-container .box:nth-child(2) {
+    background-color: #e86f97; /* Softer Pink */
+}
+
+.cat-container .box:nth-child(3) {
+    background-color: #4a99d9; /* Softer Blue */
+}
+
+.cat-container .box:nth-child(4) {
+    background-color: #e6a84c; /* Softer Orange */
+}
+
+.cat-container .box:nth-child(5) {
+    background-color: #c152d4; /* Softer Purple */
+}
+
+.cat-container .box:nth-child(6) {
+    background-color: #dc5a5a; /* Softer Red */
+}
+
+/* section 3*/
+#section3{
+    
+}
