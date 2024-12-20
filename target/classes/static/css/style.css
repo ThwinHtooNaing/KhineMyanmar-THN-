@@ -511,12 +511,42 @@ header nav ul li:hover{
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
+    position: relative;
 }
 
 #section5 #cashbox{
-    width: 350px;
-    height: 350px;
-    background-color: #f5a623;
-    position: relative;
-    margin: auto auto 20% 60%;
+    width: 380px;
+    height: 380px;
+    background-color: #e39311;
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    left: 60%;
+    right: 30%;
+    transform: translateY(-50%);
+    margin: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.365);
+}
+#section5 #cashbox #cashbox-content{
+    padding: 20px 40px;
+    padding-top: 40px;
+}
+#section5 #cashbox #cashbox-content h1{
+    font-size: 2.2rem;
+    color: #fff;
+    margin-bottom: 20px;
+}
+#section5 #cashbox #cashbox-content p{
+    font-size: 1.0rem;
+    color: #fff;
+    margin-bottom: 20px;
+}
+#section5 #cashbox a{
+    font-size: 1.1rem;
+    list-style: none;
+    border-radius: 47px;
+    border: solid 2px #fff;
+    color: #fff;
+    padding: 10px 20px;
+    margin: 0px 30px;
 }
