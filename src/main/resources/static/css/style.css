@@ -502,8 +502,114 @@ header nav ul li:hover{
 }
 /* section 4*/
 #section4{
-    
+    width: 100%;
+    padding-bottom: 60px;
 }
+#section4 h1 {
+	margin-left:45px;
+    font-size: 2.0rem;
+    margin-bottom: 40px;
+    color: #333;
+}
+#section4 .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding:0 40px;
+    gap: 5px;
+}
+
+#section4 .card {
+    width: 220px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#section4 .card-content {
+    padding: 20px;
+    background-color: #fff;
+}
+
+#section4 .card-content h2 {
+    font-size: 2rem;
+    margin: 0 0 10px;
+}
+
+#section4 .card-content p {
+    font-size: 0.9rem;
+    margin: 0;
+    color: #000;
+}
+
+#section4 .card-photo {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+}
+
+#section4 .card:nth-child(1) .card-content {
+    background-color: #f4c6ca; /* Light Red */
+}
+
+#section4 .card:nth-child(1) .card-content h2 {
+    color: #aa2520; /* Bolder Red */
+}
+#section4 .card:nth-child(1):hover {
+    box-shadow: 0 1px 18px rgba(217, 83, 79, 0.6); /* Bolder Red */
+}
+#section4 .card:nth-child(2) .card-content {
+    background-color: #bbedc6; /* Light Green */
+}
+#section4 .card:nth-child(2):hover {
+    box-shadow: 0 1px 18px rgba(92, 184, 92, 0.6); /* Bolder Red */
+}
+
+#section4 .card:nth-child(2) .card-content h2 {
+    color: #239723; /* Bolder Green */
+}
+#section4 .card:nth-child(3) .card-content {
+    background-color: #9ed9e4; /* Light Blue */
+}
+#section4 .card:nth-child(3):hover {
+    box-shadow: 0 1px 18px rgba(91, 192, 222, 0.6); /* Bolder Red */
+}
+
+#section4 .card:nth-child(3) .card-content h2 {
+    color: #187896; /* Bolder Blue */
+}
+
+#section4 .card:nth-child(4) .card-content {
+    background-color: #f1dfa0; /* Light Yellow */
+}
+
+#section4 .card:nth-child(4):hover {
+    box-shadow: 0 1px 18px rgba(240, 173, 78, 0.6); /* Bolder Red */
+}
+
+#section4 .card:nth-child(4) .card-content h2 {
+    color: #a36816; /* Bolder Yellow */
+}
+
+#section4 .card:nth-child(5) .card-content {
+    background-color: #f3b7bd; /* Light Pink */
+}
+
+#section4 .card:nth-child(5):hover {
+    box-shadow: 0 1px 18px rgba(217, 83, 79, 0.6); /* Bolder Red */
+}
+
+#section4 .card:nth-child(5) .card-content h2 {
+    color: #b12c27; /* Bolder Pink */
+}
+#section4 .card-content p:first-of-type {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000;
+}
+
 /* section 5*/
 #section5{
     width: 100%;
@@ -549,4 +655,60 @@ header nav ul li:hover{
     color: #fff;
     padding: 10px 20px;
     margin: 0px 30px;
+}
+footer {
+    background-color: #151515;
+    color: #fff;
+    padding: 40px 0;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 20px;
+}
+
+.footer-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: #f5a623;
+}
+
+.footer-bottom {
+    text-align: center;
+    /* padding: 5px 0; */
+    /* border-top: 1px solid #444; */
+    margin-top: 20px;
+}
+
+.footer-bottom p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #585858;
 }
