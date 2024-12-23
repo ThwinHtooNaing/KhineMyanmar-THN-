@@ -428,30 +428,72 @@
         </div>
     </section>
     <section id="section6">
-        <h1>Our Partners</h1>
-        <div class="slider-container">
-            <div class="slider">
-                <div class="slide">
-                    <img src="https://via.placeholder.com/150" alt="Partner Logo">
+        <h1>Available Products</h1>
+        <div class="slider-container-new">
+            <div class="slider-new">
+                <div class="slide-new">
+                    <div class="product-card-new">
+                        <img src="https://via.placeholder.com/200x150?text=Product+1" alt="Product 1">
+                        <div class="product-info-new">
+                            <h2>Gaming Headphone</h2>
+                            <p>Table with air purifier, stained veneer/black</p>
+                            <div class="price">$239.00</div>
+                            <div class="rating">★★★★★</div>
+                            <button>Add to Cart</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="slide">
-                    <img src="https://via.placeholder.com/150" alt="Partner Logo">
+                <div class="slide-new">
+                    <div class="product-card-new">
+                        <img src="https://via.placeholder.com/200x150?text=Product+2" alt="Product 2">
+                        <div class="product-info-new">
+                            <h2>Base Camp Duffel M</h2>
+                            <p>Table with air purifier, stained veneer/black</p>
+                            <div class="price">$159.00</div>
+                            <div class="rating">★★★★★</div>
+                            <button>Add to Cart</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="slide">
-                    <img src="https://via.placeholder.com/150" alt="Partner Logo">
+                <div class="slide-new">
+                    <div class="product-card-new">
+                        <img src="https://via.placeholder.com/200x150?text=Product+3" alt="Product 3">
+                        <div class="product-info-new">
+                            <h2>Tomford Watch</h2>
+                            <p>Table with air purifier, stained veneer/black</p>
+                            <div class="price">$39.00</div>
+                            <div class="rating">★★★★★</div>
+                            <button>Add to Cart</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="slide">
-                    <img src="https://via.placeholder.com/150" alt="Partner Logo">
+                <div class="slide-new">
+                    <div class="product-card-new">
+                        <img src="https://via.placeholder.com/200x150?text=Product+3" alt="Product 3">
+                        <div class="product-info-new">
+                            <h2>Tomford Watch</h2>
+                            <p>Table with air purifier, stained veneer/black</p>
+                            <div class="price">$39.00</div>
+                            <div class="rating">★★★★★</div>
+                            <button>Add to Cart</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="slide">
-                    <img src="https://via.placeholder.com/150" alt="Partner Logo">
-                </div>
-                <div class="slide">
-                    <img src="https://via.placeholder.com/150" alt="Partner Logo">
+                <div class="slide-new">
+                    <div class="product-card-new">
+                        <img src="https://via.placeholder.com/200x150?text=Product+3" alt="Product 3">
+                        <div class="product-info-new">
+                            <h2>Tomford Watch</h2>
+                            <p>Table with air purifier, stained veneer/black</p>
+                            <div class="price">$39.00</div>
+                            <div class="rating">★★★★★</div>
+                            <button>Add to Cart</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="slider-bar">
-                <div class="slider-thumb"></div>
+            <div class="progress-bar-container-new">
+                <div class="progress-bar-new"></div>
             </div>
         </div>
     </section>
@@ -600,6 +642,63 @@
         window.addEventListener('load', updateFadeVisibility);
 
         document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.product-slider');
+            const sliderThumb = document.querySelector('.product-slider-thumb');
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                slider.classList.add('active');
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+                slider.classList.remove('active');
+            });
+
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+                slider.classList.remove('active');
+            });
+
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2; // Adjust the multiplier for smoother scrolling
+                requestAnimationFrame(() => {
+                    slider.scrollLeft = scrollLeft - walk;
+                });
+            });
+
+            sliderThumb.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - sliderThumb.offsetLeft;
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - sliderThumb.offsetLeft;
+                const walk = (x - startX) * 2; // Adjust the multiplier for smoother scrolling
+                requestAnimationFrame(() => {
+                    slider.scrollLeft = scrollLeft - walk;
+                    const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
+                    const thumbPosition = (slider.scrollLeft / maxScrollLeft) * 100;
+                    sliderThumb.style.left = `${thumbPosition}%`;
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
             const slider = document.querySelector('.slider');
             const sliderThumb = document.querySelector('.slider-thumb');
             let isDown = false;
@@ -651,6 +750,147 @@
                 sliderThumb.style.left = `${thumbPosition}%`;
             });
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.slider-new');
+            const slides = document.querySelectorAll('.slide-new');
+            const progressBar = document.querySelector('.progress-bar-new');
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                slider.classList.add('active');
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+                slider.classList.remove('active');
+            });
+
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+                slider.classList.remove('active');
+            });
+
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 3; // Adjust the multiplier for smoother scrolling
+                requestAnimationFrame(() => {
+                    slider.scrollLeft = scrollLeft - walk;
+                });
+            });
+
+            progressBar.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - progressBar.offsetLeft;
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - progressBar.offsetLeft;
+                const walk = (x - startX) * 3; // Adjust the multiplier for smoother scrolling
+                requestAnimationFrame(() => {
+                    slider.scrollLeft = scrollLeft - walk;
+                    const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
+                    const thumbPosition = (slider.scrollLeft / maxScrollLeft) * 100;
+                    progressBar.style.left = `${thumbPosition}%`;
+                });
+            });
+        });
+    </script>
+    <script>
+        const sliderNew = document.querySelector('.slider-new');
+        const slidesNew = document.querySelectorAll('.slide-new');
+        const progressBarNew = document.querySelector('.progress-bar-new');
+    
+        let isDraggingNew = false;
+        let startPosNew = 0;
+        let currentTranslateNew = 0;
+        let prevTranslateNew = 0;
+        let animationIDNew;
+        let currentIndexNew = 0;
+    
+        const slideWidthNew = sliderNew.offsetWidth / slidesNew.length;
+    
+        slidesNew.forEach((slide, index) => {
+            slide.addEventListener('mousedown', startDragNew(index));
+            slide.addEventListener('touchstart', startDragNew(index));
+    
+            slide.addEventListener('mouseup', endDragNew);
+            slide.addEventListener('mouseleave', endDragNew);
+            slide.addEventListener('touchend', endDragNew);
+    
+            slide.addEventListener('mousemove', dragMoveNew);
+            slide.addEventListener('touchmove', dragMoveNew);
+        });
+    
+        function startDragNew(index) {
+            return function (event) {
+                isDraggingNew = true;
+                currentIndexNew = index;
+                startPosNew = getPositionXNew(event);
+                animationIDNew = requestAnimationFrame(animationNew);
+                sliderNew.style.cursor = 'grabbing';
+            };
+        }
+    
+        function endDragNew() {
+            isDraggingNew = false;
+            cancelAnimationFrame(animationIDNew);
+    
+            const movedBy = currentTranslateNew - prevTranslateNew;
+    
+            if (movedBy < -slideWidthNew / 3 && currentIndexNew < slidesNew.length - 1) currentIndexNew++;
+            if (movedBy > slideWidthNew / 3 && currentIndexNew > 0) currentIndexNew--;
+    
+            updateSliderPositionNew();
+            updateProgressBarNew();
+    
+            sliderNew.style.cursor = 'grab';
+        }
+    
+        function dragMoveNew(event) {
+            if (!isDraggingNew) return;
+    
+            const currentPosition = getPositionXNew(event);
+            currentTranslateNew = prevTranslateNew + currentPosition - startPosNew;
+        }
+    
+        function getPositionXNew(event) {
+            return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+        }
+    
+        function animationNew() {
+            sliderNew.style.transform = `translateX(${currentTranslateNew}px)`;
+            if (isDraggingNew) requestAnimationFrame(animationNew);
+        }
+    
+        function updateSliderPositionNew() {
+            currentTranslateNew = Math.max(
+                Math.min(currentTranslateNew, 0),
+                -(slidesNew.length - 1) * slideWidthNew
+            );
+            prevTranslateNew = currentTranslateNew;
+            sliderNew.style.transform = `translateX(${currentTranslateNew}px)`;
+        }
+    
+        function updateProgressBarNew() {
+            const progress = ((currentIndexNew + 1) / slidesNew.length) * 100;
+            progressBarNew.style.width = `${progress}%`;
+        }
+    
+        updateProgressBarNew();
     </script>
 </body>
 </html>

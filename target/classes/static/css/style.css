@@ -713,60 +713,103 @@ footer {
     color: #585858;
 }
 
-#section6{
-    width: 100%;
-    height: auto;
-    padding: 50px 0;
+#section6 {
+    margin-top: 50px;
+    user-select: none;
 }
 
-#section6 h1{
-    margin-left:45px;
+#section6 h1 {
+	margin-left:45px;
     font-size: 2.0rem;
     margin-bottom: 40px;
     color: #333;
 }
 
-#section6 .partner-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding:0 40px;
-    gap: 5px;
-}
-
-.slider-container {
-    position: relative;
-    width: 80%;
+.slider-container-new {
+    width: 90%;
+    max-width: 1200px;
     margin: 0 auto;
     overflow: hidden;
+    position: relative;
 }
 
-.slider {
+.slider-new {
     display: flex;
     transition: transform 0.3s ease;
     cursor: grab;
 }
 
-.slide {
-    min-width: 150px;
-    margin: 0 10px;
+.slider-new:active {
+    cursor: grabbing;
 }
 
-.slider-bar {
-    position: absolute;
-    bottom: -20px;
-    left: 0;
-    width: 100%;
-    height: 10px;
-    background-color: #ddd;
+.slide-new {
+    min-width: 33.33%;
+    box-sizing: border-box;
+    padding: 20px;
 }
 
-.slider-thumb {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 20%;
-    height: 100%;
-    background-color: #333;
+.product-card-new {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-card-new img {
+    width: 80%;
+    margin: 20px 0;
+}
+
+.product-info-new {
+    text-align: center;
+    padding: 20px;
+}
+
+.product-info-new h2 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.product-info-new p {
+    color: #555;
+    font-size: 0.9em;
+}
+
+.product-info-new .price {
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.product-info-new .rating {
+    color: #f5a623;
+    margin: 10px 0;
+}
+
+.product-info-new button {
+    padding: 10px 20px;
+    background-color: #f5a623;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
+
+.progress-bar-container-new {
+    width: 100%;
+    height: 5px;
+    background-color: #ddd;
+    position: relative;
+    margin-top: 15px;
+}
+
+.progress-bar-new {
+    width: 0%;
+    height: 100%;
+    background-color: #f5a623;
+    transition: width 0.3s ease;
+}
+
