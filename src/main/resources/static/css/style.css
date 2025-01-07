@@ -716,21 +716,27 @@ footer {
 #section6 {
     margin-top: 50px;
     user-select: none;
+    padding-bottom: 60px;
+}
+
+#section6 > * {
+    user-select: none;
 }
 
 #section6 h1 {
 	margin-left:45px;
     font-size: 2.0rem;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     color: #333;
 }
 
 .slider-container-new {
-    width: 90%;
+    width: 97%;
     max-width: 1200px;
     margin: 0 auto;
     overflow: hidden;
     position: relative;
+    /* padding-bottom: 20px; */
 }
 
 .slider-new {
@@ -799,8 +805,9 @@ footer {
 }
 
 .progress-bar-container-new {
+    /* padding: 20px 0; */
     width: 100%;
-    height: 5px;
+    height: 2px;
     background-color: #ddd;
     position: relative;
     margin-top: 15px;

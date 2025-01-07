@@ -1,4 +1,0 @@
-{
-    "java.compile.nullAnalysis.mode": "automatic",
-    "livePreview.defaultPreviewPath": "/src/main/resources/templates/index.html"
-}
