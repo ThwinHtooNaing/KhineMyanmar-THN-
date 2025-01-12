@@ -11,54 +11,227 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f0efeb;
         }
+        
         .header {
-            background-color: #333;
+            margin-left: 225px ;
+            background-color: #ffffff;
             color: #fff;
-            padding: 10px 0;
+            padding: 7px 0;
             text-align: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            box-shadow: 0 0px 6px rgba(0, 0, 0, 0.1);
         }
+        
+        .search {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
+        .search input {
+            background-color: #ece8e8c7;
+            width: 100%;
+            border: none;
+            padding: 5px 50px;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            padding-left: 40px;
+            box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .search .fa-search {
+            position: absolute;
+            left: 15px;
+            font-size: 16px;
+            color: #5f5d5d;
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 5px 10px;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+
+        .icons > div {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #c7c3c340;
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .icons > div:last-child {
+            background-color: transparent;
+        }
+        
+        .icons > div > i{
+            color: #8a8585;
+        }
+
+        .icons img {
+            width: inherit;
+            height: inherit;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .icons > div .notification-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 8px;
+            height: 8px;
+            background-color: red;
+            border-radius: 50%;
+        }
+
         .sidebar {
             width: 200px;
-            background-color: #444;
-            color: #fff;
+            background-color: #ffffff;
+            color: #000000;
             position: fixed;
             top: 0;
             bottom: 0;
-            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 5px;
+            padding: 0px 10px;
+        }
+        .sidebar p{
+            font-size: 18px;
+            font-weight: 900;
         }
         .sidebar a {
-            display: block;
-            color: #fff;
-            padding: 10px;
+            color: #000000;
             text-decoration: none;
+            /* flex-grow: 1; */
         }
-        .sidebar a:hover {
-            background-color: #555;
+        .sidebar p{
+            padding-left: 10px;
         }
+
+        .sidebar div {
+            width: 90%;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 5px;
+            /*  */
+            transition: all 0.03s ease-in-out;
+            margin-bottom: 10px;
+        }
+
+        .sidebar div:hover {
+            background-color: #f8dbad7b; /* Light orange hover background */
+            border-right: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .sidebar i {
+            margin-right: 10px;
+            color: #505050;
+        }
+
         .main-content {
-            margin-left: 200px;
+            margin-left: 220px;
             padding: 20px;
         }
+
+
         .card {
             background-color: #fff;
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
+        .bottom-link {
+            margin-top: auto;
+            margin-bottom: 5px;
+        }
+
+         /* Active Styles */
+         .asideActive {
+            border-right: 3px solid #faa722;
+            background-color: #f4b95a7b;border-right: 3px solid #faa722;
+        }
+
+        .asideActive i {
+            color: #f4b247;
+        }
+
+        .asideActive a {
+            color: #df8b04;
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Admin Dashboard</h1>
-    </div>
-    <div class="sidebar">
-        <a href="#">Dashboard</a>
-        <a href="#">Users</a>
-        <a href="#">Settings</a>
-        <a href="#">Logout</a>
-    </div>
+    <header class="header">
+        <div class="search">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" placeholder="Search here">
+        </div>
+        
+        <div class="icons">
+            <div>
+                <i class="fa-solid fa-envelope input-icon"></i>
+            </div>
+            <div>
+                <i class="fa-solid fa-bell "></i>
+                <span class="notification-dot"></span>
+            </div>
+            <div class="profile-image">
+                <img th:src="@{/img/profiles/default-profile.jpg}" class="">
+            </div>
+            
+        </div>
+    </header>
+    <aside class="sidebar">
+        <p>Khine Myanmar</p>
+        <div class="asideActive">
+            <i class="fas fa-tachometer-alt"></i>
+            <a href="#">Dashboard</a>
+        </div>
+        <div>
+            <i class="fas fa-shopping-cart"></i>
+            <a href="#">Orders</a>
+        </div>
+        <div>
+            <i class="fas fa-users"></i>
+            <a href="#">Users</a>
+        </div>
+        <div>
+            <i class="fas fa-box"></i>
+            <a href="#">Products</a>
+        </div>
+        <div>
+            <i class="fas fa-store"></i>
+            <a href="#">Shops</a>
+        </div>
+        <div>
+            <i class="fas fa-cog"></i>
+            <a href="#">Settings</a>
+        </div>
+        <div class="bottom-link">
+            <i class="fas fa-sign-out-alt"></i>
+            <a href="#">Log Out</a>
+        </div>
+       
+    </aside>
     <div class="main-content">
         <div class="card">
             <h2>Welcome, Admin</h2>
@@ -69,6 +242,22 @@
             <p>Here you can see the statistics of the application.</p>
         </div>
     </div>
-    <script th:src="@{/js/script.js}"></script>
+    <script>
+        // Select all sidebar div elements
+        const sidebarDivs = document.querySelectorAll('.sidebar div');
+
+        // Function to remove active class from all divs
+        function removeActiveClass() {
+            sidebarDivs.forEach(div => div.classList.remove('asideActive'));
+        }
+
+        // Add click event listener to each div
+        sidebarDivs.forEach(div => {
+            div.addEventListener('click', () => {
+                removeActiveClass(); // Remove active class from all
+                div.classList.add('asideActive'); // Add active class to clicked div
+            });
+        });
+    </script>
 </body>
 </html>
