@@ -81,10 +81,10 @@
         }
 
         .icons > div:last-child span {
-            margin-left: 6px;
+            margin-left: 17px;
             color: #000000;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 15px;
+            /* font-weight: 600; */
             margin-right: 5px;
         }
         
@@ -186,6 +186,7 @@
         }
         .main-content { 
             /* background-color: red;  */
+            margin-top: 30px;
             margin-left: 10px;
             padding-bottom: 30px;
         }
@@ -475,15 +476,11 @@
 </head>
 <body>
     <header class="header">
-        <div class="search">
-            <i class="fa-solid fa-search"></i>
-            <input type="text" placeholder="Search here">
-        </div>
-        
+            <div class="search" style="background: transparent;opacity: 0;">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" placeholder="Search here">
+            </div>
         <div class="icons">
-            <!-- <div>
-                <i class="fa-solid fa-envelope input-icon"></i>
-            </div> -->
             <div>
                 <i class="fa-solid fa-bell "></i>
                 <span class="notification-dot">
@@ -492,7 +489,7 @@
             <div class="profile-image">
                 <img th:src="@{/img/profiles/default-profile.jpg}" class="">
                 <span>Admin</span>
-                <i class="fas  fa-angle-down"></i>
+                <i class="fas fa-angle-down"></i>
             </div>
             
         </div>
@@ -529,9 +526,9 @@
         </div>
     </aside>    
     <main>
-        <div>
+        <!-- <div>
             <h2>Dashboard</h2>
-        </div>
+        </div> -->
         <div class="main-content">
             <div class="cards">
                 <div class="card">
