@@ -368,53 +368,37 @@
     </header>
     <aside class="sidebar">
         <p>Khine Myanmar</p>
-        <div class="">
+        <div class="" data-path="/admin/dashboard">
             <i class="fas fa-tachometer-alt"></i>
             <a href="#">Dashboard</a>
         </div>
-        <div>
+        <div data-path="/admin/orders">
             <i class="fas fa-shopping-cart"></i>
             <a href="#">Orders</a>
         </div>
-        <div class="asideActive">
+        <div class="asideActive" data-path="/admin/users">
             <i class="fas fa-users"></i>
             <a href="#">Users</a>
         </div>
-        <div>
+        <div data-path="/admin/products">
             <i class="fas fa-box"></i>
             <a href="#">Products</a>
         </div>
-        <div>
+        <div data-path="/admin/shops">
             <i class="fas fa-store"></i>
             <a href="#">Shops</a>
         </div>
-        <div>
+        <div data-path="/admin/setting">
             <i class="fas fa-cog"></i>
             <a href="#">Settings</a>
         </div>
-        <div class="bottom-link">
+        <div class="bottom-link" data-path="/logout">
             <i class="fas fa-sign-out-alt"></i>
             <a href="#">Log Out</a>
         </div>
-       
-    </aside>
+    </aside>    
     
-    <script>
-        // Select all sidebar div elements
-        const sidebarDivs = document.querySelectorAll('.sidebar div');
-
-        // Function to remove active class from all divs
-        function removeActiveClass() {
-            sidebarDivs.forEach(div => div.classList.remove('asideActive'));
-        }
-
-        // Add click event listener to each div
-        sidebarDivs.forEach(div => {
-            div.addEventListener('click', () => {
-                removeActiveClass(); // Remove active class from all
-                div.classList.add('asideActive'); // Add active class to clicked div
-            });
-        });
+    <script th:src="@{/js/adminSideBarNav.js}">
     </script>
 </body>
 </html>

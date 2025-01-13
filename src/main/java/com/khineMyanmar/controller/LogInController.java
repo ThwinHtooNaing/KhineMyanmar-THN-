@@ -36,10 +36,11 @@ public class LogInController {
 
             // Check if the user exists in the database
             User user = userSer.checkLogin(email, password);
+            model.addAttribute("user", user);
             if (user != null && user.getRole().getRoleName().equalsIgnoreCase("USER")) {
-                model.addAttribute("user", user);
                 return "customer"; // Redirect to customer page
             } else if (user != null && user.getRole().getRoleName().equalsIgnoreCase("ADMIN")) {
+                
                 return "admin/adminIndex"; // Redirect to admin dashboard for ADMIN role
             } else {
                 // User might be in-memory (like "admin")
