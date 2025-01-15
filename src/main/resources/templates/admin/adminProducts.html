@@ -188,8 +188,6 @@
         }
         main .main-container > div{
             height: 650px;
-            background-color: #fff;
-            box-shadow: 0 0px 6px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             box-sizing: border-box;
         }
@@ -235,12 +233,9 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 14px;
-            /* height: 500px; */
-            /* border-bottom: 1px solid #000; */
         }
 
         thead {
-            /* background-color: #f2e3ca7b; */
             border-bottom: 1px dashed #cecece;
         }
 
@@ -255,13 +250,11 @@
             padding: 12px;
             border-bottom: 1px solid #eaeaea;
             vertical-align: middle;
-            /* height: 0px; */
         }
 
         tbody img {
             width: 40px;
             height: 40px;
-            /* object-fit: cover; */
             size: 100%;
             border-radius: 5px;
         }
@@ -303,9 +296,113 @@
             background-color: none;
             text-decoration: underline;
         }
-        .table-detail{
+        
+        /* Styling the container for table-detail */
+        .table-detail {
             flex: 30%;
-            /* border: 1px solid #000; */
+            display: flex;
+            flex-direction: column; /* Stack the two sections vertically */
+            gap: 10px; /* Add space between the two sections */
+            border-radius: 10px;
+            box-shadow: none; /* Remove shadow for table-detail */
+        }
+
+        /* Styling for the Product Detail Box */
+        .product-detail-box {
+            flex: 2;
+            background-color: #fff; /* Light gray background */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .product-detail-box h2 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .product-detail-box p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Styling for the All Categories Box */
+        .all-categories-box {
+            flex: 1;
+            background-color: #ffffff; /* White background for the categories */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .all-categories-box h2 {
+            margin: 0 0 15px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .all-categories-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex; /* Switch to flexbox for alignment */
+            flex-wrap: wrap; /* Allow items to wrap if they exceed the container width */
+            gap: 10px; /* Adds spacing between items */
+        }
+
+        .all-categories-box li {
+            display: inline-block; /* Ensures the width adapts to the content */
+            font-size: 14px;
+            color: #555;
+            padding: 8px 12px; /* Adds padding to make the box larger */
+            border: 1px solid #eaeaea; /* Gives a box-like appearance */
+            border-radius: 5px; /* Rounded corners for a modern look */
+            background-color: #f9f9f9; /* Light background for contrast */
+            white-space: nowrap; /* Prevents text wrapping within the box */
+            transition: all 0.2s ease; /* Smooth hover effect */
+        }
+
+        .all-categories-box li:hover {
+            color: #fff; /* Text changes to white on hover */
+            background-color: #faa722; /* Background changes to the highlight color */
+            border-color: #faa722; /* Matches the background color */
+            cursor: pointer; /* Pointer cursor for interactivity */
+        }
+
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+            margin-bottom: 10px;
+            border-bottom: 2px solid #b9b8b8;
+        }
+
+        .add-category-icon-container {
+            margin-top: -15px;
+            margin-right: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 25px; /* Reduced size for a smaller circle */
+            height: 25px; /* Ensure it's a perfect circle */
+            background-color: #faa722;
+            border-radius: 50%; /* Creates the circular shape */
+            cursor: pointer; /* Pointer cursor for clickability */
+            transition: transform 0.2s ease, background-color 0.2s ease; /* Smooth hover effect */
+        }
+
+        .add-category-icon-container:hover {
+            background-color: #f5861b; /* Slightly darker color on hover */
+            transform: scale(1.1); /* Slight zoom on hover */
+        }
+
+        .add-category-icon-container i {
+            color: #ffffff; /* Icon is white */
+            font-size: 14px; /* Reduced icon size for a more compact look */
+            line-height: 1; /* Ensures proper vertical alignment */
         }
 
     </style>
@@ -433,41 +530,31 @@
                 </div>
             </div>
             <div class="table-detail">
-                <h2>Product Detail</h2>
-                <div>
-                    <label for="product-name">Product Name</label>
-                    <input type="text" name="product-name" id="product-name">
+                <!-- Product Detail Section -->
+                <div class="product-detail-box">
+                    <h2>Product Detail</h2>
+                    <p>Select a product to see details here.</p>
                 </div>
-                <div>
-                    <label for="category">Category</label>
-                    <input type="text" name="category" id="category">
-                </div>
-                <div>
-                    <label for="price">Price</label>
-                    <input type="text" name="price" id="price">
-                </div>
-                <div>
-                    <label for="stock">Stock</label>
-                    <input type="text" name="stock" id="stock">
-                </div>
-                <div>
-                    <label for="shop-name">Shop Name</label>
-                    <input type="text" name="shop-name" id="shop-name">
-                </div>
-                <div>
-                    <label for="description">Description</label>
-                    <textarea name="description" id="description" cols="30" rows="10"></textarea>
-                </div>
-                <div>
-                    <label for="img">Image</label>
-                    <input type="file" name="img" id="img">
-                </div>
-                <div>
-                    <button class="btn">Add</button>
-                    <button class="btn">Update</button>
-                    <button class="btn">Delete</button>
+            
+                <!-- All Categories Section -->
+                <div class="all-categories-box">
+                    <div class="category-header">
+                        <h2>All Categories</h2>
+                        <div class="add-category-icon-container">
+                            <i class="fas fa-add"></i>
+                        </div>
+                    </div>
+                    
+                    <ul>
+                        <li>Category A</li>
+                        <li>Category B</li>
+                        <li>Category C</li>
+                        <li>Category D</li>
+                        <li>Category E</li>
+                    </ul>
                 </div>
             </div>
+            
         </div>
         
     </main> 
