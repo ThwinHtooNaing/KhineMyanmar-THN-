@@ -314,7 +314,7 @@
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            /* text-align: center; */            
         }
 
         .product-detail-box h2 {
@@ -323,10 +323,37 @@
             color: #333;
         }
 
-        .product-detail-box p {
-            font-size: 14px;
-            color: #666;
+        .product-message-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 15px 20px;
+            background-color: #fff3cd; /* Light yellow background */
+            border: 1px solid #ffeeba; /* Slightly darker yellow border */
+            border-radius: 8px; /* Rounded corners for a modern look */
+            color: #856404; /* Dark yellow-brown text color */
+            font-size: 16px; /* Adjust the text size */
+            margin: 10px 0; /* Space around the box */
         }
+
+        .product-message-box .message-content {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between icon and text */
+        }
+
+        .product-message-box .message-content i {
+            font-size: 20px; /* Icon size */
+            color: #856404; /* Match the text color */
+        }
+
+        .product-message-box p {
+            margin: 0; /* Remove default margin for consistent spacing */
+            font-weight: 500; /* Slightly bold text for emphasis */
+        }
+
+
 
         /* Styling for the All Categories Box */
         .all-categories-box {
@@ -532,9 +559,14 @@
             <div class="table-detail">
                 <!-- Product Detail Section -->
                 <div class="product-detail-box">
-                    <h2>Product Detail</h2>
-                    <p>Select a product to see details here.</p>
+                    <div class="product-message-box">
+                        <div class="message-content">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Select a product to see details here.</p>
+                        </div>
+                    </div>
                 </div>
+                
             
                 <!-- All Categories Section -->
                 <div class="all-categories-box">
