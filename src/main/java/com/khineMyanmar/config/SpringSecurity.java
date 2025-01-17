@@ -36,6 +36,7 @@ public class SpringSecurity {
                         .requestMatchers("/shopowner/**").permitAll()
                         .requestMatchers("/signupprocess/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/css/**","/webfonts/**", "/js/**","/lib/**","/img/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
                         .anyRequest().authenticated()
                 ) .logout(
                 logout -> logout
