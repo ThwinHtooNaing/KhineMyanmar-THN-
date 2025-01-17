@@ -665,38 +665,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <div class="user-container-list-table-paging">
-                <div class="paging-details">
-                    <span>Rows per page: 
-                        <select class="user-container-list-table-paging-select">
-                            <option class="user-container-list-table-paging-select-option" th:value="5" th:text="5"></option>
-                            <option class="user-container-list-table-paging-select-option" th:value="10" th:text="10"></option>
-                            <option class="user-container-list-table-paging-select-option" th:value="15" th:text="15"></option>
-                        </select>
-                    </span>
-                    <span th:text="'Page ' + ${currentPage + 1} + ' of ' + ${totalPages}"></span>
-            
-                    <!-- Previous Button -->
-                    <button th:if="${currentPage > 0}" th:href="@{/users(page=${currentPage - 1})}">&lt;</button>
-            
-                    <!-- Pagination Numbers -->
-                    <button 
-                        th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}" 
-                        th:classappend="${pageNum == currentPage} ? 'active-page' : ''" 
-                        th:text="${pageNum + 1}" 
-                        th:if="${pageNum == 0 || pageNum == totalPages - 1 || (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)}" 
-                        th:href="@{/users(page=${pageNum})}">
-                    </button>
-            
-                    <!-- Ellipsis for Skipped Pages -->
-                    <span th:if="${currentPage > 2}">...</span>
-                    <span th:if="${currentPage < totalPages - 3}">...</span>
-            
-                    <!-- Next Button -->
-                    <button th:if="${currentPage < totalPages - 1}" th:href="@{/users(page=${currentPage + 1})}">&gt;</button>
-                </div>
-            </div>      
+            </div>     
            
         </div>
         
