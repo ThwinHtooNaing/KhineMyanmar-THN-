@@ -7,7 +7,7 @@ import jakarta.persistence.OneToOne;
 @Entity
 public class ShopOwner extends User{
 
-	@OneToOne(mappedBy = "shopOwner", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "shopOwner", cascade = CascadeType.ALL, optional = true)
     private Shop shop;
 	
 	public Shop getShop() {
