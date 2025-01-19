@@ -212,18 +212,19 @@
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            padding: 10px;
+            padding: 15px 13px;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         .shop-card:hover {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
         }
         .shop-photo {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%; 
             margin-right: 15px;
             size: 100%;
+            object-fit: cover;
             background-color: #e9ecef; 
         }
 
@@ -275,7 +276,7 @@
 
         .modal-content {
             background-color: #fff;
-            padding: 0px 20px 60px 30px;
+            padding: 0px 20px 30px 30px;
             border-radius: 10px;
             width: 500px;
             height: auto;
@@ -311,6 +312,8 @@
         .modal-content-shop-detail-photo-container img{
             width: 200px;
             height: 200px;
+            border-radius: 15px;
+            object-fit: cover;
         }
         .modal-content-shop-detail-data{
             flex: 1;
@@ -327,8 +330,28 @@
             margin-right: 15px;
         }
         .modal-content-shop-detail-data-group-datas{
-            border: 1px solid #000;
+            flex-wrap: wrap;
+            display: flex;
+            gap: 3px;
         }
+        .modal-content-shop-detail-data-group-datas > div{
+            display: inline-block; 
+            font-size: 13px;
+            color: #555;
+            padding: 5px 8px; 
+            border: 1px solid #eaeaea; 
+            border-radius: 5px; 
+            background-color: #fad05c; 
+            white-space: nowrap; 
+            transition: all 0.2s ease; 
+        }
+
+        .modal-content-shop-detail-data-group-datas > div:hover{
+            /* color: #fff;  */
+            background-color: #f3c446; 
+        }
+        
+        
         
 
     </style>
@@ -394,7 +417,7 @@
         </div>
         <div class="shop-container-grid" id="shop-container-grid">
             <div class="shop-card" data-role="admin">
-                <img class="shop-photo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVs5Z7asi_ApEcD0hAWS9Xmpv3nMdxmJB54A&s" alt="Admin Photo">
+                <img class="shop-photo" src="https://cdn.shopify.com/shop-assets/static_uploads/web/shop_logo/shop-logo-default.png" alt="Admin Photo">
                 <div class="shop-data">
                     <p class="shop-name">Shop Name</p>
                     <p class="shop-address">Address</p>
@@ -428,13 +451,13 @@
         </div>
 
     </main>
-    <div class="modal">
+    <div class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <h2 class="modal-content-title">Shop Detail</h2>
             <div class="modal-content-shop-detail">
                 <div class="modal-content-shop-detail-photo-container">
-                    <img class="modal-content-shop-detail-photo">
+                    <img class="modal-content-shop-detail-photo" src="https://cdn.shopify.com/shop-assets/static_uploads/web/shop_logo/shop-logo-default.png">
                 </div>
                 <div class="modal-content-shop-detail-data">
                     <div class="modal-content-shop-detail-data-group">
@@ -468,6 +491,35 @@
     </div>
     
     <script th:src="@{/js/adminSideBarNav.js}">
+    </script>
+
+    <script>
+        
+        const modal = document.querySelector('.modal');
+        const closeButton = document.querySelector('.close-button');
+        const shopCards = document.querySelectorAll('.shop-card');
+        
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+        
+        closeButton.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        function openModal() {
+            modal.style.display = 'flex';
+        }
+
+        shopCards.forEach(card => {
+            card.addEventListener('click', openModal);
+        });
+        
+
     </script>
 </body>
 </html>

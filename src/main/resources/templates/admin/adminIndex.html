@@ -371,8 +371,16 @@
         .table-header p:first-child{
             font-weight: 700;
         }
-        .table-header p:nth-child(2),.table-header p:nth-child(2) i{
+        .table-header p:nth-child(2),.table-header p:nth-child(2) i,.table-header p:nth-child(2) a{
             color: #f5a623;
+        }
+
+        .table-header p:nth-child(2) a{
+            text-decoration: none;
+        }
+
+        .table-header p:nth-child(2) a:hover{
+            text-decoration: underline;
         }
 
         .table {
@@ -471,6 +479,8 @@
             margin-bottom: 15px;
             margin-left: 30px;           
         }
+
+        
 
 
     </style>
@@ -622,7 +632,7 @@
                 <div class="table">
                     <div class="table-header">
                         <p>Recent Transactions</p>
-                        <p>View All <i class="fas fa-angle-right"></i></p>
+                        <p><a th:href="@{/admin/orders}">View All <i class="fas fa-angle-right"></i></a></p>
                     </div>
                     <table>
                         <tr>

@@ -179,10 +179,117 @@
         main{
             margin-top: 10px;
             margin-left: 225px;
-            /* border: 1px solid #000; */
             height: 88vh;
             background-color: #fff;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-header p:first-child{
+            font-weight: 700;
+        }
+        .table-header p:nth-child(2),.table-header p:nth-child(2) i{
+            color: #f5a623;
+        }
+
+        .table {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            
+
+        }
+
+        table::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        table::-webkit-scrollbar-thumb {
+            background-color: #ddd;
+            border-radius: 4px;
+        }
+
+        table::-webkit-scrollbar-thumb:hover {
+            background-color: #bbb;
+        }
+
+        .table-header {
+            display: flex;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eaeaea;
+            font-weight: bold;
+        }
+
+        .table-header p {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .table-header i {
+            font-size: 17px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            overflow-y: auto;
+        }
+
+        .table-container {
+            max-height: 75vh; /* Adjust the height as needed */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        thead th {
+            position: sticky;
+            top: 0;
+            background-color: #f8dbad7b; /* Header background */
+            z-index: 2;
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
+            padding: 12px 15px;
+        }
+
+        tbody td, th {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eaeaea;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Hover effect for grouped tbody */
+        tbody.order-group:hover {
+            background-color: #f1f1f1;
+        }
+        
+        td {
+            vertical-align: middle;
+        }
+
+        table .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .status.completed {
+            background-color: #e8f5e9;
+            color: #43a047;
+        }
+
+        .status.pending {
+            background-color: #fff8e1;
+            color: #fb8c00;
+        }
+
+        .status.cancelled {
+            background-color: #ffebee;
+            color: #e53935;
         }
 
     </style>
@@ -243,8 +350,76 @@
         </div>
     </aside>  
     <main>
-        
+        <div class="table">
+            <div class="table-header">
+                <p>Order Management</p>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer Name</th>
+                            <th>Product Name</th>
+                            <th>Qty</th>
+                            <th>Amount</th>
+                            <th>Total Amount</th>
+                            <th>Date</th>
+                            <th>Order Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="order-group">
+                        <tr>
+                            <td rowspan="2">0001</td>
+                            <td rowspan="2">John Doe</td>
+                            <td>Product A</td>
+                            <td>2</td>
+                            <td>$200</td>
+                            <td rowspan="2">$350</td>
+                            <td rowspan="2">12/12/2021</td>
+                            <td rowspan="2"><span class="status completed">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>Product B</td>
+                            <td>1</td>
+                            <td>$150</td>
+                        </tr>
+                    </tbody>
+                    <tbody class="order-group">
+                        <tr>
+                            <td rowspan="2">0002</td>
+                            <td rowspan="2">Jane Smith</td>
+                            <td>Product C</td>
+                            <td>3</td>
+                            <td>$360</td>
+                            <td rowspan="2">$540</td>
+                            <td rowspan="2">12/13/2021</td>
+                            <td rowspan="2"><span class="status pending">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>Product D</td>
+                            <td>2</td>
+                            <td>$180</td>
+                        </tr>
+                    </tbody>
+                    <tbody class="order-group">
+                        <tr>
+                            <td>0003</td>
+                            <td>Mark Lee</td>
+                            <td>Product E</td>
+                            <td>1</td>
+                            <td>$200</td>
+                            <td>$200</td>
+                            <td>12/14/2021</td>
+                            <td><span class="status cancelled">Cancelled</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
+    
+    
     
     
     <script th:src="@{/js/adminSideBarNav.js}">
