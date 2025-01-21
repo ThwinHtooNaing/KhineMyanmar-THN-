@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.model.User;
 import com.khineMyanmar.service.UserService;
 
@@ -30,7 +31,10 @@ public class LogInController {
                 return "admin/adminIndex"; 
             }else if(user != null && user.getRole().getRoleName().equalsIgnoreCase("SHOPOWNER"))
             {
-                model.addAttribute("shopowner", user);
+                if (user instanceof ShopOwner) {
+                    ShopOwner shopowner = (ShopOwner) user; 
+                    model.addAttribute("shopowner", shopowner); 
+                }                
                 return "shopowner/shopOwnerIndex";
             } 
             else 
