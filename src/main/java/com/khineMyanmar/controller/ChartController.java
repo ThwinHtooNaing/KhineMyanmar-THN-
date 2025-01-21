@@ -18,5 +18,7 @@ public class ChartController {
         data.put("labels", List.of("Electronics", "Fashion", "Home & Kitchen", "Others")); // Example categories
         return data;
     }
+
+    
 }
 
