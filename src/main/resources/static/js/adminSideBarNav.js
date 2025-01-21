@@ -11,9 +11,10 @@ const sidebarDivs = document.querySelectorAll('.sidebar div');
                 event.preventDefault();
                 const path = div.getAttribute('data-path'); // Get the path from the data attribute
                 if (path) {
-                    window.location.href = path; // Navigate to the path
+                    window.location.href = path; 
                 }
                 removeActiveClass(); // Remove active class from all
                 div.classList.add('asideActive'); // Add active class to clicked div
+                console.log("Added");
             });
         });

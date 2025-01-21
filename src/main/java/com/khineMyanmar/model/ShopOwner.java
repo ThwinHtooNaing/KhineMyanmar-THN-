@@ -27,5 +27,6 @@ public class ShopOwner extends User{
 	public ShopOwner() {
 		super();
 	}
+	
 
 }

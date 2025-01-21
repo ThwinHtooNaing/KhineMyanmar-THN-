@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <link th:href="@{/css/font.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0efeb;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #ffffff;
+            color: #000000;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 5px;
+            padding: 0px 10px;
+        }
+        .sidebar p{
+            font-size: 18px;
+            font-weight: 900;
+        }
+        .sidebar a {
+            color: #000000;
+            text-decoration: none;
+            /* flex-grow: 1; */
+        }
+        .sidebar p{
+            padding-left: 10px;
+        }
+
+        .sidebar div {
+            width: 90%;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 5px;
+            /*  */
+            transition: all 0.03s ease-in-out;
+            margin-bottom: 10px;
+        }
+
+        .sidebar div:hover {
+            background-color: #f8dbad7b; /* Light orange hover background */
+            border-right: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .sidebar i {
+            margin-right: 10px;
+            color: #505050;
+        }
+        
+        .bottom-link {
+            margin-top: auto;
+            margin-bottom: 5px;
+        }
+
+         /* Active Styles */
+         .asideActive {
+            border-right: 3px solid #faa722;
+            background-color: #f4b95a7b;border-right: 3px solid #faa722;
+        }
+
+        .asideActive i {
+            color: #f4b247;
+        }
+
+        .asideActive a {
+            color: #df8b04;
+        }
+    </style>
+</head>
+<body>
+    <!-- <h1>Hello this is shopowner page</h1>
+    -->
+    <header>
+
+    </header>
+    <aside class="sidebar">
+        <p>Khine Myanmar</p>
+        <div data-path="/shopowner/dashboard">
+            <i class="fas fa-tachometer-alt"></i>
+            <a href="#">Dashboard</a>
+        </div>
+        <div class="asideActive" data-path="/shopowner/orders">
+            <i class="fas fa-shopping-cart"></i>
+            <a href="#">Orders</a>
+        </div>
+        <div data-path="/shopowner/deliveries">
+            <i class="fas fa-users"></i>
+            <a href="#">Deliveries</a>
+        </div>
+        <div data-path="/shopowner/products">
+            <i class="fas fa-box"></i>
+            <a href="#">Products</a>
+        </div>
+        <div data-path="/shopowner/setting">
+            <i class="fas fa-cog"></i>
+            <a href="#">Settings</a>
+        </div>
+        <div class="bottom-link" data-path="/ecom/index">
+            <i class="fas fa-sign-out-alt"></i>
+            <a href="#">Log Out</a>
+        </div>
+    </aside>   
+    <script th:src="@{/js/adminSideBarNav.js}">
+    </script> 
+</body>
+
+</html>

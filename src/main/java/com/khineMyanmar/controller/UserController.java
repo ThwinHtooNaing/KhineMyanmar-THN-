@@ -27,10 +27,11 @@ public class UserController {
 		if(user == null) {
 			return "redirect:/user/usersignup";
 		}
+		
 		User userex = userSer.saveUser(user);
 		if(userex!=null) {
 			model.addAttribute("user", user);
-			return "customer";	
+			return "customer/customerIndex";	
 		}
 		return "redirect:/user/usersignup";
 	}
