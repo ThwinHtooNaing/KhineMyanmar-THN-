@@ -83,8 +83,19 @@
 <body>
     <!-- <h1>Hello this is shopowner page</h1>
     -->
-    <header>
-
+    <header class="header">
+        <div class="icons">
+            <div class="notification icon">
+                <i class="fa-solid fa-bell "></i>
+                <span class="notification-dot">
+                </span>
+            </div>
+            <div class="profile-image icon">
+                <img th:src="@{/img/profiles/default-profile.jpg}" class="">
+                <span>Admin</span>
+                <i class="fas fa-angle-down"></i>
+            </div>
+        </div>
     </header>
     <aside class="sidebar">
         <p>Khine Myanmar</p>
