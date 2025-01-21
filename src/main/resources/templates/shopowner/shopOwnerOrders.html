@@ -78,6 +78,78 @@
         .asideActive a {
             color: #df8b04;
         }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 225px;
+            width: calc(100% - 225px);
+            height: 70px;
+            background-color: #fff;
+            z-index: 1000;
+            display: flex;
+            align-items: center; 
+            justify-content: flex-end; 
+            padding-right: 20px; 
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
+        }
+
+        .icons {
+            display: flex; 
+            gap: 15px; 
+            align-items: center; 
+            margin-right: 20px;
+        }
+
+        .icons > .icon {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            background-color: #c7c3c340;
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .icons > div:last-child {
+            background-color: transparent;
+            padding: 4px 3px;
+            width: auto;
+            display: flex;
+            align-items: center; 
+            gap: 8px; 
+        }
+
+        .icons > div:last-child span {
+            color: #000000;
+            font-size: 15px;
+        }
+
+        .icons > div > i {
+            color: #8a8585;
+        }
+
+        .icons img {
+            width: 35px;
+            height: 35px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .icons > div .notification-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 8px;
+            height: 8px;
+            background-color: red;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body>
