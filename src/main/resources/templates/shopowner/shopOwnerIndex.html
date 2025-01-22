@@ -156,7 +156,7 @@
             padding: 10px;
             background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
         }
 
         .main .main-header {
@@ -199,14 +199,14 @@
             /* padding: 20px; */
             padding: 0 20px 15px 20px;
             position: relative;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.253);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-sizing: border-box;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.251);
         }
 
         .card h3 {
@@ -366,7 +366,12 @@
             text-decoration: underline;
         }
 
-
+        .recentOrder-header{
+            display:flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ddd;
+        }
     </style>
 </head>
 <body>
@@ -491,7 +496,10 @@
             <div class="recentOrder">
                 <div class="recentOrder-header">
                     <h3>Recent Orders</h3>
-                    <a href="#">View All</a>
+                    <div>
+                        <a href="#">View All</a>
+                        <span>></span>
+                    </div>
                 </div>
                 <table>
                     <tr>
