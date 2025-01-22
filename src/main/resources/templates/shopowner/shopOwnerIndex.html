@@ -327,8 +327,9 @@
             background-color: #f9f9f9;
             border-radius: 8px;
             padding: 20px;
-            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.199);
             width: 100%;
+            box-sizing: border-box;
         }
 
         .recentOrder h3, 
@@ -371,6 +372,10 @@
             justify-content: space-between;
             align-items: center;
             border: 1px solid #ddd;
+        }
+        .recentOrder-header-view-all{
+            padding-top: 10px;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -496,7 +501,7 @@
             <div class="recentOrder">
                 <div class="recentOrder-header">
                     <h3>Recent Orders</h3>
-                    <div>
+                    <div class="recentOrder-header-view-all">
                         <a href="#">View All</a>
                         <span>></span>
                     </div>
