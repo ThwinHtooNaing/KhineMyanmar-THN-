@@ -326,10 +326,16 @@
         .recentOrder, .topCustomer {
             background-color: #f9f9f9;
             border-radius: 8px;
-            padding: 0px 20px 20px 20px;
+            padding: 0px 0px 20px 0px;
             box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.199);
             width: 100%;
             box-sizing: border-box;
+        }
+        .recentOrder{
+            flex:60%;
+        }
+        .topCustomer{
+            flex:40%;
         }
 
         .recentOrder h3, 
@@ -345,14 +351,6 @@
             border-collapse: collapse;
             text-align: left;
             font-size: 14px;
-        }
-
-        .recentOrder table th, 
-        .recentOrder table td, 
-        .topCustomer table th, 
-        .topCustomer table td {
-            padding: 10px;
-            border: 1px solid #ddd;
         }
 
         .recentOrder a {
@@ -371,6 +369,7 @@
             display:flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0px 20px;
             /* border: 1px solid #ddd; */
         }
         .recentOrder-header-view-all{
@@ -378,9 +377,91 @@
             
         }
         .recentOrder-header-view-all a, .recentOrder-header-view-all span{
-            color: #fdb518;
+            color: #d18c25;
             text-decoration: none;
         }   
+        .recentOrder td {
+            text-align: left;
+            padding: 5px 10px;
+            font-size: 13px;
+        }
+        .recentOrder th{
+            text-align: left;
+            padding: 10px 10px;
+            font-size: 14px;
+        }
+
+        .recentOrder th {
+            background-color: #e4e1e1;
+            color: #333;
+        }
+
+        .recentOrder tr {
+            border-bottom: 1px solid #bbb9b9;
+        }
+        
+        .recentOrder tr:last-child {
+            border-bottom: none;
+        }
+
+        .recentOrder img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .recentOrder .status {
+            font-weight: bold;
+            text-transform: capitalize;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .recentOrder .status.status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .recentOrder .status.status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .recentOrder .status.status-progress {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .recentOrder .status.status-cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .topCustomer-header{
+            padding: 0px 20px;
+        }
+
+        .topCustomer table th, 
+        .topCustomer table td {
+            padding: 5px 10px;
+            border-bottom: 1px solid #ddd;
+            /* border: 1px solid #ddd; */
+        }
+
+        .topCustomer table th{
+            padding: 10px 10px;
+            background-color: #e4e1e1;
+            color: #333;
+        }
+
+        .topCustomer img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -507,13 +588,13 @@
                     <h3>Recent Orders</h3>
                     <div class="recentOrder-header-view-all">
                         <a href="#">View All</a>
-                        <span>></span>
+                        <span>&gt;</span>
                     </div>
                 </div>
                 <table>
                     <tr>
                         <th>No</th>
-                        <th>Customer Image</th>
+                        <th>Image</th>
                         <th>Customer Name</th>
                         <th>Order ID</th>
                         <th>Amount</th>
@@ -521,70 +602,76 @@
                     </tr>
                     <tr>
                         <td>1</td>
-                        <td>Customer 1</td>
-                        <td>Product 1</td>
-                        <td>100</td>
-                        <td>1000</td>
-                        <td>Delivered</td>
+                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
+                        <td>Aung Aung</td>
+                        <td>#0001</td>
+                        <td>100000<span> MMK</span></td>
+                        <td><span class="status status-completed">Completed</span></td>
                     </tr>
                     <tr>
                         <td>2</td>
-                        <td>Customer 2</td>
-                        <td>Product 2</td>
-                        <td>100</td>
-                        <td>1000</td>
-                        <td>Delivered</td>
+                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
+                        <td>Maung Maung</td>
+                        <td>#0002</td>
+                        <td>100000<span> MMK</span></td>
+                        <td><span class="status status-pending">Pending</span></td>
                     </tr>
                     <tr>
                         <td>3</td>
-                        <td>Customer 3</td>
-                        <td>Product 3</td>
-                        <td>100</td>
-                        <td>1000</td>
-                        <td>Delivered</td>
+                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
+                        <td>Mya Mya</td>
+                        <td>#0003</td>
+                        <td>100000<span> MMK</span></td>
+                        <td><span class="status status-progress">In Progress</span></td>
                     </tr>
                     <tr>
                         <td>4</td>
-                        <td>Customer 4</td>
-                        <td>Product 4</td>
-                        <td>100</td>
-                        <td>1000</td>
-                        <td>Delivered</td>
+                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
+                        <td>Myo Myo</td>
+                        <td>#0004</td>
+                        <td>100000<span> MMK</span></td>
+                        <td><span class="status status-cancelled">Cancelled</span></td>
                     </tr>
                     <tr>
                         <td>5</td>
-                        <td>Customer 5</td>
-                        <td>Product 5</td>
-                        <td>100</td>
-                        <td>1000</td>
-                        <td>Delivered</td>
+                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
+                        <td>Myat Myat</td>
+                        <td>#0005</td>
+                        <td>100000<span> MMK</span></td>
+                        <td><span class="status status-completed">Completed</span></td>
                     </tr>
                 </table>
             </div>
             <div class="topCustomer">
-                <h3>Top Customers</h3>
+                <h3 class="topCustomer-header">Top Customers</h3>
                 <table>
                     <tr>
+                        <th>Img</th>
                         <th>Customer Name</th>
-                        <th>Order Quantity</th>
+                        <th>Total Order Amount</th>
                     </tr>
                     <tr>
+                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
                         <td>Customer 1</td>
                         <td>100</td>
                     </tr>
                     <tr>
+                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
                         <td>Customer 2</td>
                         <td>100</td>
                     </tr>
                     <tr>
+                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
                         <td>Customer 3</td>
                         <td>100</td>
                     </tr>
                     <tr>
+                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
                         <td>Customer 4</td>
                         <td>100</td>
                     </tr>
                     <tr>
+                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
                         <td>Customer 5</td>
                         <td>100</td>
                     </tr>
