@@ -6,6 +6,7 @@
     <title>Dashboard</title>
     <link th:href="@{/css/font.css}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             margin: 0;
@@ -245,10 +246,20 @@
 
         .chart {
             height: 340px;
-            background-color: #f0f0f0;
+            background-color: #ffffff;
             border-radius: 8px;
             border: 1px solid #ddd;
             box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+        .chart h3{
+            margin-left: 20px;
+            color: #c59421;
+            /* margin-bottom: -10px; */
+        }
+
+        .chart canvas{
+            padding: 0px 10px 10px 10px;
         }
 
         .topSaleProduct {
@@ -538,8 +549,8 @@
                     </div>
                 </div>
                 <div class="chart" id="chart">
-                    <canvas id="myChart"></canvas>
-
+                    <h3>Order Amount Chart</h3>
+                    <canvas id="lineChart" width="400" height="164"></canvas>
                 </div>
             </div>
             <div class="topSaleProduct">
@@ -683,6 +694,50 @@
     </main> 
     <script th:src="@{/js/adminSideBarNav.js}">
     </script> 
-    <script th:src="@{/js/chart.js}"></script>
+    <script>
+        // Sample data for the line chart
+        
+        const labels = ['Day 1', 'Day2', 'Day3', 'Day4', 'Day5', 'Day6', 'Day7'];
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Number of Orders',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(209, 140, 37)',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                fill: false,
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    title: {
+                        display: false,
+                        text: 'Sales Over Time'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        };
+
+        const lineChart = new Chart(
+            document.getElementById('lineChart'),
+            config
+        );
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
+   
 </body>
 </html>
