@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.service.ShopOwnerService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/shopowner")
 public class ShopOwnerController {
@@ -39,35 +41,39 @@ public class ShopOwnerController {
 	}
 
 	@RequestMapping("/dashboard")
-    public String dashboard(@ModelAttribute("shopowner") ShopOwner user, Model model) {
-        model.addAttribute("shopowner", user);
-        System.out.println(user.getUserId()+" dashboard");
+    public String dashboard(Model model , HttpSession session) {
+        ShopOwner usersShopOwner = (ShopOwner) session.getAttribute("shopSession");
+        model.addAttribute("shopowner", usersShopOwner);       
         return "shopowner/shopOwnerIndex";
     }
     
     @RequestMapping("/deliveries")
-    public String user(@ModelAttribute("shopowner") ShopOwner user, Model model) {
+    public String user(HttpSession session, Model model) {
+        ShopOwner user = (ShopOwner) session.getAttribute("shopSession");
         model.addAttribute("shopowner", user);
-        System.out.println(user.getUserId()+" deliveries");
+       // System.out.println(user.getUserId()+" deliveries");
         return "shopowner/shopOwnerDeliveries";
     }
         
     @RequestMapping("/products")
-    public String product(@ModelAttribute("shopowner") ShopOwner user, Model model) {
+    public String product(HttpSession session, Model model) {
+        ShopOwner user=(ShopOwner) session.getAttribute("shopSession");
         model.addAttribute("shopowner", user);
-        System.out.println(user.getUserId()+" products");
+       // System.out.println(user.getUserId()+" products");
         return "shopowner/shopOwnerProducts";
     }
     
     @RequestMapping("/orders")
-    public String order(@ModelAttribute("shopowner") ShopOwner user, Model model) {
+    public String order(HttpSession session, Model model) {
+        ShopOwner user=(ShopOwner) session.getAttribute("shopSession");
         model.addAttribute("shopowner", user);
-        System.out.println(user.getUserId()+" orders");
+       // System.out.println(user.getUserId()+" orders");
         return "shopowner/shopOwnerOrders";
     }
     
     @RequestMapping("/setting")
-    public String setting(@ModelAttribute("shopowner") ShopOwner user, Model model) {
+    public String setting(HttpSession session, Model model) {
+        ShopOwner user=(ShopOwner) session.getAttribute("shopSession");
         model.addAttribute("shopowner", user);
         System.out.println(user.getUserId()+" setting");
         return "shopowner/shopOwnerSetting";

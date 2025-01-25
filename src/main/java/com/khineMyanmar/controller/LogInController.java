@@ -11,6 +11,8 @@ import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.model.User;
 import com.khineMyanmar.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/login")
 public class LogInController {
@@ -18,9 +20,11 @@ public class LogInController {
 	@Autowired
 	private UserService userSer;
 	@PostMapping("/loginprocess")
-	public String loginProcess(Model model, @RequestParam("email") String email, @RequestParam("password") String password) {
+	public String loginProcess(Model model, @RequestParam("email") String email, @RequestParam("password") String password, HttpSession session) {
 
             User user = userSer.checkLogin(email, password);
+            
+            session.setAttribute("usersession", user);
             if (user != null && user.getRole().getRoleName().equalsIgnoreCase("USER")) 
             {
                 model.addAttribute("customer", user);
@@ -33,6 +37,7 @@ public class LogInController {
             {
                 if (user instanceof ShopOwner) {
                     ShopOwner shopowner = (ShopOwner) user; 
+                    session.setAttribute("shopSession", user);
                     model.addAttribute("shopowner", shopowner); 
                 }                
                 return "shopowner/shopOwnerIndex";
