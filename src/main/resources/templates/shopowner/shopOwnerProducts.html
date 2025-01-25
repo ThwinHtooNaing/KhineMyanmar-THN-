@@ -84,7 +84,7 @@
             top: 0;
             left: 225px;
             width: calc(100% - 225px);
-            height: 70px;
+            height: 65px;
             background-color: #fff;
             z-index: 1000;
             display: flex;
@@ -150,6 +150,16 @@
             background-color: red;
             border-radius: 50%;
         }
+
+        .main{
+            margin-top: 70px;
+            margin-left: 225px;
+            /* border: 1px solid red; */
+            height: 100px;
+            background-color: #ffffff;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+
+        }
     </style>
 </head>
 <body>
@@ -185,7 +195,7 @@
         </div>
         <div class="asideActive" data-path="/shopowner/products">
             <i class="fas fa-box"></i>
-            <a href="#">Products</a>
+            <a href="#">Inventories</a>
         </div>
         <div data-path="/shopowner/setting">
             <i class="fas fa-cog"></i>
@@ -196,6 +206,78 @@
             <a href="#">Log Out</a>
         </div>
     </aside>   
+    <main class="main">
+        <div class="main-header">
+            <div class="main-header-buttons">
+                <button><i></i>Add</button>
+                <button><i></i>Delete</button>
+                <button><i></i>Edit</button>
+            </div>
+            <div class="main-header-search">
+                <i>len icon</i>
+                <input type="text" placeholder="Search">
+            </div>
+        </div>
+        <div class="main-content">
+            <table class="main-content-table">
+                <thead class="main-content-table-head">
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="main-content-table-body">
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><img src="https://via.placeholder.com/150" alt="product image"></td>
+                        <td>Product A</td>
+                        <td>1000</td>
+                        <td>10</td>
+                        <td>Category A</td>
+                        <td>
+                            <button><i></i>Edit</button>
+                            <button><i></i>Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><img src="https://via.placeholder.com/150" alt="product image"></td>
+                        <td>Product B</td>
+                        <td>2000</td>
+                        <td>20</td>
+                        <td>Category B</td>
+                        <td>
+                            <button><i></i>Edit</button>
+                            <button><i></i>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="main-content-pagination">
+                <div class="main-content-pagination-show">
+                    <span>Showing 10 of 100 entries</span>
+                </div>
+                <div class="main-content-pagination-pages">
+                    <span class="main-content-pagination-page-lt">&lt;</span>
+                    <div>
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                        <span>4</span>
+                        <span>...</span>
+                        <span>11</span>
+                        <span>12</span>
+                    </div>
+                    <span class="main-content-pagination-page-gt">&gt;</span>
+                </div>
+            </div>
+        </div>
+    </main>
     <script th:src="@{/js/adminSideBarNav.js}">
     </script> 
 </body>

@@ -41,30 +41,35 @@ public class ShopOwnerController {
 	@RequestMapping("/dashboard")
     public String dashboard(@ModelAttribute("shopowner") ShopOwner user, Model model) {
         model.addAttribute("shopowner", user);
+        System.out.println(user.getUserId()+" dashboard");
         return "shopowner/shopOwnerIndex";
     }
     
     @RequestMapping("/deliveries")
     public String user(@ModelAttribute("shopowner") ShopOwner user, Model model) {
         model.addAttribute("shopowner", user);
+        System.out.println(user.getUserId()+" deliveries");
         return "shopowner/shopOwnerDeliveries";
     }
         
     @RequestMapping("/products")
     public String product(@ModelAttribute("shopowner") ShopOwner user, Model model) {
         model.addAttribute("shopowner", user);
+        System.out.println(user.getUserId()+" products");
         return "shopowner/shopOwnerProducts";
     }
     
     @RequestMapping("/orders")
     public String order(@ModelAttribute("shopowner") ShopOwner user, Model model) {
         model.addAttribute("shopowner", user);
+        System.out.println(user.getUserId()+" orders");
         return "shopowner/shopOwnerOrders";
     }
     
     @RequestMapping("/setting")
     public String setting(@ModelAttribute("shopowner") ShopOwner user, Model model) {
         model.addAttribute("shopowner", user);
+        System.out.println(user.getUserId()+" setting");
         return "shopowner/shopOwnerSetting";
     } 
 
