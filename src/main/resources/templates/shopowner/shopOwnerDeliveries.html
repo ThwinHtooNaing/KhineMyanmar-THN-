@@ -244,6 +244,43 @@
             color: #333; 
         }   
 
+        .delivery-status{
+            display: flex;
+            align-items: center; /* Vertically centers the text and span */
+        }
+
+        .delivery-status span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+
+        .delivery-status span.green {
+            background-color: green;
+        }
+
+        .delivery-status.green {
+            color: green;
+        }
+
+        .delivery-status.yellow {
+            color: rgb(254, 199, 60);
+        }
+
+        .delivery-status.red{
+            color: red;
+        }
+
+        .delivery-status span.yellow {
+            background-color: rgb(254, 199, 60);
+        }
+
+        .delivery-status span.red {
+            background-color: red;
+        }
+
     </style>
 </head>
 <body>
@@ -307,7 +344,7 @@
                     <p class="delivery-name">Thaw Thaw</p>
                     <p class="delivery-gmail">admin@gmail.com</p>
                     <p class="delivery-role">No of Deli <span>12</span></p>
-                    <p class="delivery-status">Available</p>
+                    <p class="delivery-status green">Available<span class="green"></span></p>
                 </div>
             </div>
             <div class="delivery-card" data-role="customer">
@@ -315,7 +352,8 @@
                 <div class="delivery-data">
                     <p class="delivery-name">Hla Hla</p>
                     <p class="delivery-gmail">customer@gmail.com</p>
-                    <p class="delivery-role">Customer</p>
+                    <p class="delivery-role">No of Deli <span>12</span></p>
+                    <p class="delivery-status yellow">Working<span class="yellow"></span></p>
                 </div>
             </div>
             <div class="delivery-card" data-role="shop-owner">
@@ -323,7 +361,8 @@
                 <div class="delivery-data">
                     <p class="delivery-name">Mg Mya</p>
                     <p class="delivery-gmail">shopowner@gmail.com</p>
-                    <p class="delivery-role">Shop Owner</p>
+                    <p class="delivery-role">No of Deli <span>12</span></p>
+                    <p class="delivery-status">Available</p>
                 </div>
             </div>
             <div class="delivery-card" data-role="delivery">
@@ -331,7 +370,8 @@
                 <div class="delivery-data">
                     <p class="delivery-name">U Hla</p>
                     <p class="delivery-gmail">delivery@gmail.com</p>
-                    <p class="delivery-role">Delivery</p>
+                    <p class="delivery-role">No of Deli <span>12</span></p>
+                    <p class="delivery-status">Available</p>
                 </div>
             </div>
             <div class="delivery-card" data-role="delivery">
@@ -339,7 +379,8 @@
                 <div class="delivery-data">
                     <p class="delivery-name">Ko Maung</p>
                     <p class="delivery-gmail">komaung@gmail.com</p>
-                    <p class="delivery-role">Delivery</p>
+                    <p class="delivery-role">No of Deli <span>12</span></p>
+                    <p class="delivery-status">Available</p>
                 </div>
             </div>
             <div class="delivery-card" data-role="delivery">
@@ -347,7 +388,8 @@
                 <div class="delivery-data">
                     <p class="delivery-name">Aung Aung</p>
                     <p class="delivery-gmail">aungaung@gmail.com</p>
-                    <p class="delivery-role">Delivery</p>
+                    <p class="delivery-role">No of Deli <span>12</span></p>
+                    <p class="delivery-status red">Full<span class="red"></span></p>
                 </div>
             </div>
         </div>

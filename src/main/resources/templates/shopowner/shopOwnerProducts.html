@@ -155,10 +155,221 @@
             margin-top: 70px;
             margin-left: 225px;
             /* border: 1px solid red; */
-            height: 100px;
+            /* height: 100px; */
             background-color: #ffffff;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            padding-top: 20px;
+        }
+
+        .main-header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .main-header-buttons button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        .main-header-buttons button:nth-child(1) {
+            background-color: #e8f9e8;
+            color: #56d272;
+            border: 1px solid #2bd652;
+        }
+
+        .main-header-buttons button:nth-child(1):hover {
+            box-shadow: 0 0 8px #28a745;
+        }
+
+        .main-header-buttons button:nth-child(2) {
+            background-color: #fbeaea;
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+
+        .main-header-buttons button:nth-child(2):hover {
+            box-shadow: 0 0 8px #f46775;
+        }
+
+        .main-header-buttons button:nth-child(3) {
+            background-color: #f0f8ff;
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+
+        .main-header-buttons button:nth-child(3):hover {
+            box-shadow: 0 0 8px #388fed;
+        }
+
+        .main-header-search {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .main-header-search i{
+            font-size: 18px;
+            color: #575a5d;
+        }
+
+        .main-header-search input {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .icon-add {
+        color: #28a745;
+        }
+
+        .main-content-table-container {
+            height: calc(90vh - 150px);
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .main-content-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .main-content-table th, .main-content-table td {
+            text-align: left;
+            padding: 8px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .main-content-table th:last-child{
+            width: 80px;
+        }
+
+        .main-content-table th {
+            background-color: #eff0f1;
+            font-weight: bold;
+            color: #505050;
+            border: 3px solid #fff;
+            border-radius: 10px;
+        }
+
+        .main-content-table tbody tr:hover {
+            background-color: #fbf6eb;
+        }
+
+        .main-content-table img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .main-content-table td button {
+            /* text-align: center; */
+            background: none;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            /* margin-right: 10px; */
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .main-content-table td button:hover {
+            color: #007bff;
+            transform: scale(1.1);
+        }
+
+        .main-content-table td button .fa-edit {
+            color: #28a745;
+        }
+
+        .main-content-table td button .fa-trash {
+            color: #dc3545;
+        }
+
+        .main-content-pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding: 8px 20px 20px 20px;
+            box-sizing: border-box;
+        }
+
+        .main-content-pagination-show {
+            font-size: 14px;
+        }
+
+        .main-content-pagination-pages {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .main-content-pagination-pages span {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .main-content-pagination-pages span:hover {
+            background-color: #ffbc37;
+            color: #fff;
+        }
+
+        .main-content-pagination-page-lt, .main-content-pagination-page-gt {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .custom-checkbox {
+            display: inline-block;
+            width: 13px;
+            height: 13px;
+            border: 2px solid #929294;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            background-color: #fff;
+        }
+
+        .custom-checkbox input[type="checkbox"] {
+            display: none;
+        }
+
+        .custom-checkbox.checked {
+            border: 2px solid #fea813;
+            background-color: #f5a212;
+        }
+
+        .custom-checkbox.checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: white;
+            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     </style>
 </head>
@@ -209,55 +420,69 @@
     <main class="main">
         <div class="main-header">
             <div class="main-header-buttons">
-                <button><i></i>Add</button>
-                <button><i></i>Delete</button>
-                <button><i></i>Edit</button>
+                <button><i class="fas fa-plus"></i> Add</button>
+                <button><i class="fas fa-trash"></i> Delete</button>
+                <button><i class="fas fa-edit"></i> Action</button>
             </div>
             <div class="main-header-search">
-                <i>len icon</i>
+                <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" placeholder="Search">
             </div>
         </div>
         <div class="main-content">
-            <table class="main-content-table">
-                <thead class="main-content-table-head">
-                    <tr>
-                        <th><input type="checkbox"></th>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Category</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="main-content-table-body">
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td><img src="https://via.placeholder.com/150" alt="product image"></td>
-                        <td>Product A</td>
-                        <td>1000</td>
-                        <td>10</td>
-                        <td>Category A</td>
-                        <td>
-                            <button><i></i>Edit</button>
-                            <button><i></i>Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td><img src="https://via.placeholder.com/150" alt="product image"></td>
-                        <td>Product B</td>
-                        <td>2000</td>
-                        <td>20</td>
-                        <td>Category B</td>
-                        <td>
-                            <button><i></i>Edit</button>
-                            <button><i></i>Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="main-content-table-container">
+                <table class="main-content-table">
+                    <thead class="main-content-table-head">
+                        <tr>
+                            <th>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" onclick="toggleAllCheckboxes(this)">
+                                </label>
+                            </th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Category</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="main-content-table-body">
+                        <tr>
+                            <td>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" onclick="toggleCheckbox(this)">
+                                </label>
+                            </td>
+                            <td><img src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600" alt="product image"></td>
+                            <td>Product A</td>
+                            <td>1000</td>
+                            <td>10</td>
+                            <td>Category A</td>
+                            <td>
+                                <button><i class="fas fa-edit"></i></button>
+                                <button><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" onclick="toggleCheckbox(this)">
+                                </label>
+                            </td>
+                            <td><img src="https://images.pexels.com/photos/2587370/pexels-photo-2587370.jpeg?auto=compress&cs=tinysrgb&w=600" alt="product image"></td>
+                            <td>Product B</td>
+                            <td>2000</td>
+                            <td>20</td>
+                            <td>Category B</td>
+                            <td>
+                                <button><i class="fas fa-edit"></i></button>
+                                <button><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <div class="main-content-pagination">
                 <div class="main-content-pagination-show">
                     <span>Showing 10 of 100 entries</span>
@@ -280,6 +505,25 @@
     </main>
     <script th:src="@{/js/adminSideBarNav.js}">
     </script> 
+    <script>
+        function toggleCheckbox(checkbox) {
+            const label = checkbox.parentElement;
+            if (checkbox.checked) {
+                label.classList.add('checked');
+            } else {
+                label.classList.remove('checked');
+            }
+        }
+    
+        function toggleAllCheckboxes(masterCheckbox) {
+            const checkboxes = document.querySelectorAll('.main-content-table-body .custom-checkbox input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                cb.checked = masterCheckbox.checked;
+                toggleCheckbox(cb);
+            });
+        }
+    </script>
+    
 </body>
 
 </html>
