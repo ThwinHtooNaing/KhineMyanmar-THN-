@@ -482,6 +482,10 @@
         .go-to-top-btn:hover {
             background-color: #d4891f;
         }
+
+        .main-table tbody tr:hover {
+            background-color: #fbf6eb;
+        }
     </style>
 </head>
 <body>
@@ -627,7 +631,7 @@
                     <tbody>
                         <tr>
                             <td>#0001</td>
-                            <td><img src="https://via.placeholder.com/50" alt=""></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaFyDnmmtpqDBqM8EyBuxBsZHA0-s5QlGTqQ&s" alt=""></td>
                             <td>John Doe</td>
                             <td>2022-03-01</td>
                             <td>100,000 Ks</td>
@@ -642,12 +646,12 @@
                         </tr>
                         <tr>
                             <td>#0002</td>
-                            <td><img src="https://via.placeholder.com/50" alt=""></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaFyDnmmtpqDBqM8EyBuxBsZHA0-s5QlGTqQ&s" alt=""></td>
                             <td>Jane Smith</td>
                             <td>2022-03-02</td>
                             <td>50,000 Ks</td>
                             <td><span class="status pending">Pending</span></td>
-                            <td>Credit Card</td>
+                            <td>Cash on Delivery</td>
                             <td>
                                 <i class="fa-solid fa-ellipsis-vertical" onclick="showDropdown(event)"></i>
                                 <div class="dropdown">
@@ -657,12 +661,12 @@
                         </tr>
                         <tr>
                             <td>#0003</td>
-                            <td><img src="https://via.placeholder.com/50" alt=""></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaFyDnmmtpqDBqM8EyBuxBsZHA0-s5QlGTqQ&s" alt=""></td>
                             <td>Bob Johnson</td>
                             <td>2022-03-03</td>
                             <td>75,000 Ks</td>
                             <td><span class="status in-progress">In Progress</span></td>
-                            <td>Bank Transfer</td>
+                            <td>Cash on Delivery</td>
                             <td>
                                 <i class="fa-solid fa-ellipsis-vertical" onclick="showDropdown(event)"></i>
                                 <div class="dropdown">
@@ -672,12 +676,12 @@
                         </tr>
                         <tr>
                             <td>#0004</td>
-                            <td><img src="https://via.placeholder.com/50" alt=""></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaFyDnmmtpqDBqM8EyBuxBsZHA0-s5QlGTqQ&s" alt=""></td>
                             <td>Alice Brown</td>
                             <td>2022-03-04</td>
                             <td>120,000 Ks</td>
                             <td><span class="status canceled">Canceled</span></td>
-                            <td>Mobile Payment</td>
+                            <td>Cash on Delivery</td>
                             <td>
                                 <i class="fa-solid fa-ellipsis-vertical" onclick="showDropdown(event)"></i>
                                 <div class="dropdown">
@@ -706,7 +710,7 @@
         </div>
     </main>
     <section>
-        <button id="goToTopBtn" class="go-to-top-btn" onclick="scrollToTop()">^</button>
+        <button id="goToTopBtn" class="go-to-top-btn" onclick="scrollToTop()"><i class="fa-solid fa-angle-up"></i></button>
     </section>
     
     <script th:src="@{/js/adminSideBarNav.js}">
