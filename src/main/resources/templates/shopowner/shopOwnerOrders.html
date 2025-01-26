@@ -308,6 +308,115 @@
             background-color: #f1ab5b;
             transition: all 0.3s ease;
         }
+
+        .main-table-container{
+            padding: 20px;
+            overflow-x: auto;   
+            height: 500px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .main-table th, .main-table td {
+            /* border: 1px solid #ddd; */
+            padding: 10px;
+            text-align: left;
+        }
+
+        .main-table th {
+            background-color: #e4e1e1;
+            color: #333;
+            border: 3px solid #fff;
+            border-radius: 10px;
+        }
+
+        .main-table tr:first-child th {
+            /* border-bottom: 1px solid #bbb9b9; */
+            font-size: 16px;
+        }
+
+        .main-table tr {
+            border-bottom: 1px solid #bbb9b9;
+        }
+        
+        .main-table tr:last-child {
+            border-bottom: none;
+        }
+
+
+        .main-table td img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .dropdown {
+            position: absolute;
+            display: none;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            padding: 10px;
+            z-index: 10;
+            border-radius: 5px;
+        }
+
+        .dropdown:hover {
+            cursor: pointer;
+        }
+
+        .dropdown-item {
+            padding: 5px 10px;
+            text-align: left;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .fa-ellipsis-vertical {
+            cursor: pointer;
+            color: #555;
+        }
+
+        .fa-ellipsis-vertical:hover {
+            color: #000;
+        }
+
+        /* Status styles */
+        .status {
+            font-size: 15px;
+            font-weight: bold;
+            text-transform: capitalize;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .status.pending {
+            background-color: #fff3cd;
+            color: #856404; /* Orange */
+        }
+
+        .status.in-progress {
+            background-color: #cce5ff;
+            color: #004085; /* Light Blue */
+        }
+
+        .status.canceled {
+            background-color: #f8d7da;
+            color: #721c24; /* Red */
+        }
+
+        .status.completed {
+            background-color: #d4edda;
+            color: #155724; /* Green */
+        }
     </style>
 </head>
 <body>
@@ -441,7 +550,7 @@
                     <thead>
                         <tr>
                             <th>Order ID</th>
-                            <th>Customer Image</th>
+                            <th>Image</th>
                             <th>Customer Name</th>
                             <th>Order Date</th>
                             <th>Order Total</th>
@@ -452,36 +561,69 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
+                            <td>#0001</td>
                             <td><img src="https://via.placeholder.com/50" alt=""></td>
                             <td>John Doe</td>
                             <td>2022-03-01</td>
                             <td>100,000 Ks</td>
-                            <td>Completed</td>
+                            <td><span class="status completed">Completed</span></td>
                             <td>Cash on Delivery</td>
                             <td>
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                                <i class="fa-solid fa-ellipsis-vertical" onclick="showDropdown(event)"></i>
+                                <div class="dropdown">
+                                    <div class="dropdown-item">Assign</div>
+                                </div>
                             </td>
+                        </tr>
+                        <tr>
+                            <td>#0002</td>
+                            <td><img src="https://via.placeholder.com/50" alt=""></td>
+                            <td>Jane Smith</td>
+                            <td>2022-03-02</td>
+                            <td>50,000 Ks</td>
+                            <td><span class="status pending">Pending</span></td>
+                            <td>Credit Card</td>
+                            <td>
+                                <i class="fa-solid fa-ellipsis-vertical" onclick="showDropdown(event)"></i>
+                                <div class="dropdown">
+                                    <div class="dropdown-item">Assign</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#0003</td>
+                            <td><img src="https://via.placeholder.com/50" alt=""></td>
+                            <td>Bob Johnson</td>
+                            <td>2022-03-03</td>
+                            <td>75,000 Ks</td>
+                            <td><span class="status in-progress">In Progress</span></td>
+                            <td>Bank Transfer</td>
+                            <td>
+                                <i class="fa-solid fa-ellipsis-vertical" onclick="showDropdown(event)"></i>
+                                <div class="dropdown">
+                                    <div class="dropdown-item">Assign</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#0004</td>
+                            <td><img src="https://via.placeholder.com/50" alt=""></td>
+                            <td>Alice Brown</td>
+                            <td>2022-03-04</td>
+                            <td>120,000 Ks</td>
+                            <td><span class="status canceled">Canceled</span></td>
+                            <td>Mobile Payment</td>
+                            <td>
+                                <i class="fa-solid fa-ellipsis-vertical" onclick="showDropdown(event)"></i>
+                                <div class="dropdown">
+                                    <div class="dropdown-item">Assign</div>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="main-tab-container-pagination">
-                <div class="main-tab-container-pagination-pages">
-                    <span class="main-tab-container-pagination-page-lt">&lt;</span>
-                    <div>
-                        <span>1</span>
-                        <span>2</span>
-                        <span>3</span>
-                        <span>4</span>
-                        <span>...</span>
-                        <span>11</span>
-                        <span>12</span>
-                    </div>
-                    <span class="main-tab-container-pagination-page-gt">&gt;</span>
-                </div>
-            </div>
-
-        </div>  
+        </div>
     </main>
     <script th:src="@{/js/adminSideBarNav.js}">
     </script> 
@@ -507,6 +649,27 @@
     
         indicator.style.width = `${firstTabRect.width}px`;
         indicator.style.left = `${firstTabRect.left - containerRect.left}px`;
+    </script>
+    <script>
+        function showDropdown(event) {
+            closeDropdowns(); // Close other dropdowns
+            const dropdown = event.target.nextElementSibling;
+            dropdown.style.display = "block";
+            dropdown.style.top = event.pageY + "px";
+            dropdown.style.left = event.pageX + "px";
+
+            // Stop propagation to prevent closing the dropdown immediately
+            event.stopPropagation();
+        }
+
+        function closeDropdowns() {
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.style.display = "none";
+            });
+        }
+
+        // Close dropdown on click outside
+        document.addEventListener('click', closeDropdowns);
     </script>
 </body>
 
