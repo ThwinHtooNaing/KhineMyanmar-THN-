@@ -84,7 +84,7 @@
             top: 0;
             left: 225px;
             width: calc(100% - 225px);
-            height: 70px;
+            height: 65px;
             background-color: #fff;
             z-index: 1000;
             display: flex;
@@ -150,6 +150,197 @@
             background-color: red;
             border-radius: 50%;
         }
+
+        main{
+            margin-top: 70px;
+            margin-left: 225px;
+            /* background-color: #f9f9f9; */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-container {
+            background: #fefefe;
+            padding: 25px;
+            border-radius: 10px 10px 0px 0px;
+            padding-bottom: 10px;
+            /* border-bottom: 1px solid #bdbaba; */
+        }
+
+        .profile-header {
+            margin-bottom: 20px;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-size: 100%;
+            object-fit: cover;
+            border: 2px solid #ddd;
+        }
+
+        .field-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 35px;
+            box-sizing: border-box;
+        }
+
+        .field-group {
+            flex: 1;
+        }
+        .field-row:nth-child(3){
+            width: 48%;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .edit-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .save-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #f4b247;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .save-button{
+            margin-bottom: 35px;
+        }
+
+        .save-button.hidden {
+            display: none;
+        }
+
+        .save-button:hover {
+            background-color: #df8b04;
+        }
+
+        .shop-profile-container .field-row:nth-child(2){
+            width: 48%;
+        }
+
+        .shop-profile-container {
+            margin-top: 5px;
+            background: #fefefe;
+            padding: 20px 25px;
+            border-radius: 0px 0px 10px 10px;
+            padding-bottom: 20px;
+        }
+
+        .shop-profile-container-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .shop-profile-container-header-title{
+            margin: 0;
+        }
+
+        .shop-profile-container-header-button-container-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background-color: #ec9e3d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .shop-profile-container-header-button-container-button:hover {
+            background-color: #c19b48;
+        }
+
+        .shop-profile-container-header-button-container-button:active {
+            transform: scale(0.98);
+        }
+
+        .shop-profile-container-header-button-container-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            position: relative;
+        }
+
+        .shop-profile-container-header-button-container-icon::before,
+        .shop-profile-container-header-button-container-icon::after {
+            content: '';
+            position: absolute;
+            background-color: white;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .shop-profile-container-header-button-container-icon::before {
+            width: 12px;
+            height: 2px;
+        }
+
+        .shop-profile-container-header-button-container-icon::after {
+            width: 2px;
+            height: 12px;
+        }
+
+        .shop-profile-container-body-photo-container{
+            margin: 30px 0px;
+        }
+
+        .shop-profile-container-body{
+            display: block;
+        }
+
+        .shop-profile-no-data{
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+
+        .shop-profile-no-data p{
+            /* color: #f00; */
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
@@ -162,7 +353,7 @@
                 <span class="notification-dot">
                 </span>
             </div>
-            <div class="profile-image icon">
+            <div class="header-profile-image icon">
                 <img th:src="@{/img/profiles/default-profile.jpg}" class="">
                 <span>Admin</span>
                 <i class="fas fa-angle-down"></i>
@@ -196,8 +387,188 @@
             <a href="#">Log Out</a>
         </div>
     </aside>   
+    <main>
+        <div class="profile-container">
+            <div class="profile-header">
+                <label for="profile-image-input">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-yi8lUjKNVqmWkbY2plqdttxFpzC2Efcq0g&s" alt="Profile" class="profile-image" id="profile-image">
+                </label>
+                <input type="file" id="profile-image-input" accept="image/*" style="display: none;">
+            </div>
+            <form id="profile-form">
+                <div class="field-row">
+                    <div class="field-group">
+                        <label for="first-name">First Name</label>
+                        <div class="input-container">
+                            <input type="text" id="first-name" name="first-name" value="John">
+                            <span class="edit-icon">&#9998;</span>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <label for="last-name">Last Name</label>
+                        <div class="input-container">
+                            <input type="text" id="last-name" name="last-name" value="Doe">
+                            <span class="edit-icon">&#9998;</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="field-row">
+                    <div class="field-group">
+                        <label for="email">Email</label>
+                        <div class="input-container">
+                            <input type="email" id="email" name="email" value="john.doe@example.com">
+                            <span class="edit-icon">&#9998;</span>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="input-container">
+                            <input type="tel" id="phone" name="phone" value="123-456-7890">
+                            <span class="edit-icon">&#9998;</span>
+                        </div>
+                    </div>
+                </div>    
+                <button type="button" id="save-button" class="save-button hidden">Save Changes</button>
+            </form>
+        </div>
+        <div class="shop-profile-container">
+            <div class="shop-profile-container-header">
+                <h2 class="shop-profile-container-header-title">Shop Profile</h2>
+                <div class="shop-profile-container-header-button-container">
+                    <button class="shop-profile-container-header-button-container-button">
+                        <i class="shop-profile-container-header-button-container-icon"></i>
+                        Add Shop
+                    </button>
+                </div>
+            </div>
+            <div class="shop-profile-container-body">
+                <div class="shop-profile-container-body-photo-container">
+                    <label for="shop-profile-image-input">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-yi8lUjKNVqmWkbY2plqdttxFpzC2Efcq0g&s" alt="Profile" class="profile-image" id="shop-profile-image">
+                    </label>
+                    <input type="file" id="shop-profile-image-input" accept="image/*" style="display: none;">
+                </div>
+                <form id="shop-profile-form">
+                    <div class="field-row">
+                        <div class="field-group">
+                            <label for="shop-name">Shop Name</label>
+                            <div class="input-container">
+                                <input type="text" id="shop-name" name="shop-name" value="Wai La">
+                                <span class="edit-icon">&#9998;</span>
+                            </div>
+                        </div>
+                        <div class="field-group">
+                            <label for="shop-address">address</label>
+                            <div class="input-container">
+                                <input type="address" id="shop-address" name="shop-address" value="Mandalay">
+                                <span class="edit-icon">&#9998;</span>
+                            </div>
+                        </div>     
+                    </div>
+                    <div class="field-row">
+                        <div class="field-group">
+                            <label for="shop-contact-number">Contact Number</label>
+                            <div class="input-container">
+                                <input type="text" id="shop-contact-number" name="shop-contact-number" value="09254552767">
+                                <span class="edit-icon">&#9998;</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="shop-profile-save-button" class="save-button hidden">Save Changes</button>
+                </form>   
+            </div>
+            <div class="shop-profile-no-data">
+                <p style="color: red;">You have not added any shop yet!</p>
+            </div>
+        </div>
+    </main>
 
     <script th:src="@{/js/adminSideBarNav.js}">
     </script> 
+
+    <script>
+        const form = document.getElementById("profile-form");
+        const saveButton = document.getElementById("save-button");
+
+        const initialValues = {
+            "first-name": "John",
+            "last-name": "Doe",
+            email: "john.doe@example.com",
+            phone: "123-456-7890",
+        };
+
+        form.addEventListener("input", () => {
+            let hasChanges = false;
+
+            for (const [key, value] of Object.entries(initialValues)) {
+                const input = document.querySelector(`[name="${key}"]`);
+                if (input.value !== value) {
+                    hasChanges = true;
+                    break;
+                }
+            }
+
+            saveButton.classList.toggle("hidden", !hasChanges);
+        });
+
+        const profileImageInput = document.getElementById("profile-image-input");
+        const profileImage = document.getElementById("profile-image");
+
+        // Handle profile image change
+        profileImageInput.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    profileImage.src = reader.result;
+                    saveButton.classList.remove("hidden"); // Show "Save Changes" button
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+    </script>
+    <script>
+        const shopform = document.getElementById("shop-profile-form");
+        const shopsaveButton = document.getElementById("shop-profile-save-button");
+
+        const shopinitialValues = {
+            "shop-name": "Wai La",
+            "shop-address": "Mandalay",
+            "shop-contact-number": "09254552767",
+        };
+
+        shopform.addEventListener("input", () => {
+            let hasChanges = false;
+
+            for (const [key, value] of Object.entries(shopinitialValues)) {
+                const input = document.querySelector(`[name="${key}"]`);
+                if (input.value !== value) {
+                    hasChanges = true;
+                    break;
+                }
+            }
+
+            shopsaveButton.classList.toggle("hidden", !hasChanges);
+        });
+
+        const shopprofileImageInput = document.getElementById("shop-profile-image-input");
+        const shopprofileImage = document.getElementById("shop-profile-image");
+
+        // Handle profile image change
+        shopprofileImageInput.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    shopprofileImage.src = reader.result;
+                    shopsaveButton.classList.remove("hidden"); // Show "Save Changes" button
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+    </script>
 </body>
 </html>
