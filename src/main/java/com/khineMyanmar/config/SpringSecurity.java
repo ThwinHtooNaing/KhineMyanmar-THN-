@@ -24,22 +24,24 @@ public class SpringSecurity {
 	 @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authorize -> authorize
-                		.requestMatchers("/favicon.ico").permitAll()
-                        .requestMatchers("/user/**").permitAll()
-                        .requestMatchers("/ecom/**").permitAll()
-                        .requestMatchers("/login/**").permitAll()
-                        .requestMatchers("/admin/**").permitAll()
-                        .requestMatchers("/delivery/**").permitAll()
-                        .requestMatchers("/shopowner/**").permitAll()
-                        .requestMatchers("/signupprocess/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/css/**","/webfonts/**", "/js/**","/lib/**","/img/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
-                        .anyRequest().authenticated()
-                ) .logout(
-                logout -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .permitAll()
+            .csrf(csrf -> csrf.disable()) 
+            .authorizeHttpRequests(authorize -> authorize
+            
+                    .requestMatchers("/favicon.ico").permitAll()
+                    .requestMatchers("/user/**").permitAll()
+                    .requestMatchers("/ecom/**").permitAll()
+                    .requestMatchers("/login/**").permitAll()
+                    .requestMatchers("/admin/**").permitAll()
+                    .requestMatchers("/delivery/**").permitAll()
+                    .requestMatchers("/shopowner/**").permitAll()
+                    .requestMatchers("/signupprocess/**").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/css/**","/webfonts/**", "/js/**","/lib/**","/img/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
+                    .anyRequest().authenticated()
+            ) .logout(
+            logout -> logout
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .permitAll()
         );
         return http.build();
  

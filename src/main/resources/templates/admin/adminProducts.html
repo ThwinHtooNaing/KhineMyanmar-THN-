@@ -523,6 +523,80 @@
             background-color: #d6d6d6;
         }
 
+        /* Context Menu Styling */
+        .context-menu {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 5px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+            border-radius: 6px;
+            min-width: 150px;
+            font-family: Arial, sans-serif;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        /* Show animation */
+        .context-menu.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Context menu items */
+        .context-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .context-menu li {
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s ease-in-out;
+        }
+
+        /* Icons */
+        .context-menu li i {
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Hover effect */
+        .context-menu li:hover {
+            background: #f4f4f4;
+        }
+
+        /* Edit option */
+        .context-menu li.edit i {
+            color: #007bff;
+        }
+
+        /* Delete option */
+        .context-menu li.delete i {
+            color: #dc3545;
+        }
+
+        /* Right-click list item */
+        .context-menu li {
+            cursor: pointer;
+            padding: 8px 15px;
+            transition: background 0.2s ease-in-out;
+        }
+
+        /* Hover effect for list items */
+        .context-menu li:hover {
+            background: #f0f0f0;
+        }
+
+
+
 
     </style>
 </head>
@@ -667,20 +741,9 @@
                         <div class="add-category-icon-container">
                             <i class="fas fa-add"></i>
                         </div>
-                    </div>
-                    
-                    <ul>
-                        <li>Category A</li>
-                        <li>Category B</li>
-                        <li>Category C</li>
-                        <li>Category D</li>
-                        <li>Category E</li>
-                        <li>Category E</li>
-                        <li>Category E</li>
-                        <li>Category E</li>
-                        <li>Category E</li>
-                        <li>Category E</li>
-                        <li>Category E</li>
+                    </div>   
+                    <ul id="category-list">
+                        <li th:each="category : ${categories}" th:data-id="${category.id}" th:text="${category.name}"></li>
                     </ul>
                 </div>
             </div>
@@ -728,36 +791,123 @@
             }
         });
 
-        // Handle 'Add' button click and send data to Spring Boot
-        addCategoryBtn.addEventListener("click", () => {
-            const categoryName = document.getElementById("categoryName").value.trim();
+        const categoryNameInput = document.getElementById("categoryName");
+
+        addCategoryBtn.addEventListener("click", async () => {
+        const categoryName = categoryNameInput.value.trim();
+
+        if (!categoryName) {
+            alert("Please enter a category name.");
+            return;
+        }
+
+        addCategoryBtn.disabled = true;
+        addCategoryBtn.textContent = "Adding...";
+
+        try {
+            const response = await fetch('/admin/addcategories', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: categoryName })
+            });
+
+            const text = await response.text(); // Get the raw response as text
             
-            if (categoryName) {
-                // Send data to the backend via fetch API
-                fetch('/categories/add', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ name: categoryName }) // Data sent to Spring Boot
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert(`Category '${categoryName}' added successfully!`);
-                        modal.style.display = "none"; // Hide modal
-                    } else {
-                        alert("Error adding category. Please try again.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    alert("Failed to add category. Please check your connection.");
-                });
-            } else {
-                alert("Please enter a category name.");
+            console.log("Raw response:", text); // Debugging
+
+            if (!text) {
+                throw new Error("Server returned an empty response.");
+            }
+
+            const result = JSON.parse(text); // Manually parse JSON
+            if (!response.ok) {
+                throw new Error(result.error || "Failed to add category");
+            }
+
+            alert(`Category '${categoryName}' added successfully!`);
+            categoryNameInput.value = ""; 
+            modal.style.display = "none"; 
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            addCategoryBtn.disabled = false;
+            addCategoryBtn.textContent = "Add Category";
+        }
+    });
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const categoryList = document.getElementById('category-list');
+
+        // Create context menu dynamically
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'context-menu';
+        contextMenu.innerHTML = `
+            <ul>
+                <li class="edit"><i class="fas fa-edit"></i> Edit</li>
+                <li class="delete"><i class="fas fa-trash"></i> Delete</li>
+            </ul>
+        `;
+        document.body.appendChild(contextMenu);
+
+        let currentItem = null; // Store clicked item
+
+        // Show context menu on right-click
+        categoryList.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            const li = e.target.closest('li');
+            if (li) {
+                currentItem = li; // Store selected item
+                contextMenu.style.display = 'block';
+                contextMenu.style.left = `${e.pageX}px`;
+                contextMenu.style.top = `${e.pageY}px`;
+
+                // Add show class for animation
+                setTimeout(() => {
+                    contextMenu.classList.add('show');
+                }, 10);
             }
         });
 
+        // Handle edit option
+        contextMenu.querySelector('.edit').addEventListener('click', function() {
+            if (currentItem) {
+                let newName = prompt('Edit Category Name:', currentItem.textContent.trim());
+                if (newName) {
+                    currentItem.textContent = newName;
+                }
+            }
+            hideContextMenu();
+        });
+
+        // Handle delete option
+        contextMenu.querySelector('.delete').addEventListener('click', function() {
+            if (currentItem) {
+                currentItem.remove();
+            }
+            hideContextMenu();
+        });
+
+        // Hide context menu on outside click
+        document.addEventListener('click', function(event) {
+            if (!contextMenu.contains(event.target)) {
+                hideContextMenu();
+            }
+        });
+
+        // Hide function
+        function hideContextMenu() {
+            contextMenu.classList.remove('show');
+            setTimeout(() => {
+                contextMenu.style.display = 'none';
+            }, 200);
+        }
+    });
+
+
     </script>
+    
 </body>
 </html>
