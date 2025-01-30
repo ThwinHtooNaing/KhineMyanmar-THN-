@@ -781,7 +781,8 @@
                     <label class="modal-content-form-group-label">Role</label>
                     <select class="modal-content-form-group-select" id="role" name="roleName" required>
                         <option class="modal-content-form-group-option" value="" disabled selected>Select a role</option>
-                        <option th:each="role : ${roles}" th:value="${role.roleName}" th:text="${role.roleName}" class="modal-content-form-group-option"></option>
+                        <option th:each="role : ${roles}" th:value="${role.roleName}" th:if="${role.roleName != 'delivery'}"
+                        th:text="${role.roleName}" class="modal-content-form-group-option"></option>
                     </select>
                 </div>
                 <div class="modal-content-form-group">
