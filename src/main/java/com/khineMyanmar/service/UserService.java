@@ -63,7 +63,8 @@ public class UserService {
 			user.setRole(role.get());
 			
 			if (user.getProfilePic() == null || user.getProfilePic().isEmpty()) {
-	            user.setProfilePic("/img/profiles/default-profile.jpg"); // Relative path for Thymeleaf
+	            user.setProfilePic("/img/profiles/default-profile.jpg"); 
+				// Relative path for Thymeleaf
 	        }
 			if(roleName.equalsIgnoreCase("delivery")) {
 				deliRep.save((Delivery)user);
