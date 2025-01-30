@@ -6,21 +6,24 @@ import com.khineMyanmar.service.CategoryService;
 import org.springframework.ui.Model;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+// import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@Controller
+@Controller // Changed to RestController
 @RequestMapping("/admin")
 public class AdminController {
 
@@ -91,24 +94,40 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/update")
+    @PostMapping("/categoryupdate")
     @ResponseBody
-    public String updateCategory(@RequestParam Long id, @RequestParam String name) {
+    public ResponseEntity<Map<String, String>> updateCategory(@RequestParam("categoryId") Long id, 
+                                                              @RequestParam("categoryName") String name) {
         Category category = categoryService.getCategoryById(id);
         if (category != null) {
             category.setCategoryName(name);
             categoryService.saveCategory(category);
-            return "Updated Successfully";
+            return ResponseEntity.ok(Collections.singletonMap("message", "Updated Successfully"));
         }
-        return "Category Not Found";
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap("error", "Category Not Found"));
+    }
+    
+
+    @PostMapping("/categorydelete")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> deleteCategory(@RequestParam("categoryId") Long id) {
+        Category category = categoryService.getCategoryById(id);
+        if (category != null) {
+            categoryService.deleteCategory(id);
+            return ResponseEntity.ok(Collections.singletonMap("message", "Deleted Successfully"));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap("error", "Category Not Found"));
     }
 
-    // Delete Category (AJAX call)
-    @PostMapping("/delete")
+    @GetMapping("/checkChildren")
     @ResponseBody
-    public String deleteCategory(@RequestParam Long id) {
-        categoryService.deleteCategory(id);
-        return "Deleted Successfully";
+    public Map<String, Boolean> checkChildren(@RequestParam Long categoryId) {
+        Category category = categoryService.getCategoryById(categoryId);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("hasChildren", category != null && !category.getProducts().isEmpty());
+        return response;
     }
 
     
