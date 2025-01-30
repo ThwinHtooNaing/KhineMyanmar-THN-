@@ -2,6 +2,7 @@ package com.khineMyanmar.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -64,16 +65,21 @@ public class UserService {
 			
 			if (user.getProfilePic() == null || user.getProfilePic().isEmpty()) {
 	            user.setProfilePic("/img/profiles/default-profile.jpg"); 
-				// Relative path for Thymeleaf
 	        }
-			if(roleName.equalsIgnoreCase("delivery")) {
-				deliRep.save((Delivery)user);
-				return "Delivery saved";
-			}
+
 			if(roleName.equalsIgnoreCase("shopowner")) {
-				shopOwnRep.save((ShopOwner)user);
+				ShopOwner shopOwner = new ShopOwner();
+				BeanUtils.copyProperties(user, shopOwner);
+				shopOwnRep.save(shopOwner);
 				return "ShopOwner saved";
 			}
+			if(roleName.equalsIgnoreCase("delivery")) {
+				Delivery delivery = new Delivery();
+				BeanUtils.copyProperties(user, delivery);
+				deliRep.save(delivery);
+				return "Delivery saved";
+			}
+
 			userRep.save(user);
 			return "User saved";
 		}else {
