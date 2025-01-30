@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.khineMyanmar.model.Delivery;
 import com.khineMyanmar.model.Role;
+import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.model.User;
+import com.khineMyanmar.repository.IDeliveryRepository;
+import com.khineMyanmar.repository.IShopOwnerRepository;
 import com.khineMyanmar.repository.IUserRepository;
 import com.khineMyanmar.repository.IUserRoleRepository;
 
@@ -15,6 +19,12 @@ import com.khineMyanmar.repository.IUserRoleRepository;
 public class UserService {
 	@Autowired
 	private IUserRepository userRep;
+
+	@Autowired
+	private IDeliveryRepository deliRep;
+
+	@Autowired
+	private IShopOwnerRepository shopOwnRep;
 	
 	@Autowired
 	private PasswordEncoder passEnd;
@@ -55,6 +65,14 @@ public class UserService {
 			if (user.getProfilePic() == null || user.getProfilePic().isEmpty()) {
 	            user.setProfilePic("/img/profiles/default-profile.jpg"); // Relative path for Thymeleaf
 	        }
+			if(roleName.equalsIgnoreCase("delivery")) {
+				deliRep.save((Delivery)user);
+				return "Delivery saved";
+			}
+			if(roleName.equalsIgnoreCase("shopowner")) {
+				shopOwnRep.save((ShopOwner)user);
+				return "ShopOwner saved";
+			}
 			userRep.save(user);
 			return "User saved";
 		}else {
