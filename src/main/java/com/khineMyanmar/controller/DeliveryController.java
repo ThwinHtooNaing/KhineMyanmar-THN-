@@ -24,7 +24,6 @@ public class DeliveryController {
 		model.addAttribute("delivery", new Delivery());
 		List<Shop > shops = shopservice.allShop();
 		List<String>shopname = new ArrayList<String>();
-//		shopname.add("select shop");
 		
 		shopname.add("Hello");
 		shopname.add("World");

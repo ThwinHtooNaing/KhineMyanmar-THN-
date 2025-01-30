@@ -760,44 +760,40 @@
                 Add New User
             </h2>
             
-            <form action="" class="modal-content-form">
+            <form th:action="@{/admin/adduser}" class="modal-content-form" th:object="${newUser}" method="post">
                 <div class="modal-content-form-group">
                     <label class="modal-content-form-group-label">First Name</label>
-                    <input class="modal-content-form-group-input" placeholder="Thwin">
+                    <input class="modal-content-form-group-input" th:field="*{firstName}" placeholder="Thwin">
                 </div>
                 <div class="modal-content-form-group">
                     <label class="modal-content-form-group-label">Last Name</label>
-                    <input class="modal-content-form-group-input" placeholder="Htoo">
+                    <input class="modal-content-form-group-input" th:field="*{lastName}" placeholder="Htoo">
                 </div>
                 <div class="modal-content-form-group">
                     <label class="modal-content-form-group-label">Email</label>
-                    <input class="modal-content-form-group-input" placeholder="thwinhtoo@gmail.com">
+                    <input class="modal-content-form-group-input" th:field="*{email}" placeholder="thwinhtoo@gmail.com">
                 </div>
                 <div class="modal-content-form-group">
                     <label class="modal-content-form-group-label">Phone Number</label>
-                    <input class="modal-content-form-group-input" placeholder="09254557777">
+                    <input class="modal-content-form-group-input" th:field="*{phNo}" placeholder="09254557777">
                 </div>
                 <div class="modal-content-form-group">
                     <label class="modal-content-form-group-label">Role</label>
-                    <select class="modal-content-form-group-select" id="role" required >
-                        <option class="modal-content-form-group-option" value="">Select a role</option>
-                        <option class="modal-content-form-group-option" value="admin">Admin</option>
-                        <option class="modal-content-form-group-option" value="editor">Editor</option>
-                        <option class="modal-content-form-group-option" value="viewer">Viewer</option>
+                    <select class="modal-content-form-group-select" id="role" name="roleName" required>
+                        <option class="modal-content-form-group-option" value="" disabled selected>Select a role</option>
+                        <option th:each="role : ${roles}" th:value="${role.roleName}" th:text="${role.roleName}" class="modal-content-form-group-option"></option>
                     </select>
                 </div>
                 <div class="modal-content-form-group">
                     <label class="modal-content-form-group-label">Password</label>
-                    <input class="modal-content-form-group-input" placeholder="">
+                    <input class="modal-content-form-group-input" placeholder="" th:field="*{passWord}">
                 </div>
                 <div class="modal-content-form-group">
                     <label class="modal-content-form-group-label">Confrim password</label>
                     <input class="modal-content-form-group-input">
                 </div>
-                <button type="submit" class="modal-content-save-button">Save</button>
-
+                <button type="submit" class="modal-content-save-button">Add</button>
             </form>
-
         </div>
 
     </div>
@@ -841,7 +837,43 @@
         });
 
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let successMessage = "[[${success}]]";
+            let errorMessage = "[[${error}]]";
     
+            if (successMessage !== "null" && successMessage.trim() !== "") {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Congrats!',
+                    text: successMessage,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#6FCF97',
+                    customClass: {
+                        popup: 'custom-swal-popup'
+                    }
+                }).then(() => {
+                    location.reload(); // Reload the page after clicking OK
+                });
+            } else if (errorMessage !== "null" && errorMessage.trim() !== "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops!',
+                    text: errorMessage,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#F27474',
+                    customClass: {
+                        popup: 'custom-swal-popup'
+                    }
+                }).then(() => {
+                    location.reload(); // Reload the page after clicking OK
+                });
+            }
+        });
+    </script>
+    
+
       
 </body>
 </html>

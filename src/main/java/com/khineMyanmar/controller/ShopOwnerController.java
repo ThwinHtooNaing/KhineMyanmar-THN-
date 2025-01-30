@@ -51,7 +51,6 @@ public class ShopOwnerController {
     public String user(HttpSession session, Model model) {
         ShopOwner user = (ShopOwner) session.getAttribute("shopSession");
         model.addAttribute("shopowner", user);
-       // System.out.println(user.getUserId()+" deliveries");
         return "shopowner/shopOwnerDeliveries";
     }
         

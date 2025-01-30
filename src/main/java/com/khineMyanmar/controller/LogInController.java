@@ -26,11 +26,13 @@ public class LogInController {
             
             session.setAttribute("usersession", user);
             if (user != null && user.getRole().getRoleName().equalsIgnoreCase("USER")) 
-            {
+            {   
+                session.setAttribute("customerSession", user);      
                 model.addAttribute("customer", user);
                 return "customer/customerIndex"; 
             } else if (user != null && user.getRole().getRoleName().equalsIgnoreCase("ADMIN")) 
             {
+                session.setAttribute("adminSession", user);      
                 model.addAttribute("admin", user);
                 return "admin/adminIndex"; 
             }else if(user != null && user.getRole().getRoleName().equalsIgnoreCase("SHOPOWNER"))

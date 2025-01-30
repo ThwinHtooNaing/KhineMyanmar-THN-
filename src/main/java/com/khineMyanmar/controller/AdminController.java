@@ -1,7 +1,12 @@
 package com.khineMyanmar.controller;
 import com.khineMyanmar.model.Category;
+import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.model.User;
 import com.khineMyanmar.service.CategoryService;
+import com.khineMyanmar.service.RoleService;
+import com.khineMyanmar.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.ui.Model;
 
@@ -19,7 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-// import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -30,41 +35,55 @@ public class AdminController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private UserService userService;
+
     @RequestMapping("/dashboard")
-    public String dashboard(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("user", user);
+    public String dashboard(HttpSession session, Model model) {
+        User admin = (User) session.getAttribute("adminSession");
+        model.addAttribute("admin", admin);
         return "admin/adminIndex";
     }
     
     @RequestMapping("/users")
-    public String user(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("user", user);
+    public String user(HttpSession session, Model model) {
+        User admin = (User) session.getAttribute("adminSession");
+        model.addAttribute("admin", admin);
+        model.addAttribute("roles", roleService.getAllRoles());
+        model.addAttribute("newUser",new User());
         return "admin/adminUsers";
     }
     
     @RequestMapping("/shops")
-    public String shop(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("user", user);
+    public String shop(HttpSession session, Model model) {
+        User admin = (User) session.getAttribute("adminSession");
+        model.addAttribute("admin", admin);
         return "admin/adminShops";
     }
     
     @RequestMapping("/products")
-    public String product(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("user", user);
+    public String product(HttpSession session, Model model) {
+        User admin = (User) session.getAttribute("adminSession");
+        model.addAttribute("admin", admin);
         List<Category> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
         return "admin/adminProducts";
     }
     
     @RequestMapping("/orders")
-    public String order(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("user", user);
+    public String order(HttpSession session, Model model) {
+        User admin = (User) session.getAttribute("adminSession");
+        model.addAttribute("admin", admin);
         return "admin/adminOrders";
     }
     
     @RequestMapping("/setting")
-    public String setting(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("user", user);
+    public String setting(HttpSession session, Model model) {
+        User admin = (User) session.getAttribute("adminSession");
+        model.addAttribute("admin", admin);
         return "admin/adminSetting";
     } 
 
@@ -129,6 +148,56 @@ public class AdminController {
         response.put("hasChildren", category != null && !category.getProducts().isEmpty());
         return response;
     }
+
+    // @PostMapping("/adduser")
+    // @ResponseBody
+    // public ResponseEntity<Map<String, String>> addUser(@ModelAttribute User user,@RequestParam("roleName") String roleName) {
+    //     System.out.println("Received request: " + user); // Debugging
+
+    //     try {
+    //         if (user == null) {
+    //             return ResponseEntity.badRequest().body(Collections.singletonMap("error", "User object is required"));
+    //         }
+
+    //         String message = userService.save(user,roleName);
+    //         return ResponseEntity.ok(Collections.singletonMap("message", message));
+
+    //     } catch (IllegalArgumentException e) {
+    //         return ResponseEntity.badRequest().body(Collections.singletonMap("error", e.getMessage()));
+    //     } catch (IllegalStateException e) {
+    //         return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap("error", e.getMessage()));
+    //     } catch (Exception e) {
+    //         e.printStackTrace(); // Print any unexpected errors in the server logs
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+    //                 .body(Collections.singletonMap("error", "An unexpected error occurred"));
+    //     }
+    // }
+
+    @PostMapping("/adduser")
+    public String addUser(@ModelAttribute User user, @RequestParam("roleName") String roleName, RedirectAttributes redirectAttributes) {
+        try {
+            if (user == null) {
+                redirectAttributes.addFlashAttribute("error", "User object is required");
+                return "redirect:/admin/users";
+            }
+
+            String message = userService.save(user, roleName);
+            redirectAttributes.addFlashAttribute("success", message);
+            return "redirect:/admin/users";
+
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/admin/users";
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/admin/users";
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "An unexpected error occurred");
+            return "redirect:/admin/users";
+        }
+    }
+
 
     
 

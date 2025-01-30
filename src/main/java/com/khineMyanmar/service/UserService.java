@@ -35,10 +35,30 @@ public class UserService {
 			if (user.getProfilePic() == null || user.getProfilePic().isEmpty()) {
 	            user.setProfilePic("/img/profiles/default-profile.jpg"); // Relative path for Thymeleaf
 	        }
-			
 			return userRep.save(user);
 		}else {
 			return null;
+		}
+		
+	}
+
+	public String save(User user, String roleName) {
+		System.err.println(user.getEmail()+" email");
+		boolean userexist= userRep.findByEmail(user.getEmail()).isPresent();
+		if(!userexist) {
+			String pass = passEnd.encode(user.getPassWord());
+			user.setPassWord(pass);
+			System.out.println(pass+" password");
+			Optional<Role> role = roleRep.findByRoleName(roleName);
+			user.setRole(role.get());
+			
+			if (user.getProfilePic() == null || user.getProfilePic().isEmpty()) {
+	            user.setProfilePic("/img/profiles/default-profile.jpg"); // Relative path for Thymeleaf
+	        }
+			userRep.save(user);
+			return "User saved";
+		}else {
+			return "User already exist";
 		}
 		
 	}
