@@ -8,6 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Role {
 	
@@ -19,6 +21,7 @@ public class Role {
 	private String roleName;
 	
 	@OneToMany(mappedBy = "role")
+	@JsonIgnore 
 	private Set<User> users;
 
 	public Role(String roleName, Set<User> users) {

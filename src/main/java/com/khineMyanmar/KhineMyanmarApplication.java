@@ -10,5 +10,5 @@ public class KhineMyanmarApplication {
 		SpringApplication.run(KhineMyanmarApplication.class, args);
 	}
 
-}
+}	
 

@@ -326,11 +326,11 @@
             border-left: 4px solid #ff6f61; /* Red for admin */
         }
 
-        .user-card[data-role="customer"] {
+        .user-card[data-role="user"] {
             border-left: 4px solid #007bff; /* Blue for customer */
         }
 
-        .user-card[data-role="shop-owner"] {
+        .user-card[data-role="shopowner"] {
             border-left: 4px solid #28a745; /* Green for shop owner */
         }
 
@@ -343,11 +343,11 @@
             color: #ff6f61; /* Matching red for admin */
         }
 
-        .user-card[data-role="customer"] .user-role {
+        .user-card[data-role="user"] .user-role {
             color: #007bff; /* Matching blue for customer */
         }
 
-        .user-card[data-role="shop-owner"] .user-role {
+        .user-card[data-role="shopowner"] .user-role {
             color: #28a745; /* Matching green for shop owner */
         }
 
@@ -377,6 +377,10 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-container-list-table{
+            height: 450px;
         }
 
         table {
@@ -559,6 +563,37 @@
             margin-top: 10px;
         }
 
+        .status {
+            font-size: 15px;
+            /* font-weight: bold; */
+            text-transform: capitalize;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        tr .user-role[data-role="admin"] .status {
+            background-color: #ff6f61;
+            color: white;
+        }
+
+        tr .user-role[data-role="user"] .status{
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr .user-role[data-role="shopowner"] .status{
+            background-color: #28a745;
+            color: white;
+        }
+
+        tr .user-role[data-role="delivery"] .status{
+            background-color: #ffc107;
+            color: black;
+        }
+
+
+
     </style>
 </head>
 <body>
@@ -635,89 +670,16 @@
             </div>
         </div>
         <div class="user-container-grid" id="user-container-grid">
-            <div class="user-card" data-role="admin">
-                <img class="user-photo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVs5Z7asi_ApEcD0hAWS9Xmpv3nMdxmJB54A&s" alt="Admin Photo">
+            <div th:each="user : ${users}" class="user-card" th:data-role="${user.role.roleName}">
+                <img class="user-photo" th:src="${user.profilePic}" alt="User Photo">
                 <div class="user-data">
-                    <p class="user-name">Admin Name</p>
-                    <p class="user-gmail">admin@gmail.com</p>
-                    <p class="user-role">Admin</p>
-                </div>
-            </div>
-            <div class="user-card" data-role="customer">
-                <img class="user-photo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVs5Z7asi_ApEcD0hAWS9Xmpv3nMdxmJB54A&s" alt="Customer Photo">
-                <div class="user-data">
-                    <p class="user-name">Customer Name</p>
-                    <p class="user-gmail">customer@gmail.com</p>
-                    <p class="user-role">Customer</p>
-                </div>
-            </div>
-            <div class="user-card" data-role="shop-owner">
-                <img class="user-photo" src="https://e7.pngegg.com/pngimages/981/645/png-clipart-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette.png" alt="Shop Owner Photo">
-                <div class="user-data">
-                    <p class="user-name">Shop Owner Name</p>
-                    <p class="user-gmail">shopowner@gmail.com</p>
-                    <p class="user-role">Shop Owner</p>
-                </div>
-            </div>
-            <div class="user-card" data-role="delivery">
-                <img class="user-photo" src="https://e7.pngegg.com/pngimages/981/645/png-clipart-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette.png" alt="Delivery Photo">
-                <div class="user-data">
-                    <p class="user-name">Delivery Person</p>
-                    <p class="user-gmail">delivery@gmail.com</p>
-                    <p class="user-role">Delivery</p>
-                </div>
-            </div>
-            <div class="user-card" data-role="delivery">
-                <img class="user-photo" src="https://e7.pngegg.com/pngimages/981/645/png-clipart-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette.png" alt="Delivery Photo">
-                <div class="user-data">
-                    <p class="user-name">Delivery Person</p>
-                    <p class="user-gmail">delivery@gmail.com</p>
-                    <p class="user-role">Delivery</p>
-                </div>
-            </div>
-            <div class="user-card" data-role="delivery">
-                <img class="user-photo" src="https://e7.pngegg.com/pngimages/981/645/png-clipart-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette.png" alt="Delivery Photo">
-                <div class="user-data">
-                    <p class="user-name">Delivery Person</p>
-                    <p class="user-gmail">delivery@gmail.com</p>
-                    <p class="user-role">Delivery</p>
-                </div>
-            </div>
-            <div class="user-card" data-role="delivery">
-                <img class="user-photo" src="https://e7.pngegg.com/pngimages/981/645/png-clipart-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette.png" alt="Delivery Photo">
-                <div class="user-data">
-                    <p class="user-name">Delivery Person</p>
-                    <p class="user-gmail">delivery@gmail.com</p>
-                    <p class="user-role">Delivery</p>
-                </div>
-            </div>
-            <div class="user-card" data-role="delivery">
-                <img class="user-photo" src="https://e7.pngegg.com/pngimages/981/645/png-clipart-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette.png" alt="Delivery Photo">
-                <div class="user-data">
-                    <p class="user-name">Delivery Person</p>
-                    <p class="user-gmail">delivery@gmail.com</p>
-                    <p class="user-role">Delivery</p>
-                </div>
-            </div>
-            <div class="user-card" data-role="delivery">
-                <img class="user-photo" src="https://e7.pngegg.com/pngimages/981/645/png-clipart-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette.png" alt="Delivery Photo">
-                <div class="user-data">
-                    <p class="user-name">Delivery Person</p>
-                    <p class="user-gmail">delivery@gmail.com</p>
-                    <p class="user-role">Delivery</p>
-                </div>
-            </div>
-            <div class="user-card" data-role="delivery">
-                <img class="user-photo" src="https://e7.pngegg.com/pngimages/981/645/png-clipart-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette.png" alt="Delivery Photo">
-                <div class="user-data">
-                    <p class="user-name">Delivery Person</p>
-                    <p class="user-gmail">delivery@gmail.com</p>
-                    <p class="user-role">Delivery</p>
+                    <p class="user-name" th:text="${user.firstName} + ' ' + ${user.lastName}"></p>
+                    <p class="user-gmail" th:text="${user.email}"></p>
+                    <p class="user-role" th:text="${user.role.roleName}"></p>
                 </div>
             </div>
         </div>
-        
-        <div class="user-container-list" id="user-container-list">
+        <div class="user-container-list" id="user-container-list" style="display: none;">
             <div class="user-container-list-table">
                 <table>
                     <thead>
@@ -729,27 +691,25 @@
                             <th>Role</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmVq-OmHL5H_5P8b1k306pFddOe3049-il2A&s" alt="User Photo" class="user-photo"></td>
-                            <td>Liam Smith</td>
-                            <td>smith@example.com</td>
-                            <td>+1234567890</td>
-                            <!-- <td>123 Main St, City</td> -->
-                            <td>Project Manager</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmVq-OmHL5H_5P8b1k306pFddOe3049-il2A&s" alt="User Photo" class="user-photo"></td>
-                            <td>Isabella Garcia</td>
-                            <td>garcia@example.com</td>
-                            <td>+9876543210</td>
-                            <!-- <td>456 Elm St, Town</td> -->
-                            <td>Front-End Developer</td>
-                        </tr>
+                    <tbody id="users-table-body">
+                        <!-- Data will be populated by JavaScript -->
                     </tbody>
                 </table>
             </div>     
-           
+            <div class="user-container-list-table-paging">
+                <div class="paging-details">
+                    <span>Rows per page: 
+                        <select id="rowsPerPage" class="user-container-list-table-paging-select">
+                            <option value="6">6</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                        </select>
+                    </span>
+                    <span id="pagination-info"></span>
+                    <button id="prevPage" disabled>&lt;</button>
+                    <button id="nextPage">&gt;</button>
+                </div>
+            </div>
         </div>
         
     </main>  
@@ -801,15 +761,16 @@
     <script th:src="@{/js/adminSideBarNav.js}">
     </script>
     <script>
-        document.querySelector('.user-container-header-grid-view').addEventListener('click', () => {
-        document.getElementById('user-container-grid').style.display = 'grid';
-        document.getElementById('user-container-list').style.display = 'none';
-    });
+    //     document.querySelector('.user-container-header-grid-view').addEventListener('click', () => {
+    //     document.getElementById('user-container-grid').style.display = 'grid';
+    //     document.getElementById('user-container-list').style.display = 'none';
+        
+    // });
 
-    document.querySelector('.user-container-header-list-view').addEventListener('click', () => {
-        document.getElementById('user-container-grid').style.display = 'none';
-        document.getElementById('user-container-list').style.display = 'block';
-    });
+    // document.querySelector('.user-container-header-list-view').addEventListener('click', () => {
+    //     document.getElementById('user-container-grid').style.display = 'none';
+    //     document.getElementById('user-container-list').style.display = 'block';
+    // });
 
     </script>
     <script>
@@ -873,6 +834,109 @@
             }
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentPage = 0;
+            let pageSize = 6;
+            let totalPages = 0;
+        
+            // View switching logic
+            document.querySelector('.user-container-header-grid-view').addEventListener('click', () => {
+                document.getElementById('user-container-grid').style.display = 'grid';
+                document.getElementById('user-container-list').style.display = 'none';
+                location.reload(); // Refresh to show all users in grid view
+            });
+        
+            document.querySelector('.user-container-header-list-view').addEventListener('click', () => {
+                document.getElementById('user-container-grid').style.display = 'none';
+                document.getElementById('user-container-list').style.display = 'block';
+                currentPage = 0;
+                fetchUsers(); // Initial fetch for list view
+            });
+        
+            // Fetch users function
+            const fetchUsers = () => {
+            fetch(`/admin/getPaginatedUsers?page=${currentPage}&size=${pageSize}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.text(); // Read as text first
+                })
+                .then(text => {
+                    if (!text) {
+                        console.error("Empty response from server");
+                        return;
+                    }
+                    return JSON.parse(text); // Manually parse JSON
+                })
+                .then(data => {
+                    if (data) {
+                        console.log(data); 
+                        updateTable(data.users);
+                        updatePagination(data.totalPages);
+                    }
+                })
+                .catch(error => console.error("Error fetching users:", error));
+            };
+
+        
+            // Update table content
+            const updateTable = (users) => {
+                const tbody = document.getElementById('users-table-body');
+                tbody.innerHTML = users.map(user => `
+                    <tr>
+                        <td>
+                            <img src="${user.profilePic || '/images/default-user.png'}" 
+                                 alt="User Photo" class="user-photo">
+                        </td>
+                        <td>${user.firstName} ${user.lastName}</td>
+                        <td>${user.email}</td>
+                        <td>${user.phNo || 'N/A'}</td>
+                        <td class="user-role" data-role="${user.role.roleName}">
+                            <span class="status">${user.role.roleName}</span>
+                        </td>
+                    </tr>
+                `).join('');
+            };
+        
+            // Update pagination controls
+            const updatePagination = (total) => {
+                totalPages = total;
+                document.getElementById('pagination-info').textContent = 
+                    `Page ${currentPage + 1} of ${totalPages}`;
+                    
+                document.getElementById('prevPage').disabled = currentPage === 0;
+                document.getElementById('nextPage').disabled = currentPage >= totalPages - 1;
+            };
+        
+            // Pagination event handlers
+            document.getElementById('prevPage').addEventListener('click', () => {
+                if (currentPage > 0) {
+                    currentPage--;
+                    fetchUsers();
+                }
+            });
+        
+            document.getElementById('nextPage').addEventListener('click', () => {
+                if (currentPage < totalPages - 1) {
+                    currentPage++;
+                    fetchUsers();
+                }
+            });
+        
+            // Page size change handler
+            document.getElementById('rowsPerPage').addEventListener('change', (e) => {
+                pageSize = parseInt(e.target.value);
+                currentPage = 0;
+                fetchUsers();
+            });
+        
+            document.getElementById('user-container-grid').style.display = 'grid';
+            document.getElementById('user-container-list').style.display = 'none';
+        });
+        </script>
+
     
 
       
