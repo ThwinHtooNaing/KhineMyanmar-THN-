@@ -114,4 +114,8 @@ public class UserService {
 	public Page<User> getUsers(Pageable pageable) {
         return userRep.findAll(pageable);
     }
+
+	public User getUserByUserId(long id){
+		return userRep.findById(id).get();
+	}
 }

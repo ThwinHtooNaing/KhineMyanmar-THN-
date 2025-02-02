@@ -203,7 +203,9 @@ public class AdminController {
                                         @RequestParam(required = false) MultipartFile profileImage,
                                         HttpSession session) {
 
-        User admin = (User) session.getAttribute("adminSession");
+        User user = (User) session.getAttribute("adminSession");
+
+        User admin = userService.getUserByUserId(user.getUserId());
 
         updates.forEach((key, value) -> {
             switch (key) {
