@@ -354,8 +354,8 @@
                 </span>
             </div>
             <div class="header-profile-image icon">
-                <img th:src="@{/img/profiles/default-profile.jpg}" class="">
-                <span>Admin</span>
+                <img th:src="${shopowner.profilePic}" class="">
+                <span th:text="${shopowner.firstName + ' '+shopowner.lastName}">Admin</span>
                 <i class="fas fa-angle-down"></i>
             </div>
         </div>
