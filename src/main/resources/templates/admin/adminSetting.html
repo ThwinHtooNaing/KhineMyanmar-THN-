@@ -437,9 +437,10 @@
                         text: "Your profile information has been updated successfully.",
                         icon: "success",
                         confirmButtonText: "OK"
+                    }).then(() => {
+                        // Reload the page after the user clicks "OK"
+                        location.reload();
                     });
-
-                    location.reload();
                 }else {
                     Swal.fire({
                         title: "Update Failed!",
