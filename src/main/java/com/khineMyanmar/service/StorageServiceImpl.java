@@ -10,7 +10,7 @@ import java.util.UUID;
 @Service
 public class StorageServiceImpl implements StorageService {
 
-    private final String UPLOAD_DIR = "src/main/resources/static/img/";
+    private final String UPLOAD_DIR = "src/main/resources/static/img/profiles/users";
 
     @Override
     public String saveProfilePicture(MultipartFile file, String firstName, String lastName, long userId) {
@@ -29,7 +29,7 @@ public class StorageServiceImpl implements StorageService {
             Path filePath = userDir.resolve(fileName);
             Files.write(filePath, file.getBytes());
 
-            return "/img/" + sanitizedName + "/" + fileName;
+            return "/img/profiles/users/" + sanitizedName + "/" + fileName;
         } catch (IOException e) {
             throw new RuntimeException("Error saving profile picture", e);
         }

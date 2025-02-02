@@ -1,10 +1,8 @@
 package com.khineMyanmar.controller;
 import com.khineMyanmar.model.Category;
-import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.model.User;
 import com.khineMyanmar.service.CategoryService;
 import com.khineMyanmar.service.RoleService;
-import com.khineMyanmar.service.StorageService;
 import com.khineMyanmar.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -44,9 +42,6 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private StorageService storageService;
 
     @RequestMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
@@ -203,27 +198,23 @@ public class AdminController {
                                         @RequestParam(required = false) MultipartFile profileImage,
                                         HttpSession session) {
 
-        User user = (User) session.getAttribute("adminSession");
-
-        User admin = userService.getUserByUserId(user.getUserId());
-
-        updates.forEach((key, value) -> {
-            switch (key) {
-                case "firstName": admin.setFirstName(value); break;
-                case "lastName": admin.setLastName(value); break;
-                case "email": admin.setEmail(value); break;
-                case "phNo": admin.setPhNo(value); break;
-            }
-        });
-
-        if (profileImage != null && !profileImage.isEmpty()) {
-            String imageUrl = storageService.saveProfilePicture(profileImage,admin.getFirstName(),admin.getLastName(),admin.getUserId());
-            admin.setProfilePic(imageUrl);
+        User admin = (User) session.getAttribute("adminSession");
+        User user = userService.getUserByUserId(admin.getUserId());
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("success", false, "message", "Unauthorized"));
         }
 
-        userService.saveUser(admin);
-        return ResponseEntity.ok(Map.of("success", true));
+        try {
+            User updatedUser = userService.updateUser(user.getUserId(), updates, profileImage);
+            session.setAttribute("adminSession", updatedUser);
+            return ResponseEntity.ok(Map.of("success", true, "message", "Profile updated successfully!", "updatedUser", updatedUser));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("success", false, "message", e.getMessage()));
+        }
     }
+
 
 
 
