@@ -284,9 +284,9 @@
                 </span>
             </div>
             <div class="header-profile-image">
-                <img th:src="@{/img/profiles/default-profile.jpg}" class="">
-                <span>Admin</span>
-                <i class="fas  fa-angle-down"></i>
+                <img th:src="${admin.profilePic}" class="">
+                <span th:text="${(admin.firstName ?: '') + ' ' + (admin.lastName ?: '') == ' ' ? 'Admin' : (admin.firstName ?: '') + ' ' + (admin.lastName ?: '')}"></span>
+                <i class="fas fa-angle-down"></i>
             </div>
         </div>
     </header>
@@ -326,7 +326,7 @@
         <div class="profile-container">
             <div class="profile-header">
                 <label for="profile-image-input">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-yi8lUjKNVqmWkbY2plqdttxFpzC2Efcq0g&s" alt="Profile" class="profile-image" id="profile-image">
+                    <img th:src="${admin.profilePic}" alt="Profile" class="profile-image" id="profile-image">
                 </label>
                 <input type="file" id="profile-image-input" accept="image/*" style="display: none;">
             </div>
@@ -335,14 +335,14 @@
                     <div class="field-group">
                         <label for="first-name">First Name</label>
                         <div class="input-container">
-                            <input type="text" id="first-name" name="first-name" value="John">
+                            <input type="text" id="first-name" name="first-name" th:value="${admin.firstName}">
                             <span class="edit-icon">&#9998;</span>
                         </div>
                     </div>
                     <div class="field-group">
                         <label for="last-name">Last Name</label>
                         <div class="input-container">
-                            <input type="text" id="last-name" name="last-name" value="Doe">
+                            <input type="text" id="last-name" name="last-name" th:value="${admin.lastName}">
                             <span class="edit-icon">&#9998;</span>
                         </div>
                     </div>
@@ -352,29 +352,18 @@
                     <div class="field-group">
                         <label for="email">Email</label>
                         <div class="input-container">
-                            <input type="email" id="email" name="email" value="john.doe@example.com">
+                            <input type="email" id="email" name="email" th:value="${admin.email}">
                             <span class="edit-icon">&#9998;</span>
                         </div>
                     </div>
                     <div class="field-group">
                         <label for="phone">Phone Number</label>
                         <div class="input-container">
-                            <input type="tel" id="phone" name="phone" value="123-456-7890">
+                            <input type="tel" id="phone" name="phone" th:value="${admin.phNo}">
                             <span class="edit-icon">&#9998;</span>
                         </div>
                     </div>
-                </div>
-    
-                <div class="field-row">
-                    <div class="field-group">
-                        <label for="role">Role</label>
-                        <div class="input-container">
-                            <input type="text" id="role" name="role" value="Admin">
-                            <span class="edit-icon">&#9998;</span>
-                        </div>
-                    </div>
-                </div>
-    
+                </div>    
                 <button type="button" id="save-button" class="save-button hidden">Save Changes</button>
             </form>
         </div>
@@ -387,11 +376,10 @@
         const saveButton = document.getElementById("save-button");
 
         const initialValues = {
-            "first-name": "John",
-            "last-name": "Doe",
-            email: "john.doe@example.com",
-            phone: "123-456-7890",
-            role: "Admin",
+            "first-name": form.querySelector("[name='first-name']").value,
+            "last-name": form.querySelector("[name='last-name']").value,
+            "email": form.querySelector("[name='email']").value,
+            "phone": form.querySelector("[name='phone']").value
         };
 
         form.addEventListener("input", () => {
@@ -404,21 +392,19 @@
                     break;
                 }
             }
-
             saveButton.classList.toggle("hidden", !hasChanges);
         });
 
         const profileImageInput = document.getElementById("profile-image-input");
         const profileImage = document.getElementById("profile-image");
 
-        // Handle profile image change
         profileImageInput.addEventListener("change", (event) => {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = () => {
                     profileImage.src = reader.result;
-                    saveButton.classList.remove("hidden"); // Show "Save Changes" button
+                    saveButton.classList.remove("hidden");
                 };
                 reader.readAsDataURL(file);
             }

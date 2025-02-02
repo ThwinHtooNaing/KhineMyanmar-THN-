@@ -311,9 +311,9 @@
                 </span>
             </div>
             <div class="profile-image">
-                <img th:src="@{/img/profiles/default-profile.jpg}" class="">
-                <span>Admin</span>
-                <i class="fas  fa-angle-down"></i>
+                <img th:src="${admin.profilePic}" class="">
+                <span th:text="${(admin.firstName ?: '') + ' ' + (admin.lastName ?: '') == ' ' ? 'Admin' : (admin.firstName ?: '') + ' ' + (admin.lastName ?: '')}"></span>
+                <i class="fas fa-angle-down"></i>
             </div>
             
         </div>

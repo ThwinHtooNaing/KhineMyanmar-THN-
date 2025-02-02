@@ -24,11 +24,11 @@ public class LogInController {
 
             User user = userSer.checkLogin(email, password);
             
-            session.setAttribute("usersession", user);
+            // session.setAttribute("usersession", user);
             if (user != null && user.getRole().getRoleName().equalsIgnoreCase("USER")) 
             {   
-                session.setAttribute("customerSession", user);      
-                model.addAttribute("customer", user);
+                session.setAttribute("customerSession", user); 
+                model.addAttribute("customer", user);     
                 return "customer/customerIndex"; 
             } else if (user != null && user.getRole().getRoleName().equalsIgnoreCase("ADMIN")) 
             {
@@ -39,7 +39,7 @@ public class LogInController {
             {
                 if (user instanceof ShopOwner) {
                     ShopOwner shopowner = (ShopOwner) user; 
-                    session.setAttribute("shopSession", user);
+                    session.setAttribute("shopSession", shopowner);
                     model.addAttribute("shopowner", shopowner); 
                 }                
                 return "shopowner/shopOwnerIndex";

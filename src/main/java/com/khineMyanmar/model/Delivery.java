@@ -4,6 +4,8 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -15,6 +17,11 @@ public class Delivery extends User{
 	@JoinColumn(name = "shop_id")
 	private Shop shop;
 	
+	@Enumerated(EnumType.STRING) // Store enum values as strings in the database
+	private WorkingStatus workingStatus;
+
+	int deliveryCount;
+
 	@OneToMany(mappedBy = "deliveryPerson", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DeliveryItem> deliveryItems;
 	

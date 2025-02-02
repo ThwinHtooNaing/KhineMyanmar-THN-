@@ -613,9 +613,9 @@
                 </span>
             </div>
             <div class="profile-image">
-                <img th:src="@{/img/profiles/default-profile.jpg}" class="">
-                <span>Admin</span>
-                <i class="fas  fa-angle-down"></i>
+                <img th:src="${admin.profilePic}" class="">
+                <span th:text="${(admin.firstName ?: '') + ' ' + (admin.lastName ?: '') == ' ' ? 'Admin' : (admin.firstName ?: '') + ' ' + (admin.lastName ?: '')}"></span>
+                <i class="fas fa-angle-down"></i>
             </div>
             
         </div>
@@ -759,19 +759,6 @@
 
     </div>
     <script th:src="@{/js/adminSideBarNav.js}">
-    </script>
-    <script>
-    //     document.querySelector('.user-container-header-grid-view').addEventListener('click', () => {
-    //     document.getElementById('user-container-grid').style.display = 'grid';
-    //     document.getElementById('user-container-list').style.display = 'none';
-        
-    // });
-
-    // document.querySelector('.user-container-header-list-view').addEventListener('click', () => {
-    //     document.getElementById('user-container-grid').style.display = 'none';
-    //     document.getElementById('user-container-list').style.display = 'block';
-    // });
-
     </script>
     <script>
         // Select the modal, close button, and modal background
