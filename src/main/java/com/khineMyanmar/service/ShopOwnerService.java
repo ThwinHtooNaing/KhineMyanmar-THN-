@@ -1,15 +1,19 @@
 package com.khineMyanmar.service;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.khineMyanmar.model.Role;
 import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.repository.IShopOwnerRepository;
 import com.khineMyanmar.repository.IUserRoleRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ShopOwnerService {
@@ -22,6 +26,9 @@ public class ShopOwnerService {
 	
 	@Autowired
 	private IUserRoleRepository roleRep;
+
+	@Autowired
+	private StorageService storageService;
 
     public ShopOwner saveUser(ShopOwner owner) {
 		
@@ -43,4 +50,39 @@ public class ShopOwnerService {
 		}
 		
 	}
+
+	public ShopOwner getUserByUserId(long id){
+		return shopOwnerRep.findById(id).get();
+	}
+
+	@Transactional
+    public ShopOwner updateUser(Long userId, Map<String, String> updates, MultipartFile profileImage) {
+        Optional<ShopOwner> optionalUser = shopOwnerRep.findById(userId);
+        if (optionalUser.isEmpty()) {
+            throw new RuntimeException("User not found!");
+        }
+
+        ShopOwner user = optionalUser.get();
+
+        // Update user details based on provided data
+        updates.forEach((key, value) -> {
+            switch (key) {
+                case "firstName": user.setFirstName(value); break;
+                case "lastName": user.setLastName(value); break;
+                case "email": user.setEmail(value); break;
+                case "phNo": user.setPhNo(value); break;
+            }
+        });
+
+        
+        if (profileImage != null && !profileImage.isEmpty()) {
+            String imageUrl = storageService.saveProfilePicture(profileImage, 
+                user.getFirstName(), user.getLastName(), user.getUserId(),user.getRole().getRoleName());
+            user.setProfilePic(imageUrl);
+        }
+
+        return shopOwnerRep.save(user); 
+    }
+
+
 }

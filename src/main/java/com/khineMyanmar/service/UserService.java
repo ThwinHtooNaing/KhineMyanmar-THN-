@@ -148,7 +148,7 @@ public class UserService {
         // Handle profile image update
         if (profileImage != null && !profileImage.isEmpty()) {
             String imageUrl = storageService.saveProfilePicture(profileImage, 
-                user.getFirstName(), user.getLastName(), user.getUserId());
+                user.getFirstName(), user.getLastName(), user.getUserId(),user.getRole().getRoleName());
             user.setProfilePic(imageUrl);
         }
 

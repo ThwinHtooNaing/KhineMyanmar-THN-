@@ -10,10 +10,10 @@ import java.util.UUID;
 @Service
 public class StorageServiceImpl implements StorageService {
 
-    private final String UPLOAD_DIR = "src/main/resources/static/img/profiles/users";
+    private final String BASE_UPLOAD_DIR = "src/main/resources/static/img/profiles/";
 
     @Override
-    public String saveProfilePicture(MultipartFile file, String firstName, String lastName, long userId) {
+    public String saveProfilePicture(MultipartFile file, String firstName, String lastName, long userId, String roleName) {
         if (file == null || file.isEmpty()) {
             throw new RuntimeException("File is empty or null");
         }
@@ -21,6 +21,7 @@ public class StorageServiceImpl implements StorageService {
         try {
            
             String sanitizedName = (firstName + "_" + lastName + "_" + userId).toLowerCase().replaceAll("\\s+", "");
+            String UPLOAD_DIR = BASE_UPLOAD_DIR + "/" + roleName;
 
             Path userDir = Paths.get(UPLOAD_DIR, sanitizedName);
             Files.createDirectories(userDir);
@@ -29,7 +30,7 @@ public class StorageServiceImpl implements StorageService {
             Path filePath = userDir.resolve(fileName);
             Files.write(filePath, file.getBytes());
 
-            return "/img/profiles/users/" + sanitizedName + "/" + fileName;
+            return "/img/profiles/"+roleName+"/" + sanitizedName + "/" + fileName;
         } catch (IOException e) {
             throw new RuntimeException("Error saving profile picture", e);
         }
