@@ -4,6 +4,7 @@ import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.model.User;
 import com.khineMyanmar.service.CategoryService;
 import com.khineMyanmar.service.RoleService;
+import com.khineMyanmar.service.StorageService;
 import com.khineMyanmar.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +44,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private StorageService storageService;
 
     @RequestMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
@@ -153,30 +158,6 @@ public class AdminController {
         return response;
     }
 
-    // @PostMapping("/adduser")
-    // @ResponseBody
-    // public ResponseEntity<Map<String, String>> addUser(@ModelAttribute User user,@RequestParam("roleName") String roleName) {
-    //     System.out.println("Received request: " + user); // Debugging
-
-    //     try {
-    //         if (user == null) {
-    //             return ResponseEntity.badRequest().body(Collections.singletonMap("error", "User object is required"));
-    //         }
-
-    //         String message = userService.save(user,roleName);
-    //         return ResponseEntity.ok(Collections.singletonMap("message", message));
-
-    //     } catch (IllegalArgumentException e) {
-    //         return ResponseEntity.badRequest().body(Collections.singletonMap("error", e.getMessage()));
-    //     } catch (IllegalStateException e) {
-    //         return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap("error", e.getMessage()));
-    //     } catch (Exception e) {
-    //         e.printStackTrace(); // Print any unexpected errors in the server logs
-    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-    //                 .body(Collections.singletonMap("error", "An unexpected error occurred"));
-    //     }
-    // }
-
     @PostMapping("/adduser")
     public String addUser(@ModelAttribute User user, @RequestParam("roleName") String roleName, RedirectAttributes redirectAttributes) {
         try {
@@ -215,6 +196,33 @@ public class AdminController {
 
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/updateProfile")
+    @ResponseBody
+    public ResponseEntity<?> updateProfile(@RequestParam Map<String, String> updates,
+                                        @RequestParam(required = false) MultipartFile profileImage,
+                                        HttpSession session) {
+
+        User admin = (User) session.getAttribute("adminSession");
+
+        updates.forEach((key, value) -> {
+            switch (key) {
+                case "firstName": admin.setFirstName(value); break;
+                case "lastName": admin.setLastName(value); break;
+                case "email": admin.setEmail(value); break;
+                case "phNo": admin.setPhNo(value); break;
+            }
+        });
+
+        if (profileImage != null && !profileImage.isEmpty()) {
+            String imageUrl = storageService.saveProfilePicture(profileImage,admin.getFirstName(),admin.getLastName(),admin.getUserId());
+            admin.setProfilePic(imageUrl);
+        }
+
+        userService.saveUser(admin);
+        return ResponseEntity.ok(Map.of("success", true));
+    }
+
 
 
     

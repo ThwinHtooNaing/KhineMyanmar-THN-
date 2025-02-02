@@ -333,16 +333,16 @@
             <form id="profile-form">
                 <div class="field-row">
                     <div class="field-group">
-                        <label for="first-name">First Name</label>
+                        <label for="firstName">First Name</label>
                         <div class="input-container">
-                            <input type="text" id="first-name" name="first-name" th:value="${admin.firstName}">
+                            <input type="text" id="first-name" name="firstName" th:value="${admin.firstName}">
                             <span class="edit-icon">&#9998;</span>
                         </div>
                     </div>
                     <div class="field-group">
-                        <label for="last-name">Last Name</label>
+                        <label for="lastName">Last Name</label>
                         <div class="input-container">
-                            <input type="text" id="last-name" name="last-name" th:value="${admin.lastName}">
+                            <input type="text" id="last-name" name="lastName" th:value="${admin.lastName}">
                             <span class="edit-icon">&#9998;</span>
                         </div>
                     </div>
@@ -357,9 +357,9 @@
                         </div>
                     </div>
                     <div class="field-group">
-                        <label for="phone">Phone Number</label>
+                        <label for="phNo">Phone Number</label>
                         <div class="input-container">
-                            <input type="tel" id="phone" name="phone" th:value="${admin.phNo}">
+                            <input type="tel" id="phone" name="phNo" th:value="${admin.phNo}">
                             <span class="edit-icon">&#9998;</span>
                         </div>
                     </div>
@@ -371,28 +371,28 @@
     
     <script th:src="@{/js/adminSideBarNav.js}">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const form = document.getElementById("profile-form");
         const saveButton = document.getElementById("save-button");
 
-        const initialValues = {
-            "first-name": form.querySelector("[name='first-name']").value,
-            "last-name": form.querySelector("[name='last-name']").value,
-            "email": form.querySelector("[name='email']").value,
-            "phone": form.querySelector("[name='phone']").value
-        };
+        let initialValues = {};
+        let changedValues = {};
+
+        form.querySelectorAll("input").forEach(input => {
+            initialValues[input.name] = input.value;
+        });
 
         form.addEventListener("input", () => {
-            let hasChanges = false;
+            const { name, value } = event.target;
 
-            for (const [key, value] of Object.entries(initialValues)) {
-                const input = document.querySelector(`[name="${key}"]`);
-                if (input.value !== value) {
-                    hasChanges = true;
-                    break;
-                }
+            if (initialValues[name] !== value) {
+                changedValues[name] = value;
+            } else {
+                delete changedValues[name];
             }
-            saveButton.classList.toggle("hidden", !hasChanges);
+
+            saveButton.classList.toggle("hidden", Object.keys(changedValues).length === 0);
         });
 
         const profileImageInput = document.getElementById("profile-image-input");
@@ -403,11 +403,60 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = () => {
-                    profileImage.src = reader.result;
+                        profileImage.src = reader.result;
+                    changedValues["profileImage"] = file; // Store image separately
                     saveButton.classList.remove("hidden");
                 };
                 reader.readAsDataURL(file);
             }
+        });
+
+        // Save Changes
+        saveButton.addEventListener("click", () => {
+            if (Object.keys(changedValues).length === 0) return;
+
+            const formData = new FormData();
+            for (const key in changedValues) {
+                formData.append(key, changedValues[key]);
+            }
+
+            fetch("/admin/updateProfile", {
+                method: "POST",
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data);
+                console.log(data.success);
+                if (data.success) {
+                    Object.assign(initialValues, changedValues); 
+                    changedValues = {}; 
+                    saveButton.classList.add("hidden");
+
+                    Swal.fire({
+                        title: "Profile Updated!",
+                        text: "Your profile information has been updated successfully.",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                    });
+
+                    location.reload();
+                }else {
+                    Swal.fire({
+                        title: "Update Failed!",
+                        text: data.message || "Something went wrong. Please try again.",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                }
+            }).catch(error => {
+                console.error("Update failed:", error);
+                Swal.fire({
+                    title: "Error!",
+                    text: "A network error occurred. Please check your connection and try again.",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+            });
         });
 
     </script>
