@@ -436,11 +436,8 @@
                         text: "Your profile information has been updated successfully.",
                         icon: "success",
                         confirmButtonText: "OK"
-                    }).then(() => {
-                        
-                        profileImage.src = profileImage.src.split("?")[0] + "?t=" + new Date().getTime();
-                        location.reload();
                     });
+                    
                 }else {
                     Swal.fire({
                         title: "Update Failed!",
@@ -459,7 +456,6 @@
                 });
             });
         });
-        //
 
     </script>
 </body>

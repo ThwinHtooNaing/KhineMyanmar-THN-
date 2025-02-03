@@ -154,7 +154,6 @@
         main{
             margin-top: 70px;
             margin-left: 225px;
-            /* background-color: #f9f9f9; */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
@@ -163,7 +162,6 @@
             padding: 25px;
             border-radius: 10px 10px 0px 0px;
             padding-bottom: 10px;
-            /* border-bottom: 1px solid #bdbaba; */
         }
 
         .profile-header {
@@ -325,22 +323,22 @@
             margin: 30px 0px;
         }
 
-        .shop-profile-container-body{
-            display: block;
-        }
-
         .shop-profile-no-data{
-            
             display: flex;
             justify-content: center;
             align-items: center;
-            display: none;
         }
 
         .shop-profile-no-data p{
-            /* color: #f00; */
+            color: #f00;
             font-size: 20px;
         }
+
+        #shop-profile-container-body{
+            display: none;
+        }
+
+        
     </style>
 </head>
 <body>
@@ -436,13 +434,13 @@
             <div class="shop-profile-container-header">
                 <h2 class="shop-profile-container-header-title">Shop Profile</h2>
                 <div class="shop-profile-container-header-button-container">
-                    <button class="shop-profile-container-header-button-container-button">
+                    <button class="shop-profile-container-header-button-container-button" id="shop-profile-container-header-button-container-button">
                         <i class="shop-profile-container-header-button-container-icon"></i>
                         Add Shop
                     </button>
                 </div>
             </div>
-            <div class="shop-profile-container-body" style="display: none;">
+            <div class="shop-profile-container-body" id="shop-profile-container-body">
                 <div class="shop-profile-container-body-photo-container">
                     <label for="shop-profile-image-input">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-yi8lUjKNVqmWkbY2plqdttxFpzC2Efcq0g&s" alt="Profile" class="profile-image" id="shop-profile-image">
@@ -477,9 +475,6 @@
                     </div>
                     <button type="button" id="shop-profile-save-button" class="save-button hidden">Save Changes</button>
                 </form>   
-            </div>
-            <div class="shop-profile-no-data" style="display: flex;">
-                <p style="color: red;">You do not have any shop data yet!</p>
             </div>
         </div>
     </main>
@@ -576,6 +571,15 @@
             });
         });
 
+    </script>
+    <script>
+        const addShopButton = document.getElementById("shop-profile-container-header-button-container-button");
+        const shopprofilecontainer = document.getElementById("shop-profile-container-body");
+        const shopprofilenodata = document.getElementById("shop-profile-no-data");
+        addShopButton.addEventListener("click",()=>{
+            shopprofilecontainer.style.display = "block";
+            shopprofilenodata.style.display = "none";
+        });
     </script>
     <script>
         const shopform = document.getElementById("shop-profile-form");
