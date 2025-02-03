@@ -6,7 +6,6 @@ import com.khineMyanmar.service.RoleService;
 import com.khineMyanmar.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
-
 import org.springframework.ui.Model;
 
 import java.util.Collections;
@@ -30,7 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@Controller // Changed to RestController
+@Controller
 @RequestMapping("/admin")
 public class AdminController {
 

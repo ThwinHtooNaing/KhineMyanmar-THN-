@@ -55,6 +55,7 @@ public class ShopOwnerService {
 		return shopOwnerRep.findById(id).get();
 	}
 
+    
 	@Transactional
     public ShopOwner updateUser(Long userId, Map<String, String> updates, MultipartFile profileImage) {
         Optional<ShopOwner> optionalUser = shopOwnerRep.findById(userId);

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.repository.IShopRepository;
+
 @Service
 public class ShopService {
 	@Autowired
