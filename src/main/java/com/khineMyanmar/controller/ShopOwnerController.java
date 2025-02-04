@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.model.User;
 import com.khineMyanmar.service.ShopOwnerService;
+import com.khineMyanmar.service.ShopService;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequestMapping("/shopowner")
@@ -27,6 +31,9 @@ public class ShopOwnerController {
 
 	@Autowired
 	ShopOwnerService shopOwnerSer;
+
+    @Autowired
+    ShopService shopService;
 
 	@GetMapping("/shopownersignup")
 	public String SignUp(Model model) {
@@ -108,6 +115,34 @@ public class ShopOwnerController {
                     .body(Map.of("success", false, "message", e.getMessage()));
         }
     }
+
+    @PostMapping("/updateShopProfile")
+    @ResponseBody
+    public String updateShopProfile(@RequestParam Map<String, String> updates){
+        return null;
+    }
+
+    @PostMapping("/createShop")
+    @ResponseBody
+    public ResponseEntity<?> postMethodName(@RequestParam Map<String, String> updates,@RequestParam MultipartFile shopprofileImage,HttpSession session) {
+        
+        ShopOwner shopowner = (ShopOwner) session.getAttribute("shopSession");
+        Long ownerId = shopowner.getUserId();
+        System.out.println(shopowner);
+        System.out.println(updates);
+        System.out.println(shopprofileImage);
+        if (!updates.containsKey("shopName") || updates.get("shopName").isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Shop name is required"));
+        }
+        try{
+            Shop newshop = shopService.createShop(updates,shopprofileImage,ownerId);
+            return ResponseEntity.ok(Map.of("success", true, "message", "Shop created successfully", "shopId", newshop));
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("success", false, "message", e.getMessage()));
+        }
+
+    }  
 
 	
 }

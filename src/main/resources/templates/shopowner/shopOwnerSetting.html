@@ -434,41 +434,45 @@
             <div class="shop-profile-container-header">
                 <h2 class="shop-profile-container-header-title">Shop Profile</h2>
                 <div class="shop-profile-container-header-button-container">
-                    <button class="shop-profile-container-header-button-container-button" id="shop-profile-container-header-button-container-button">
+                    <button class="shop-profile-container-header-button-container-button" id="shop-profile-container-header-button-container-button" th:if="${shopowner.shop == null}">
                         <i class="shop-profile-container-header-button-container-icon"></i>
                         Add Shop
                     </button>
                 </div>
             </div>
-            <div class="shop-profile-container-body" id="shop-profile-container-body">
+            <div class="shop-profile-container-body" id="shop-profile-container-body" th:style="${shopowner.shop == null} ? 'display: none;' : 'display: block;'">
                 <div class="shop-profile-container-body-photo-container">
                     <label for="shop-profile-image-input">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-yi8lUjKNVqmWkbY2plqdttxFpzC2Efcq0g&s" alt="Profile" class="profile-image" id="shop-profile-image">
+                        <img th:src="${shopowner.shop != null && shopOwner.shop.shopImagePath != null} 
+                        ? @{${shopowner.shop.shopImagePath}} 
+                        : @{/img/shopprofiles/default_shop_profile.png}"
+                    alt="Profile" class="profile-image" id="shop-profile-image">
                     </label>
                     <input type="file" id="shop-profile-image-input" accept="image/*" style="display: none;">
                 </div>
                 <form id="shop-profile-form">
                     <div class="field-row">
                         <div class="field-group">
-                            <label for="shop-name">Shop Name</label>
+                            <label for="shopName">Shop Name</label>
                             <div class="input-container">
-                                <input type="text" id="shop-name" name="shop-name" value="Wai La">
+                                <input type="text" id="shop-name" name="shopName" 
+                            th:value="${shopowner.shop != null && shopowner.shop.shopName != null ? shopOwner.shop.shopName : ''}" placeholder="Enter Shop Name">
                                 <span class="edit-icon">&#9998;</span>
                             </div>
                         </div>
                         <div class="field-group">
-                            <label for="shop-address">address</label>
+                            <label for="address">address</label>
                             <div class="input-container">
-                                <input type="address" id="shop-address" name="shop-address" value="Mandalay">
+                                <input type="address" id="shop-address" name="address"  th:value="${shopowner.shop != null && shopowner.shop.address != null ? shopowner.shop.address : ''}" placeholder="Enter Shop Address">
                                 <span class="edit-icon">&#9998;</span>
                             </div>
                         </div>     
                     </div>
                     <div class="field-row">
                         <div class="field-group">
-                            <label for="shop-contact-number">Contact Number</label>
+                            <label for="contactNumber">Contact Number</label>
                             <div class="input-container">
-                                <input type="text" id="shop-contact-number" name="shop-contact-number" value="09254552767">
+                                <input type="text" id="shop-contact-number" name="contactNumber" th:value="${shopowner.shop != null && shopowner.shop.contactNumber != null ? shopowner.shop.contactNumber : ''}" placeholder="Enter Shop Contact Number">
                                 <span class="edit-icon">&#9998;</span>
                             </div>
                         </div>
@@ -578,47 +582,102 @@
         const shopprofilenodata = document.getElementById("shop-profile-no-data");
         addShopButton.addEventListener("click",()=>{
             shopprofilecontainer.style.display = "block";
-            shopprofilenodata.style.display = "none";
+            // shopprofilenodata.style.display = "none";
         });
     </script>
     <script>
         const shopform = document.getElementById("shop-profile-form");
         const shopsaveButton = document.getElementById("shop-profile-save-button");
 
-        const shopinitialValues = {
-            "shop-name": "Wai La",
-            "shop-address": "Mandalay",
-            "shop-contact-number": "09254552767",
-        };
+        let shopinitialValues = {};
+        let shopchangedValues = {};
 
-        shopform.addEventListener("input", () => {
-            let hasChanges = false;
+        const shopExists = /*[[${shopowner.shop != null}]]*/ false;
 
-            for (const [key, value] of Object.entries(shopinitialValues)) {
-                const input = document.querySelector(`[name="${key}"]`);
-                if (input.value !== value) {
-                    hasChanges = true;
-                    break;
-                }
+        shopform.querySelectorAll("input").forEach(input => {
+            shopinitialValues[input.name] = input.value;
+        });
+
+        shopform.addEventListener("input", (event) => {
+            const { name, value } = event.target;
+            if (shopinitialValues[name] !== value) {
+                shopchangedValues[name] = value;
+            } else {
+                delete shopchangedValues[name];
             }
-
-            shopsaveButton.classList.toggle("hidden", !hasChanges);
+            shopsaveButton.classList.toggle("hidden", Object.keys(shopchangedValues).length === 0);
         });
 
         const shopprofileImageInput = document.getElementById("shop-profile-image-input");
         const shopprofileImage = document.getElementById("shop-profile-image");
 
-        // Handle profile image change
         shopprofileImageInput.addEventListener("change", (event) => {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = () => {
                     shopprofileImage.src = reader.result;
-                    shopsaveButton.classList.remove("hidden"); // Show "Save Changes" button
+                    shopchangedValues["shopprofileImage"] = file;
+                    shopsaveButton.classList.remove("hidden");
                 };
                 reader.readAsDataURL(file);
             }
+        });
+
+        shopsaveButton.addEventListener("click", () => {
+            if (Object.keys(shopchangedValues).length === 0) return;
+
+            const shopformData = new FormData();
+            for (const key in shopchangedValues) {
+                shopformData.append(key, shopchangedValues[key]);
+            }
+
+            // Decide whether to create a new shop or update an existing one
+            const endpoint = shopExists ? "/shopowner/updateShopProfile" : "/shopowner/createShop";
+
+            fetch(endpoint, {
+                method: "POST",
+                body: shopformData
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Object.assign(shopinitialValues, shopchangedValues);
+                    shopchangedValues = {};
+                    shopsaveButton.classList.add("hidden");
+
+                    Swal.fire({
+                        title: shopExists ? "Shop Profile Updated!" : "Shop Created!",
+                        text: shopExists 
+                            ? "Your shop profile information has been updated successfully."
+                            : "Your shop has been created successfully.",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                    }).then(() => {
+                        if (!shopExists) {
+                            // If a new shop was created, reload the page to reflect changes
+                            location.reload();
+                        } else {
+                            shopprofileImage.src = shopprofileImage.src.split("?")[0] + "?t=" + new Date().getTime();
+                        }
+                    });
+
+                } else {
+                    Swal.fire({
+                        title: "Operation Failed!",
+                        text: data.message || "Something went wrong. Please try again.",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                }
+            }).catch(error => {
+                console.error("Operation failed:", error);
+                Swal.fire({
+                    title: "Error!",
+                    text: "A network error occurred. Please check your connection and try again.",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+            });
         });
 
     </script>

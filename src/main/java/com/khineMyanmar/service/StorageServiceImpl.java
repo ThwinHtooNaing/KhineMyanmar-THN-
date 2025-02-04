@@ -11,6 +11,8 @@ import java.util.UUID;
 public class StorageServiceImpl implements StorageService {
 
     private final String BASE_UPLOAD_DIR = "src/main/resources/static/img/profiles/";
+    private final String BASE_UPLOAD_DIR_SHOP = "src/main/resources/static/img/shopprofiles/";
+
 
     @Override
     public String saveProfilePicture(MultipartFile file, String firstName, String lastName, long userId, String roleName) {
@@ -33,6 +35,29 @@ public class StorageServiceImpl implements StorageService {
             return "/img/profiles/"+roleName+"/" + sanitizedName + "/" + fileName;
         } catch (IOException e) {
             throw new RuntimeException("Error saving profile picture", e);
+        }
+    }
+
+    @Override
+    public String saveShopProfilePicture(MultipartFile file, String shopName,long shopId){
+        if (file == null || file.isEmpty()) {
+            throw new RuntimeException("File is empty or null");
+        }
+        try {
+
+            String sanitizedShopName = (shopName+"_"+shopId).toLowerCase().replaceAll("\\s+", "");
+            String UPLOAD_DIR = BASE_UPLOAD_DIR_SHOP + sanitizedShopName;
+    
+            Path shopDir = Paths.get(UPLOAD_DIR);
+            Files.createDirectories(shopDir);
+    
+            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            Path filePath = shopDir.resolve(fileName);
+            Files.write(filePath, file.getBytes()); // Save the file
+    
+            return "/img/shopprofiles/" + sanitizedShopName + "/" + fileName;
+        } catch (IOException e) {
+            throw new RuntimeException("Error saving shop profile picture", e);
         }
     }
 }
