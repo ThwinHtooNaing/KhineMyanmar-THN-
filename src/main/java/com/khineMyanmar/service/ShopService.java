@@ -38,14 +38,14 @@ public class ShopService {
 		ShopOwner owner = shopOwnerRepository.findById(ownerId)
             .orElseThrow(() -> new RuntimeException("Owner not found"));
 
-		// owner.setShop(shop);
-		// shopOwnerRepository.save(owner);
 		shop.setShopOwner(owner);
 		if (shop.getShopImagePath() == null || shop.getShopImagePath().isEmpty()) {
 			 // Relative 
 			shop.setShopImagePath("/img/shopprofiles/default_shop_profile.png");
 		}
 		shop = shopRep.save(shop); 
+		owner.setShop(shop);
+		shopOwnerRepository.save(owner);
 
 		if (shopProfileImage != null && !shopProfileImage.isEmpty()) {
 			String imageUrl = storageService.saveShopProfilePicture(shopProfileImage,shop.getShopName(),shop.getShopId());
