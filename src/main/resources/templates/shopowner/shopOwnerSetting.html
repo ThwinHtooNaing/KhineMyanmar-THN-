@@ -430,7 +430,7 @@
                 <button type="button" id="save-button" class="save-button hidden">Save Changes</button>
             </form>
         </div>
-        <div class="shop-profile-container">
+        <div class="shop-profile-container" th:data-shop-exists="${shopowner.shop != null}" id="shop-profile-container">
             <div class="shop-profile-container-header">
                 <h2 class="shop-profile-container-header-title">Shop Profile</h2>
                 <div class="shop-profile-container-header-button-container">
@@ -551,11 +551,7 @@
                         text: "Your profile information has been updated successfully.",
                         icon: "success",
                         confirmButtonText: "OK"
-                    }).then(() => {
-                        
-                        profileImage.src = profileImage.src.split("?")[0] + "?t=" + new Date().getTime();
-                        location.reload();
-                    });
+                    })
                 }else {
                     Swal.fire({
                         title: "Update Failed!",
@@ -592,7 +588,7 @@
         let shopinitialValues = {};
         let shopchangedValues = {};
 
-        const shopExists = /*[[${shopowner.shop != null}]]*/ false;
+        const shopExists = document.getElementById("shop-profile-container").dataset.shopExists === "true";
 
         shopform.querySelectorAll("input").forEach(input => {
             shopinitialValues[input.name] = input.value;

@@ -118,24 +118,39 @@ public class ShopOwnerController {
 
     @PostMapping("/updateShopProfile")
     @ResponseBody
-    public String updateShopProfile(@RequestParam Map<String, String> updates){
-        return null;
+    public ResponseEntity<?> updateShopProfile(@RequestParam Map<String, String> updates, @RequestParam(required = false) MultipartFile shopprofileImage, HttpSession session) {
+        ShopOwner shopowner = (ShopOwner) session.getAttribute("shopSession");
+        if (shopowner == null || shopowner.getShop() == null) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "No shop associated with the current session"));
+        }
+        
+        Shop existingShop = shopowner.getShop();
+        System.out.println(existingShop);
+        try {
+            Shop updatedShop = shopService.updateShop(existingShop, updates, shopprofileImage);
+            shopowner.setShop(updatedShop);
+            session.setAttribute("shopSession", shopowner);
+            return ResponseEntity.ok(Map.of("success", true, "message", "Shop updated successfully", "shopId", updatedShop.getShopId()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("success", false, "message", e.getMessage()));
+        }
     }
+
 
     @PostMapping("/createShop")
     @ResponseBody
-    public ResponseEntity<?> postMethodName(@RequestParam Map<String, String> updates,@RequestParam MultipartFile shopprofileImage,HttpSession session) {
+    public ResponseEntity<?> postMethodName(@RequestParam Map<String, String> updates,@RequestParam MultipartFile shopprofileImage ,HttpSession session) {
         
         ShopOwner shopowner = (ShopOwner) session.getAttribute("shopSession");
         Long ownerId = shopowner.getUserId();
-        System.out.println(shopowner);
-        System.out.println(updates);
-        System.out.println(shopprofileImage);
         if (!updates.containsKey("shopName") || updates.get("shopName").isEmpty()) {
             return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Shop name is required"));
         }
         try{
             Shop newshop = shopService.createShop(updates,shopprofileImage,ownerId);
+            shopowner.setShop(newshop);
+            session.setAttribute("shopSession", shopowner);
             return ResponseEntity.ok(Map.of("success", true, "message", "Shop created successfully", "shopId", newshop));
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

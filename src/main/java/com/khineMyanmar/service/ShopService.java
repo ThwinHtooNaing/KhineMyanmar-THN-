@@ -12,6 +12,8 @@ import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.repository.IShopOwnerRepository;
 import com.khineMyanmar.repository.IShopRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ShopService {
 	@Autowired
@@ -28,6 +30,7 @@ public class ShopService {
 		return shopRep.findAll();
 	}
 
+	@Transactional
 	public Shop createShop(Map<String,String> updates,MultipartFile shopProfileImage,Long ownerId){
 
 		Shop shop = new Shop();
@@ -52,6 +55,27 @@ public class ShopService {
             shop.setShopImagePath(imageUrl);
         }
 		return shopRep.save(shop);
+	}
+
+
+	@Transactional
+	public Shop updateShop(Shop existShop,Map<String,String> updates,MultipartFile shopProfileImage)
+	{
+		if(existShop == null){
+			throw new RuntimeException("Shop not found");
+		}
+		updates.forEach((key, value) -> {
+            switch (key) {
+                case "shopName": existShop.setShopName(value); break;
+                case "address": existShop.setAddress(value); break;
+                case "contactNumber": existShop.setContactNumber(value); break;
+            }
+        });
+		if (shopProfileImage != null && !shopProfileImage.isEmpty()) {
+            String imageUrl = storageService.saveShopProfilePicture(shopProfileImage,existShop.getShopName(),existShop.getShopId());
+            existShop.setShopImagePath(imageUrl);
+        }
+		return shopRep.save(existShop);
 	}
 
 }
