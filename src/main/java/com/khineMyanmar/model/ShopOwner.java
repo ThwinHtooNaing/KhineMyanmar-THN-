@@ -1,5 +1,7 @@
 package com.khineMyanmar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
@@ -8,6 +10,7 @@ import jakarta.persistence.OneToOne;
 public class ShopOwner extends User{
 
 	@OneToOne(mappedBy = "shopOwner", cascade = CascadeType.ALL, optional = true)
+	@JsonIgnore 
     private Shop shop;
 	
 	public Shop getShop() {

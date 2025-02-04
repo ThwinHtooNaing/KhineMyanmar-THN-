@@ -24,14 +24,13 @@ public class StorageServiceImpl implements StorageService {
            
             String sanitizedName = (firstName + "_" + lastName + "_" + userId).toLowerCase().replaceAll("\\s+", "");
             String UPLOAD_DIR = BASE_UPLOAD_DIR + "/" + roleName;
-
             Path userDir = Paths.get(UPLOAD_DIR, sanitizedName);
             Files.createDirectories(userDir);
-
+            
             String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
             Path filePath = userDir.resolve(fileName);
+            
             Files.write(filePath, file.getBytes());
-
             return "/img/profiles/"+roleName+"/" + sanitizedName + "/" + fileName;
         } catch (IOException e) {
             throw new RuntimeException("Error saving profile picture", e);
