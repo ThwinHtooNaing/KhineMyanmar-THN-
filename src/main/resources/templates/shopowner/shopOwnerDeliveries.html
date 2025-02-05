@@ -231,24 +231,28 @@
             flex-direction: column;
         }
 
-        .delivery-data p {
+        .delivery-data p{
             margin: 3px 0;
             font-size: 13px;
             color: #555; 
         }
 
-        .delivery-data p:first-child {
+        .delivery-data > p:first-child {
             font-size: 16px;
             font-weight: bold;
             color: #333; 
         }   
 
-        .delivery-status{
-            display: flex;
-            align-items: center; /* Vertically centers the text and span */
+        .delivery-working-status p{
+            font-size: 12px;
         }
 
-        .delivery-status span {
+        .delivery-working-status{
+            display: flex;
+            align-items: center;
+        }
+
+        .delivery-working-status span {
             display: inline-block;
             width: 10px;
             height: 10px;
@@ -256,25 +260,22 @@
             margin-left: 5px;
         }
 
-        .delivery-status[data-role="AVAILABLE"] span{
+        .delivery-status[data-role="AVAILABLE"] + span{
             background-color: green;
-            /* color: green; */
         }
         .delivery-status[data-role="AVAILABLE"]{
             color: green;
         }
 
-        .delivery-status[data-role="WORKING"] span{
+        .delivery-status[data-role="WORKING"] + span{
             background-color: rgb(254, 199, 60);
-            /* color: green; */
         }
         .delivery-status[data-role="WORKING"]{
             color: rgb(254, 199, 60);
         }
 
-        .delivery-status[data-role="FULL"] span{
+        .delivery-status[data-role="FULL"] + span{
             background-color: red;
-            /* color: green; */
         }
         .delivery-status[data-role="FULL"]{
             color: red;
@@ -432,7 +433,10 @@
                     <p class="delivery-name" th:text="${delivery.firstName + ' ' + delivery.lastName}"></p>
                     <p class="delivery-gmail" th:text="${delivery.email}"></p>
                     <p class="delivery-role">No of Deli <span th:text="${delivery.deliveryCount}"></span></p>
-                    <p class="delivery-status" th:attr="data-role=${delivery.workingStatus}" th:text="${delivery.workingStatus}"></p>
+                    <div class="delivery-working-status">
+                        <p class="delivery-status" th:data-role="${delivery.workingStatus}" th:text="${delivery.workingStatus}"></p>
+                        <span></span>
+                    </div>
                 </div>
             </div>
             <div class="delivery-card">
