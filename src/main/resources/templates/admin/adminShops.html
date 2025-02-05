@@ -416,36 +416,12 @@
             <h2>Shop Management</h2>
         </div>
         <div class="shop-container-grid" id="shop-container-grid">
-            <div class="shop-card" data-role="admin">
-                <img class="shop-photo" src="https://cdn.shopify.com/shop-assets/static_uploads/web/shop_logo/shop-logo-default.png" alt="Admin Photo">
+            <div th:each="shop : ${shops}" class="shop-card" th:data-id="${shop.shopId}" onclick="showShopDetail(this)">
+                <img class="shop-photo" th:src="${shop.shopImagePath}" alt="Shop Photo">
                 <div class="shop-data">
-                    <p class="shop-name">Shop Name</p>
-                    <p class="shop-address">Address</p>
-                    <p class="shop-contact">09xxxxxx</p>
-                </div>
-            </div>
-            <div class="shop-card" data-role="admin">
-                <img class="shop-photo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVs5Z7asi_ApEcD0hAWS9Xmpv3nMdxmJB54A&s" alt="Admin Photo">
-                <div class="shop-data">
-                    <p class="shop-name">Shop Name</p>
-                    <p class="shop-address">Address</p>
-                    <p class="shop-contact">09xxxxxx</p>
-                </div>
-            </div>
-            <div class="shop-card" data-role="admin">
-                <img class="shop-photo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVs5Z7asi_ApEcD0hAWS9Xmpv3nMdxmJB54A&s" alt="Admin Photo">
-                <div class="shop-data">
-                    <p class="shop-name">Shop Name</p>
-                    <p class="shop-address">Address</p>
-                    <p class="shop-contact">09xxxxxx</p>
-                </div>
-            </div>
-            <div class="shop-card" data-role="admin">
-                <img class="shop-photo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVs5Z7asi_ApEcD0hAWS9Xmpv3nMdxmJB54A&s" alt="Admin Photo">
-                <div class="shop-data">
-                    <p class="shop-name">Shop Name</p>
-                    <p class="shop-address">Address</p>
-                    <p class="shop-contact">09xxxxxx</p>
+                    <p class="shop-name" th:text="${shop.shopName}">Shop Name</p>
+                    <p class="shop-address" th:text="${shop.address}">Address</p>
+                    <p class="shop-contact" th:text="${shop.contactNumber}">09xxxxxx</p>
                 </div>
             </div>
         </div>

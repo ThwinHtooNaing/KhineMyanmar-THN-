@@ -283,8 +283,6 @@
     </style>
 </head>
 <body>
-    <!-- <h1>Hello this is shopowner page</h1>
-    -->
     <header class="header">
         <div class="icons">
             <div class="notification icon">
@@ -393,6 +391,46 @@
             </div>
         </div>
     </main>
+    <div class="modal" style="display: none;" id="delivery-modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Add New Delivery</h2>
+            <form class="modal-content-form" id="modal-content-form">
+                <div class="modal-content-form-group">
+                    <label class="modal-content-form-group-label" for="firstName">First Name</label>
+                    <input class="modal-content-form-group-input" type="text" name="firstName" placeholder="First Number">
+                </div>
+                <div class="modal-content-form-group">
+                    <label class="modal-content-form-group-label" for="lastName">Last Name</label>
+                    <input class="modal-content-form-group-input" type="text" name="lastName" placeholder="Last Number">
+                </div>
+                <div class="modal-content-form-group">
+                    <label class="modal-content-form-group-label" for="phNo">Phone Number</label>
+                    <input class="modal-content-form-group-input" type="text" name="phNo" placeholder="Phone Number (eg. 09xxxxxxx)">
+                </div>
+                <div class="modal-content-form-group">
+                    <label class="modal-content-form-group-label" for="email">Email</label>
+                    <input class="modal-content-form-group-input" type="email" name="email" placeholder="Email (eg. example@gmail.comm)">
+                </div>
+                <div class="modal-content-form-group">
+                    <label class="modal-content-form-group-label">
+                    <select required class="fa-solid fa-shop modal-content-form-group-select">
+                        <option th:value="${shopowner.shop.shopId}" th:text="${shopowner.shop.shopName}" name=""></option>
+                    </select>
+                </div>
+                <div class="modal-content-form-group">
+                    <label class="modal-content-form-group-label" for="passWord">Password</label>
+                    <input class="modal-content-form-group-input" name="passWord" type="password">
+                </div>
+                <div class="modal-content-form-group">
+                    <label class="modal-content-form-group-label" for="cpassWord">Confirm Password</label>
+                    <input class="modal-content-form-group-input" name="cpassWord" type="password">
+                </div>
+                <button type="submit" class="modal-content-save-button">Add</button>
+            </form>
+        </div>
+
+    </div>
     <script th:src="@{/js/adminSideBarNav.js}">
     </script> 
     

@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.model.ShopOwner;
+import com.khineMyanmar.model.User;
 import com.khineMyanmar.repository.IShopOwnerRepository;
 import com.khineMyanmar.repository.IShopRepository;
 
@@ -76,6 +77,10 @@ public class ShopService {
             existShop.setShopImagePath(imageUrl);
         }
 		return shopRep.save(existShop);
+	}
+
+	public List<Shop> getAllShops() {
+		return shopRep.findAll();
 	}
 
 }

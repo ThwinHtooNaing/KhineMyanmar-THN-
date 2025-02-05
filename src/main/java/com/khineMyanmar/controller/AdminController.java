@@ -1,8 +1,10 @@
 package com.khineMyanmar.controller;
 import com.khineMyanmar.model.Category;
+import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.model.User;
 import com.khineMyanmar.service.CategoryService;
 import com.khineMyanmar.service.RoleService;
+import com.khineMyanmar.service.ShopService;
 import com.khineMyanmar.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -42,6 +44,9 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ShopService shopService;
+
     @RequestMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
         User admin = (User) session.getAttribute("adminSession");
@@ -63,6 +68,8 @@ public class AdminController {
     @RequestMapping("/shops")
     public String shop(HttpSession session, Model model) {
         User admin = (User) session.getAttribute("adminSession");
+        List<Shop> shops = shopService.getAllShops();
+        model.addAttribute("shops", shops);
         model.addAttribute("admin", admin);
         return "admin/adminShops";
     }

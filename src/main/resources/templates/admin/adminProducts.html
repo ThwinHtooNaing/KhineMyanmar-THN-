@@ -987,8 +987,8 @@
             .then(result => {
                 console.log(result);
                 if (result.message  === "Updated Successfully") {
-                    selectedCategoryItem.textContent = newName; // Update UI
-                    editmodal.style.display = "none"; // Close modal
+                    selectedCategoryItem.textContent = newName; 
+                    editmodal.style.display = "none"; 
                     alert("Successfully updated category!");
                 } else {
                     alert("Error updating category!");

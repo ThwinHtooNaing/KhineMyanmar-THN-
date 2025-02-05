@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 import com.khineMyanmar.model.Shop;
 @Repository
 public interface IShopRepository extends JpaRepository<Shop,Long> {
-
 }
