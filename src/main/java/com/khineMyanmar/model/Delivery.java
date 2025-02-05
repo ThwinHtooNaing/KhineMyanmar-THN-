@@ -1,9 +1,7 @@
 package com.khineMyanmar.model;
 
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,7 +30,6 @@ public class Delivery extends User{
 	public Delivery(String profilePic, String firstName, String lastName, String phNo, String email, String passWord,
 			Role role,Shop shop) {
 		super(profilePic, firstName, lastName, phNo, email, passWord, role);
-		// TODO Auto-generated constructor stub
 		this.shop = shop;
 	}
 	
@@ -50,7 +47,6 @@ public class Delivery extends User{
 	}
 
 	public Delivery() {
-		// TODO Auto-generated constructor stub
 		super();
 	}
 
