@@ -280,6 +280,97 @@
             background-color: red;
         }
 
+        .modal {
+            /* display: none; */
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 0px 20px 30px 30px;
+            border-radius: 10px;
+            width: 500px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .modal-content-title{
+            text-align: left;
+            font-size: 25px;
+            color: #e59420;
+            
+        }
+
+        /* Form group container */
+        .modal-content-form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Labels */
+        .modal-content-form-group-label {
+            width: 150px;
+            font-weight: bold;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        /* Inputs */
+        .modal-content-form-group-input,
+        .modal-content-form-group-select {
+            margin-left: 15px;
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .modal-content-save-button {
+            display: block;
+            width: 150px;
+            padding: 10px;
+            background-color: #f5a623;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: auto;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-content-save-button:hover {
+            background-color: #e59420;
+        }
+
+        .close-button:hover{
+            color: #e59420;
+        }
+
+        .close-button {
+            float: right;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+
     </style>
 </head>
 <body>
@@ -391,48 +482,105 @@
             </div>
         </div>
     </main>
-    <div class="modal" style="display: none;" id="delivery-modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Add New Delivery</h2>
-            <form class="modal-content-form" id="modal-content-form">
-                <div class="modal-content-form-group">
-                    <label class="modal-content-form-group-label" for="firstName">First Name</label>
-                    <input class="modal-content-form-group-input" type="text" name="firstName" placeholder="First Number">
-                </div>
-                <div class="modal-content-form-group">
-                    <label class="modal-content-form-group-label" for="lastName">Last Name</label>
-                    <input class="modal-content-form-group-input" type="text" name="lastName" placeholder="Last Number">
-                </div>
-                <div class="modal-content-form-group">
-                    <label class="modal-content-form-group-label" for="phNo">Phone Number</label>
-                    <input class="modal-content-form-group-input" type="text" name="phNo" placeholder="Phone Number (eg. 09xxxxxxx)">
-                </div>
-                <div class="modal-content-form-group">
-                    <label class="modal-content-form-group-label" for="email">Email</label>
-                    <input class="modal-content-form-group-input" type="email" name="email" placeholder="Email (eg. example@gmail.comm)">
-                </div>
-                <div class="modal-content-form-group">
-                    <label class="modal-content-form-group-label">
-                    <select required class="fa-solid fa-shop modal-content-form-group-select">
-                        <option th:value="${shopowner.shop.shopId}" th:text="${shopowner.shop.shopName}" name=""></option>
-                    </select>
-                </div>
-                <div class="modal-content-form-group">
-                    <label class="modal-content-form-group-label" for="passWord">Password</label>
-                    <input class="modal-content-form-group-input" name="passWord" type="password">
-                </div>
-                <div class="modal-content-form-group">
-                    <label class="modal-content-form-group-label" for="cpassWord">Confirm Password</label>
-                    <input class="modal-content-form-group-input" name="cpassWord" type="password">
-                </div>
-                <button type="submit" class="modal-content-save-button">Add</button>
-            </form>
+    <div class="modal-container">
+        <div class="modal" style="display: none;" id="delivery-modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2 class="modal-content-title">Add New Delivery</h2>
+                <form class="modal-content-form" id="modal-content-form" th:action="@{/shopowner/addDelivery}" th:object="${newDelivery}" method="POST">
+                    <div class="modal-content-form-group">
+                        <label class="modal-content-form-group-label" for="firstName">First Name</label>
+                        <input class="modal-content-form-group-input" type="text" name="firstName" placeholder="First Number" th:field="*{firstName}">
+                    </div>
+                    <div class="modal-content-form-group">
+                        <label class="modal-content-form-group-label" for="lastName">Last Name</label>
+                        <input class="modal-content-form-group-input" type="text" name="lastName" placeholder="Last Number" th:field="*{lastName}">
+                    </div>
+                    <div class="modal-content-form-group">
+                        <label class="modal-content-form-group-label" for="phNo">Phone Number</label>
+                        <input class="modal-content-form-group-input" type="text" name="phNo" placeholder="Phone Number (eg. 09xxxxxxx)" th:field="*{phNo}">
+                    </div>
+                    <div class="modal-content-form-group">
+                        <label class="modal-content-form-group-label" for="email">Email</label>
+                        <input class="modal-content-form-group-input" type="email" name="email" placeholder="Email (eg. example@gmail.comm)" th:field="*{email}">
+                    </div>
+                    <div class="modal-content-form-group">
+                        <label class="modal-content-form-group-label">Shop Name</label>
+                        <select required class="fa-solid fa-shop modal-content-form-group-select">
+                            <option th:value="${shopowner.shop.shopId}" th:text="${shopowner.shop.shopName}"></option>
+                        </select>
+                    </div>
+                    <div class="modal-content-form-group">
+                        <label class="modal-content-form-group-label" for="passWord">Password</label>
+                        <input class="modal-content-form-group-input" name="passWord" type="password" th:field="*{passWord}">
+                    </div>
+                    <div class="modal-content-form-group">
+                        <label class="modal-content-form-group-label" for="cpassWord">Confirm Password</label>
+                        <input class="modal-content-form-group-input" name="cpassWord" type="password">
+                    </div>
+                    <button type="submit" class="modal-content-save-button">Add</button>
+                </form>
+            </div>
         </div>
-
     </div>
+   
     <script th:src="@{/js/adminSideBarNav.js}">
-    </script> 
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+    <script>
+
+        const modal = document.getElementById("delivery-modal");
+        const openModalButton = document.getElementById("delivery-container-header-add-button");
+        const closeButton = modal.querySelector(".close-button");
+
+        openModalButton.addEventListener("click", function () {
+            modal.style.display = "flex";
+        });
+
+        closeButton.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script>
+    <script>
+         document.addEventListener("DOMContentLoaded", function () {
+            let successMessage = "[[${success}]]";
+            let errorMessage = "[[${error}]]";
+    
+            if (successMessage !== "null" && successMessage.trim() !== "") {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Congrats!',
+                    text: successMessage,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#6FCF97',
+                    customClass: {
+                        popup: 'custom-swal-popup'
+                    }
+                }).then(() => {
+                    location.reload(); // Reload the page after clicking OK
+                });
+            } else if (errorMessage !== "null" && errorMessage.trim() !== "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops!',
+                    text: errorMessage,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#F27474',
+                    customClass: {
+                        popup: 'custom-swal-popup'
+                    }
+                }).then(() => {
+                    location.reload(); // Reload the page after clicking OK
+                });
+            }
+        });
+    </script>
     
 </body>
 

@@ -3,12 +3,14 @@ package com.khineMyanmar.model;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 
 @Entity
 public class Delivery extends User{
@@ -17,10 +19,10 @@ public class Delivery extends User{
 	@JoinColumn(name = "shop_id")
 	private Shop shop;
 	
-	@Enumerated(EnumType.STRING) // Store enum values as strings in the database
+	@Enumerated(EnumType.STRING)
 	private WorkingStatus workingStatus;
 
-	int deliveryCount;
+	private int deliveryCount;
 
 	@OneToMany(mappedBy = "deliveryPerson", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DeliveryItem> deliveryItems;
@@ -56,6 +58,16 @@ public class Delivery extends User{
 
 	public void setDeliveryItems(List<DeliveryItem> deliveryItems) {
 		this.deliveryItems = deliveryItems;
+	}
+
+	@PrePersist
+	public void prePersist() {
+		if (workingStatus == null) {
+			workingStatus = WorkingStatus.AVAILABLE;
+		}
+		if (deliveryCount == 0) { // Optional check to prevent overriding manually set values
+			deliveryCount = 0;
+		}
 	}
 
 	

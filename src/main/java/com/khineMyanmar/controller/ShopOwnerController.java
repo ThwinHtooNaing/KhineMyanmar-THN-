@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.khineMyanmar.model.Delivery;
 import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.model.User;
+import com.khineMyanmar.service.DeliveryService;
 import com.khineMyanmar.service.ShopOwnerService;
 import com.khineMyanmar.service.ShopService;
 
@@ -34,6 +37,9 @@ public class ShopOwnerController {
 
     @Autowired
     ShopService shopService;
+
+    @Autowired
+    DeliveryService deliveryService;
 
 	@GetMapping("/shopownersignup")
 	public String SignUp(Model model) {
@@ -65,7 +71,9 @@ public class ShopOwnerController {
     @RequestMapping("/deliveries")
     public String user(HttpSession session, Model model) {
         ShopOwner user = (ShopOwner) session.getAttribute("shopSession");
+        Delivery newDelivery = new Delivery();
         model.addAttribute("shopowner", user);
+        model.addAttribute("newDelivery", newDelivery);
         return "shopowner/shopOwnerDeliveries";
     }
         
@@ -158,6 +166,33 @@ public class ShopOwnerController {
         }
 
     }  
+    @PostMapping("/addDelivery")
+	public String postMethodName(@ModelAttribute Delivery delivery,RedirectAttributes redirectAttributes,HttpSession session) {
+		
+        try {
+            if (delivery == null) {
+                redirectAttributes.addFlashAttribute("error", "Delivery object is required");
+                return "redirect:/shopowner/deliveries";
+            }
+            ShopOwner shopowner = (ShopOwner) session.getAttribute("shopSession");
+            Shop existingShop = shopowner.getShop();
+            delivery.setShop(existingShop);
+            String message = deliveryService.save(delivery);
+            redirectAttributes.addFlashAttribute("success", message);
+            return "redirect:/shopowner/deliveries";
+
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/shopowner/deliveries";
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/shopowner/deliveries";
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "An unexpected error occurred");
+            return "redirect:/shopowner/deliveries";
+        }
+	}
 
 	
 }

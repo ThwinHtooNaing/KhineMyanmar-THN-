@@ -13,6 +13,7 @@ import com.khineMyanmar.model.Delivery;
 import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.service.ShopService;
 
+
 @Controller
 @RequestMapping("/delivery")
 public class DeliveryController {
@@ -34,4 +35,7 @@ public class DeliveryController {
 		model.addAttribute("shopname", shopname);
 		return "deliverySignUp";
 	}
+
+	
+	
 }
