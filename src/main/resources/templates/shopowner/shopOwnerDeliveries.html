@@ -256,28 +256,28 @@
             margin-left: 5px;
         }
 
-        .delivery-status span.green {
+        .delivery-status[data-role="AVAILABLE"] span{
             background-color: green;
+            /* color: green; */
         }
-
-        .delivery-status.green {
+        .delivery-status[data-role="AVAILABLE"]{
             color: green;
         }
 
-        .delivery-status.yellow {
+        .delivery-status[data-role="WORKING"] span{
+            background-color: rgb(254, 199, 60);
+            /* color: green; */
+        }
+        .delivery-status[data-role="WORKING"]{
             color: rgb(254, 199, 60);
         }
 
-        .delivery-status.red{
-            color: red;
-        }
-
-        .delivery-status span.yellow {
-            background-color: rgb(254, 199, 60);
-        }
-
-        .delivery-status span.red {
+        .delivery-status[data-role="FULL"] span{
             background-color: red;
+            /* color: green; */
+        }
+        .delivery-status[data-role="FULL"]{
+            color: red;
         }
 
         .modal {
@@ -426,13 +426,22 @@
             </div>
         </div>
         <div class="delivery-container-grid" id="delivery-container-grid">
-            <div class="delivery-card" data-role="admin">
+            <div th:each="delivery : ${deliveries}" class="delivery-card">
+                <img class="delivery-photo" th:src="${delivery.profilePic}" alt="Delivery Photo">
+                <div class="delivery-data">
+                    <p class="delivery-name" th:text="${delivery.firstName + ' ' + delivery.lastName}"></p>
+                    <p class="delivery-gmail" th:text="${delivery.email}"></p>
+                    <p class="delivery-role">No of Deli <span th:text="${delivery.deliveryCount}"></span></p>
+                    <p class="delivery-status" th:attr="data-role=${delivery.workingStatus}" th:text="${delivery.workingStatus}"></p>
+                </div>
+            </div>
+            <div class="delivery-card">
                 <img class="delivery-photo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVs5Z7asi_ApEcD0hAWS9Xmpv3nMdxmJB54A&s" alt="Admin Photo">
                 <div class="delivery-data">
                     <p class="delivery-name">Thaw Thaw</p>
                     <p class="delivery-gmail">admin@gmail.com</p>
                     <p class="delivery-role">No of Deli <span>12</span></p>
-                    <p class="delivery-status green">Available<span class="green"></span></p>
+                    <p class="delivery-status" data-role="AVAILABLE">Available<span></span></p>
                 </div>
             </div>
             <div class="delivery-card" data-role="customer">
@@ -441,34 +450,7 @@
                     <p class="delivery-name">Hla Hla</p>
                     <p class="delivery-gmail">customer@gmail.com</p>
                     <p class="delivery-role">No of Deli <span>12</span></p>
-                    <p class="delivery-status yellow">Working<span class="yellow"></span></p>
-                </div>
-            </div>
-            <div class="delivery-card" data-role="shop-owner">
-                <img class="delivery-photo" src="https://e7.pngegg.com/pngimages/981/645/png-clipart-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette.png" alt="Shop Owner Photo">
-                <div class="delivery-data">
-                    <p class="delivery-name">Mg Mya</p>
-                    <p class="delivery-gmail">shopowner@gmail.com</p>
-                    <p class="delivery-role">No of Deli <span>12</span></p>
-                    <p class="delivery-status">Available</p>
-                </div>
-            </div>
-            <div class="delivery-card" data-role="delivery">
-                <img class="delivery-photo" src="https://e7.pngegg.com/pngimages/981/645/png-clipart-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette.png" alt="Delivery Photo">
-                <div class="delivery-data">
-                    <p class="delivery-name">U Hla</p>
-                    <p class="delivery-gmail">delivery@gmail.com</p>
-                    <p class="delivery-role">No of Deli <span>12</span></p>
-                    <p class="delivery-status">Available</p>
-                </div>
-            </div>
-            <div class="delivery-card" data-role="delivery">
-                <img class="delivery-photo" src="https://e7.pngegg.com/pngimages/981/645/png-clipart-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette.png" alt="Delivery Photo">
-                <div class="delivery-data">
-                    <p class="delivery-name">Ko Maung</p>
-                    <p class="delivery-gmail">komaung@gmail.com</p>
-                    <p class="delivery-role">No of Deli <span>12</span></p>
-                    <p class="delivery-status">Available</p>
+                    <p class="delivery-status" data-role="WORKING">Working<span></span></p>
                 </div>
             </div>
             <div class="delivery-card" data-role="delivery">
@@ -477,7 +459,7 @@
                     <p class="delivery-name">Aung Aung</p>
                     <p class="delivery-gmail">aungaung@gmail.com</p>
                     <p class="delivery-role">No of Deli <span>12</span></p>
-                    <p class="delivery-status red">Full<span class="red"></span></p>
+                    <p class="delivery-status" data-role="FULL">Full<span></span></p>
                 </div>
             </div>
         </div>

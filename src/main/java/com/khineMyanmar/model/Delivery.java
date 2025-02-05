@@ -2,8 +2,9 @@ package com.khineMyanmar.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -17,6 +18,7 @@ public class Delivery extends User{
 	
 	@ManyToOne
 	@JoinColumn(name = "shop_id")
+	@JsonIgnore
 	private Shop shop;
 	
 	@Enumerated(EnumType.STRING)
@@ -58,6 +60,21 @@ public class Delivery extends User{
 
 	public void setDeliveryItems(List<DeliveryItem> deliveryItems) {
 		this.deliveryItems = deliveryItems;
+	}
+
+	public int getDeliveryCount() {
+		return deliveryCount;
+	}
+
+	public void setDeliveryCount(int deliveryCount){
+		this.deliveryCount = deliveryCount;
+	}
+
+	public WorkingStatus getWorkingStatus() {
+		return workingStatus;
+	}
+	public void setWorkingStatus(WorkingStatus workingStatus) {
+		this.workingStatus = workingStatus;
 	}
 
 	@PrePersist

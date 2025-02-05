@@ -1,5 +1,6 @@
 package com.khineMyanmar.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,8 +73,10 @@ public class ShopOwnerController {
     public String user(HttpSession session, Model model) {
         ShopOwner user = (ShopOwner) session.getAttribute("shopSession");
         Delivery newDelivery = new Delivery();
+        List<Delivery> deliveries = deliveryService.getAllDeliveriesByShopId(user.getShop());
         model.addAttribute("shopowner", user);
         model.addAttribute("newDelivery", newDelivery);
+        model.addAttribute("deliveries", deliveries);
         return "shopowner/shopOwnerDeliveries";
     }
         
