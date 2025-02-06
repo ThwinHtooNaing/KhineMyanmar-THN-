@@ -441,7 +441,7 @@
                         <i class="fa-solid fa-shop input-icon"></i>
                         <select required>
                             <option value="" disabled selected>Select Shop</option>
-                            <option th:each="shop : ${shopname}" th:value="${shop}" th:text="${shop}"></option>
+                            <option th:each="shop : ${shops}" th:value="${shop.shopId}" th:text="${shop.shopName}"></option>
                         </select>
                     </div>
                     <div class="input-container">

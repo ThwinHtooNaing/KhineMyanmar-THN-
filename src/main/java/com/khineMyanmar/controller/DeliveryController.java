@@ -1,6 +1,5 @@
 package com.khineMyanmar.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,15 +21,7 @@ public class DeliveryController {
 	public String SignUp(Model model) {
 		model.addAttribute("delivery", new Delivery());
 		List<Shop > shops = shopservice.allShop();
-		List<String>shopname = new ArrayList<String>();
-		
-		shopname.add("Hello");
-		shopname.add("World");
-		for(Shop s:shops) {
-			
-			shopname.addLast(s.getShopName());
-		}
-		model.addAttribute("shopname", shopname);
+		model.addAttribute("shops", shops);
 		return "deliverySignUp";
 	}
 
