@@ -27,6 +27,7 @@ public class ProductService {
 
     public boolean saveProduct(Shop shop, Map<String, String> updates, MultipartFile productImage) {
         try {
+
             // Validate required fields
             if (!updates.containsKey("categoryId") || !updates.containsKey("productName") || 
                 !updates.containsKey("description") || !updates.containsKey("productPrice") || 
@@ -39,6 +40,14 @@ public class ProductService {
             System.out.println("categoryId: " + category);
             if (category == null) {
                 return false; // Invalid category
+            }
+
+            String productName = updates.get("productName");
+
+        // Check if the product already exists in the shop
+            boolean productExists = productShopService.existsByShopAndProductName(shop, productName);
+            if (productExists) {
+                return false; // Product already exists in this shop
             }
 
             // Create new product
@@ -56,10 +65,9 @@ public class ProductService {
             if (productImage != null && !productImage.isEmpty()) {
                 String imageUrl = storageService.saveProductPicture(productImage, shop, product);
                 product.setProductImagePath(imageUrl);
-                productRepository.save(product); // Update product image path in DB
+                product = productRepository.save(product); // Update product image path in DB
             }
 
-            // Convert price and stock quantity safely
             double productPrice;
             int stockQuantity;
             try {

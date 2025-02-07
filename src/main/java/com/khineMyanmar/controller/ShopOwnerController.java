@@ -217,7 +217,6 @@ public class ShopOwnerController {
         }
 
         Shop shop = shopOwner.getShop();
-        System.out.println(shop.getShopName()+" "+shopOwner);
         if (shop == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
         }

@@ -71,7 +71,6 @@ public class StorageServiceImpl implements StorageService {
             throw new RuntimeException("File is empty or null");
         }
         try{
-
             String sanitizedProductName = (product.getProductName()+"_"+product.getProductId()).toLowerCase().replaceAll("\\s+", "");
             String UPLOAD_DIR = BASE_UPLOAD_DIR_PRODUCT + shop.getShopId() + "/" + sanitizedProductName;
             Path productDir = Paths.get(UPLOAD_DIR);

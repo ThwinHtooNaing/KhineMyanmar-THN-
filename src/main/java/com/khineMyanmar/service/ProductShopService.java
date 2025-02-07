@@ -24,4 +24,8 @@ public class ProductShopService {
         productShopRepository.save(productShop);
         System.out.println("ProductShop :"+ productShop);
     }
+
+    public boolean existsByShopAndProductName(Shop shop, String productName) {
+        return productShopRepository.existsByShopAndProduct_ProductName(shop, productName);
+    }
 }
