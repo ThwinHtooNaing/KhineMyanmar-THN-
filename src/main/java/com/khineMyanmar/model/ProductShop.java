@@ -27,7 +27,7 @@ public class ProductShop {
     private int stockQuantity;
     
     @Column(nullable = false)
-    private double shopPrice;
+    private double productPrice;
 
 	public Long getProductShopId() {
 		return productShopId;
@@ -62,11 +62,11 @@ public class ProductShop {
 	}
 
 	public double getShopPrice() {
-		return shopPrice;
+		return productPrice;
 	}
 
 	public void setShopPrice(double shopPrice) {
-		this.shopPrice = shopPrice;
+		this.productPrice = shopPrice;
 	}
 	
 	public ProductShop(Shop shop, Product product, int stockQuantity, double shopPrice) {
@@ -74,7 +74,7 @@ public class ProductShop {
 		this.shop = shop;
 		this.product = product;
 		this.stockQuantity = stockQuantity;
-		this.shopPrice = shopPrice;
+		this.productPrice = shopPrice;
 	}
 
 	public ProductShop() {

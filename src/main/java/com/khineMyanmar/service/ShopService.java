@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.model.ShopOwner;
-import com.khineMyanmar.model.User;
 import com.khineMyanmar.repository.IShopOwnerRepository;
 import com.khineMyanmar.repository.IShopRepository;
 
@@ -27,7 +26,7 @@ public class ShopService {
 	private IShopOwnerRepository shopOwnerRepository;
 
 	public List<Shop> allShop() {
-		// TODO Auto-generated method stub
+		
 		return shopRep.findAll();
 	}
 

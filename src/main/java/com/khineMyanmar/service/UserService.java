@@ -97,7 +97,7 @@ public class UserService {
 	}
 
 	public User checkLogin(String em, String pass) {
-		// TODO Auto-generated method stub
+		
 		User user =null;
 		if( userRep.findByEmail(em).isPresent()) {
 			user =userRep.findByEmail(em).get();
