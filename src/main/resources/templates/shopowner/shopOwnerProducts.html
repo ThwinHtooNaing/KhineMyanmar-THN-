@@ -1,754 +1,836 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Products</title>
-    <link th:href="@{/css/font.css}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link th:href="@{/css/font.css}" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #f0efeb;
-        }
-        .sidebar {
-            width: 200px;
-            background-color: #ffffff;
-            color: #000000;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 5px;
-            padding: 0px 10px;
-        }
-        .sidebar p{
-            font-size: 18px;
-            font-weight: 900;
-        }
-        .sidebar a {
-            color: #000000;
-            text-decoration: none;
-            /* flex-grow: 1; */
-        }
-        .sidebar p{
-            padding-left: 10px;
-        }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f0efeb;
+      }
+      .sidebar {
+        width: 200px;
+        background-color: #ffffff;
+        color: #000000;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 5px;
+        padding: 0px 10px;
+      }
+      .sidebar p {
+        font-size: 18px;
+        font-weight: 900;
+      }
+      .sidebar a {
+        color: #000000;
+        text-decoration: none;
+        /* flex-grow: 1; */
+      }
+      .sidebar p {
+        padding-left: 10px;
+      }
 
-        .sidebar div {
-            width: 90%;
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-radius: 5px;
-            /*  */
-            transition: all 0.03s ease-in-out;
-            margin-bottom: 10px;
-        }
+      .sidebar div {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 5px;
+        /*  */
+        transition: all 0.03s ease-in-out;
+        margin-bottom: 10px;
+      }
 
-        .sidebar div:hover {
-            background-color: #f8dbad7b; /* Light orange hover background */
-            border-right: 3px solid transparent;
-            cursor: pointer;
-        }
+      .sidebar div:hover {
+        background-color: #f8dbad7b; /* Light orange hover background */
+        border-right: 3px solid transparent;
+        cursor: pointer;
+      }
 
-        .sidebar i {
-            margin-right: 10px;
-            color: #505050;
-        }
-        
-        .bottom-link {
-            margin-top: auto;
-            margin-bottom: 5px;
-        }
+      .sidebar i {
+        margin-right: 10px;
+        color: #505050;
+      }
 
-         /* Active Styles */
-         .asideActive {
-            border-right: 3px solid #faa722;
-            background-color: #f4b95a7b;border-right: 3px solid #faa722;
-        }
+      .bottom-link {
+        margin-top: auto;
+        margin-bottom: 5px;
+      }
 
-        .asideActive i {
-            color: #f4b247;
-        }
+      /* Active Styles */
+      .asideActive {
+        border-right: 3px solid #faa722;
+        background-color: #f4b95a7b;
+        border-right: 3px solid #faa722;
+      }
 
-        .asideActive a {
-            color: #df8b04;
-        }
+      .asideActive i {
+        color: #f4b247;
+      }
 
-        .header {
-            position: fixed;
-            top: 0;
-            left: 225px;
-            width: calc(100% - 225px);
-            height: 65px;
-            background-color: #fff;
-            z-index: 1000;
-            display: flex;
-            align-items: center; 
-            justify-content: flex-end; 
-            padding-right: 20px; 
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
-        }
+      .asideActive a {
+        color: #df8b04;
+      }
 
-        .icons {
-            display: flex; 
-            gap: 15px; 
-            align-items: center; 
-            margin-right: 20px;
-        }
+      .header {
+        position: fixed;
+        top: 0;
+        left: 225px;
+        width: calc(100% - 225px);
+        height: 65px;
+        background-color: #fff;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 20px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
 
-        .icons > .icon {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: row;
-            background-color: #c7c3c340;
-            width: 35px;
-            height: 35px;
-            border-radius: 10px;
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-        }
+      .icons {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        margin-right: 20px;
+      }
 
-        .icons > div:last-child {
-            background-color: transparent;
-            padding: 4px 3px;
-            width: auto;
-            display: flex;
-            align-items: center; 
-            gap: 8px; 
-        }
+      .icons > .icon {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        background-color: #c7c3c340;
+        width: 35px;
+        height: 35px;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+      }
 
-        .icons > div:last-child span {
-            color: #000000;
-            font-size: 15px;
-        }
+      .icons > div:last-child {
+        background-color: transparent;
+        padding: 4px 3px;
+        width: auto;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
 
-        .icons > div > i {
-            color: #8a8585;
-        }
+      .icons > div:last-child span {
+        color: #000000;
+        font-size: 15px;
+      }
 
-        .icons img {
-            width: 35px;
-            height: 35px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
+      .icons > div > i {
+        color: #8a8585;
+      }
 
-        .icons > div .notification-dot {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            width: 8px;
-            height: 8px;
-            background-color: red;
-            border-radius: 50%;
-        }
+      .icons img {
+        width: 35px;
+        height: 35px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
 
-        .main{
-            margin-top: 70px;
-            margin-left: 225px;
-            /* border: 1px solid red; */
-            /* height: 100px; */
-            background-color: #ffffff;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      .icons > div .notification-dot {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 8px;
+        height: 8px;
+        background-color: red;
+        border-radius: 50%;
+      }
 
-        }
+      .main {
+        margin-top: 70px;
+        margin-left: 225px;
+        /* border: 1px solid red; */
+        /* height: 100px; */
+        background-color: #ffffff;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
 
-        .main-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            padding-top: 20px;
-        }
+      .main-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        padding-top: 20px;
+      }
 
-        .main-header-buttons {
-            display: flex;
-            gap: 10px;
-        }
+      .main-header-buttons {
+        display: flex;
+        gap: 10px;
+      }
 
-        .main-header-buttons button {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 5px 15px;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: box-shadow 0.3s, transform 0.3s;
-        }
+      .main-header-buttons button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: box-shadow 0.3s, transform 0.3s;
+      }
 
-        .main-header-buttons button:nth-child(1) {
-            background-color: #e8f9e8;
-            color: #56d272;
-            border: 1px solid #2bd652;
-        }
+      .main-header-buttons button:nth-child(1) {
+        background-color: #e8f9e8;
+        color: #56d272;
+        border: 1px solid #2bd652;
+      }
 
-        .main-header-buttons button:nth-child(1):hover {
-            box-shadow: 0 0 8px #28a745;
-        }
+      .main-header-buttons button:nth-child(1):hover {
+        box-shadow: 0 0 8px #28a745;
+      }
 
-        .main-header-buttons button:nth-child(2) {
-            background-color: #fbeaea;
-            color: #dc3545;
-            border: 1px solid #dc3545;
-        }
+      .main-header-buttons button:nth-child(2) {
+        background-color: #fbeaea;
+        color: #dc3545;
+        border: 1px solid #dc3545;
+      }
 
-        .main-header-buttons button:nth-child(2):hover {
-            box-shadow: 0 0 8px #f46775;
-        }
+      .main-header-buttons button:nth-child(2):hover {
+        box-shadow: 0 0 8px #f46775;
+      }
 
-        .main-header-buttons button:nth-child(3) {
-            background-color: #f0f8ff;
-            color: #007bff;
-            border: 1px solid #007bff;
-        }
+      .main-header-buttons button:nth-child(3) {
+        background-color: #f0f8ff;
+        color: #007bff;
+        border: 1px solid #007bff;
+      }
 
-        .main-header-buttons button:nth-child(3):hover {
-            box-shadow: 0 0 8px #388fed;
-        }
+      .main-header-buttons button:nth-child(3):hover {
+        box-shadow: 0 0 8px #388fed;
+      }
 
-        .main-header-search {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+      .main-header-search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
 
-        .main-header-search i{
-            font-size: 18px;
-            color: #575a5d;
-        }
+      .main-header-search i {
+        font-size: 18px;
+        color: #575a5d;
+      }
 
-        .main-header-search input {
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-        }
+      .main-header-search input {
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+      }
 
-        .icon-add {
+      .icon-add {
         color: #28a745;
-        }
+      }
 
-        .main-content-table-container {
-            height: calc(90vh - 150px);
-            overflow-x: auto;
-            margin-bottom: 20px;
-        }
+      .main-content-table-container {
+        height: calc(90vh - 150px);
+        overflow-x: auto;
+        margin-bottom: 20px;
+      }
 
-        .main-content-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+      .main-content-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
 
-        .main-content-table th{
-            text-align: left;
-            padding: 8px 12px;
-            border-bottom: 1px solid #ddd;
-        }
-        .main-content-table td {
-            box-sizing: border-box;
-            text-align: left;
-            padding: 0px 12px;
-        }
+      .main-content-table th {
+        text-align: left;
+        padding: 8px 12px;
+        border-bottom: 1px solid #ddd;
+      }
+      .main-content-table td {
+        box-sizing: border-box;
+        text-align: left;
+        padding: 0px 12px;
+      }
 
-        .main-content-table th:last-child{
-            width: 80px;
-        }
+      .main-content-table th:last-child {
+        width: 80px;
+      }
 
-        .main-content-table th {
-            background-color: #eff0f1;
-            font-weight: bold;
-            color: #505050;
-            border: 3px solid #fff;
-            border-radius: 10px;
-        }
+      .main-content-table th {
+        background-color: #eff0f1;
+        font-weight: bold;
+        color: #505050;
+        border: 3px solid #fff;
+        border-radius: 10px;
+      }
 
-        .main-content-table tbody tr:hover {
-            background-color: #fbf6eb;
-        }
+      .main-content-table tbody tr:hover {
+        background-color: #fbf6eb;
+      }
 
-        .main-content-table img {
-            width: 50px;
-            height: 50px;
-            border-radius: 5px;
-            object-fit: cover;
-        }
+      .main-content-table img {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        object-fit: cover;
+      }
 
-        .main-content-table td button {
-            box-sizing: border-box;
-            display: inline-block;
-            background: none;
-            border: none;
-            font-size: 14px;
-            cursor: pointer;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
+      .main-content-table td button {
+        box-sizing: border-box;
+        display: inline-block;
+        background: none;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+        transition: color 0.3s ease, transform 0.3s ease;
+      }
 
-        .main-content-table td button:hover {
-            color: #007bff;
-            transform: scale(1.1);
-        }
+      .main-content-table td button:hover {
+        color: #007bff;
+        transform: scale(1.1);
+      }
 
-        .main-content-table td button .fa-edit {
-            color: #28a745;
-        }
+      .main-content-table td button .fa-edit {
+        color: #28a745;
+      }
 
-        .main-content-table td button .fa-trash {
-            color: #dc3545;
-        }
+      .main-content-table td button .fa-trash {
+        color: #dc3545;
+      }
 
-        .main-content-pagination {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-            padding: 8px 20px 20px 20px;
-            box-sizing: border-box;
-        }
+      .main-content-pagination {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        padding: 8px 20px 20px 20px;
+        box-sizing: border-box;
+      }
 
-        .main-content-pagination-show {
-            font-size: 14px;
-        }
+      .main-content-pagination-show {
+        font-size: 14px;
+      }
 
-        .main-content-pagination-pages {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+      .main-content-pagination-pages {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
 
-        .main-content-pagination-pages span {
-            display: inline-block;
-            padding: 5px 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
+      .main-content-pagination-pages span {
+        display: inline-block;
+        padding: 5px 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
 
-        .main-content-pagination-pages span:hover {
-            background-color: #ffbc37;
-            color: #fff;
-        }
+      .main-content-pagination-pages span:hover {
+        background-color: #ffbc37;
+        color: #fff;
+      }
 
-        .main-content-pagination-page-lt, .main-content-pagination-page-gt {
-            cursor: pointer;
-            font-weight: bold;
-        }
+      .main-content-pagination-page-lt,
+      .main-content-pagination-page-gt {
+        cursor: pointer;
+        font-weight: bold;
+      }
 
-        .custom-checkbox {
-            display: inline-block;
-            width: 13px;
-            height: 13px;
-            border: 2px solid #929294;
-            border-radius: 4px;
-            position: relative;
-            cursor: pointer;
-            background-color: #fff;
-        }
+      .custom-checkbox {
+        display: inline-block;
+        width: 13px;
+        height: 13px;
+        border: 2px solid #929294;
+        border-radius: 4px;
+        position: relative;
+        cursor: pointer;
+        background-color: #fff;
+      }
 
-        .custom-checkbox input[type="checkbox"] {
-            display: none;
-        }
+      .custom-checkbox input[type="checkbox"] {
+        display: none;
+      }
 
-        .custom-checkbox.checked {
-            border: 2px solid #fea813;
-            background-color: #f5a212;
-        }
+      .custom-checkbox.checked {
+        border: 2px solid #fea813;
+        background-color: #f5a212;
+      }
 
-        .custom-checkbox.checked::after {
-            content: '\f00c';
-            font-family: 'Font Awesome 5 Free';
-            font-weight: 900;
-            color: white;
-            font-size: 12px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+      .custom-checkbox.checked::after {
+        content: "\f00c";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        color: white;
+        font-size: 12px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
 
-        .modal {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 1000;
-        }
+      .modal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1000;
+      }
 
-        .modal-content {
-            background: #fff;
-            width: 450px;
-            border-radius: 10px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            
-        }
+      .modal-content {
+        background: #fff;
+        width: 450px;
+        border-radius: 10px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
 
-        .modal-content-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
+      .modal-content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+      }
 
-        .modal-content-header h2 {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 0;
-            color: #fea813;
-        }
+      .modal-content-header h2 {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 0;
+        color: #fea813;
+      }
 
-        .modal-content-header span {
-            font-size: 20px;
-            cursor: pointer;
-        }
+      .modal-content-header span {
+        font-size: 20px;
+        cursor: pointer;
+      }
 
-        .modal-content-image-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
+      .modal-content-image-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
 
-        .modal-content-image-container label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 80px;
-            height: 80px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            cursor: pointer;
-            overflow: hidden;
-        }
+      .modal-content-image-container label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        overflow: hidden;
+      }
 
-        .modal-content-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+      .modal-content-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
 
-        .modal-content-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            
-        }
+      .modal-content-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
 
-        .modal-content-form-group {
-            display: flex;
-            flex-direction: column;
-            
-        }
+      .modal-content-form-group {
+        display: flex;
+        flex-direction: column;
+      }
 
-        .modal-content-form-group label {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-        .modal-content-form-group label span {
-            color: #929294;
-            font-weight: 100;
-        }
+      .modal-content-form-group label {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+      .modal-content-form-group label span {
+        color: #929294;
+        font-weight: 100;
+      }
 
+      .modal-content-form-group input,
+      .modal-content-form-group textarea,
+      .modal-content-form-group select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        width: 100%;
+        box-sizing: border-box;
+      }
 
-        .modal-content-form-group input,
-        .modal-content-form-group textarea,
-        .modal-content-form-group select {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-            width: 100%;
-            box-sizing: border-box;
-        }
+      .modal-content-form-group select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        width: 100%;
+        box-sizing: border-box;
+        max-height: 100px; 
+        overflow-y: auto;  
+        display: block;
+        -webkit-appearance: none; 
+        -moz-appearance: none;    
+        appearance: none;         
+    }
 
-        .modal-content-form-group input[type="number"] {
-            width: 100%;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-        }
+      .modal-content-form-group input[type="number"] {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+      }
 
-        button {
-            background: #fea813;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            width: 100%;
-        }
+      button {
+        background: #fea813;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        width: 100%;
+      }
 
-        button:hover {
-            background: #c49138;
-        }
+      button:hover {
+        background: #c49138;
+      }
 
-        .modal-content-form-group input:focus,
-        .modal-content-form-group textarea:focus {
-            border: 1.5px solid;
-            border-color: #fea813;
-            /* color: #fea813; */
-            outline: none;
-        }
+      .modal-content-form-group input:focus,
+      .modal-content-form-group textarea:focus {
+        border: 1.5px solid;
+        border-color: #fea813;
+        /* color: #fea813; */
+        outline: none;
+      }
 
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- <h1>Hello this is shopowner page</h1>
     -->
     <header class="header">
-        <div class="icons">
-            <div class="notification icon">
-                <i class="fa-solid fa-bell "></i>
-                <span class="notification-dot">
-                </span>
-            </div>
-            <div class="profile-image icon">
-                <img th:src="${shopowner.profilePic}" class="">
-                <span th:text="${shopowner.firstName + ' '+shopowner.lastName}">Admin</span>
-                <i class="fas fa-angle-down"></i>
-            </div>
+      <div class="icons">
+        <div class="notification icon">
+          <i class="fa-solid fa-bell"></i>
+          <span class="notification-dot"> </span>
         </div>
+        <div class="profile-image icon">
+          <img th:src="${shopowner.profilePic}" class="" />
+          <span th:text="${shopowner.firstName + ' '+shopowner.lastName}"
+            >Admin</span
+          >
+          <i class="fas fa-angle-down"></i>
+        </div>
+      </div>
     </header>
     <aside class="sidebar">
-        <p>Khine Myanmar</p>
-        <div data-path="/shopowner/dashboard">
-            <i class="fas fa-tachometer-alt"></i>
-            <a href="#">Dashboard</a>
-        </div>
-        <div data-path="/shopowner/orders">
-            <i class="fas fa-shopping-cart"></i>
-            <a href="#">Orders</a>
-        </div>
-        <div data-path="/shopowner/deliveries">
-            <i class="fas fa-users"></i>
-            <a href="#">Deliveries</a>
-        </div>
-        <div class="asideActive" data-path="/shopowner/products">
-            <i class="fas fa-box"></i>
-            <a href="#">Products</a>
-        </div>
-        <div data-path="/shopowner/setting">
-            <i class="fas fa-cog"></i>
-            <a href="#">Settings</a>
-        </div>
-        <div class="bottom-link" data-path="/ecom/index">
-            <i class="fas fa-sign-out-alt"></i>
-            <a href="#">Log Out</a>
-        </div>
-    </aside>   
+      <p>Khine Myanmar</p>
+      <div data-path="/shopowner/dashboard">
+        <i class="fas fa-tachometer-alt"></i>
+        <a href="#">Dashboard</a>
+      </div>
+      <div data-path="/shopowner/orders">
+        <i class="fas fa-shopping-cart"></i>
+        <a href="#">Orders</a>
+      </div>
+      <div data-path="/shopowner/deliveries">
+        <i class="fas fa-users"></i>
+        <a href="#">Deliveries</a>
+      </div>
+      <div class="asideActive" data-path="/shopowner/products">
+        <i class="fas fa-box"></i>
+        <a href="#">Products</a>
+      </div>
+      <div data-path="/shopowner/setting">
+        <i class="fas fa-cog"></i>
+        <a href="#">Settings</a>
+      </div>
+      <div class="bottom-link" data-path="/ecom/index">
+        <i class="fas fa-sign-out-alt"></i>
+        <a href="#">Log Out</a>
+      </div>
+    </aside>
     <main class="main">
-        <div class="main-header">
-            <div class="main-header-buttons">
-                <button  id="addProductbtn"><i class="fas fa-plus"></i> Add</button>
-                <button id="deleteSelectedProductbtn"><i class="fas fa-trash" ></i> Delete</button>
-                <!-- <button><i class="fas fa-edit"></i> Edit</button> -->
-            </div>
-            <div class="main-header-search">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Search">
-            </div>
+      <div class="main-header">
+        <div class="main-header-buttons">
+          <button id="addProductbtn"><i class="fas fa-plus"></i> Add</button>
+          <button id="deleteSelectedProductbtn">
+            <i class="fas fa-trash"></i> Delete
+          </button>
+          <!-- <button><i class="fas fa-edit"></i> Edit</button> -->
         </div>
-        <div class="main-content">
-            <div class="main-content-table-container">
-                <table class="main-content-table">
-                    <thead class="main-content-table-head">
-                        <tr>
-                            <th>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" onclick="toggleAllCheckboxes(this)">
-                                </label>
-                            </th>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Category</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="main-content-table-body">
-                        <tr>
-                            <td>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" onclick="toggleCheckbox(this)">
-                                </label>
-                            </td>
-                            <td><img src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600" alt="product image"></td>
-                            <td>Product A</td>
-                            <td>1000</td>
-                            <td>10</td>
-                            <td>Category A</td>
-                            <td>
-                                <button><i class="fas fa-edit"></i></button>
-                                <button><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" onclick="toggleCheckbox(this)">
-                                </label>
-                            </td>
-                            <td><img src="https://images.pexels.com/photos/2587370/pexels-photo-2587370.jpeg?auto=compress&cs=tinysrgb&w=600" alt="product image"></td>
-                            <td>Product B</td>
-                            <td>2000</td>
-                            <td>20</td>
-                            <td>Category B</td>
-                            <td>
-                                <button><i class="fas fa-edit"></i></button>
-                                <button><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="main-content-pagination">
-                <div class="main-content-pagination-show">
-                    <span>Showing 10 of 100 entries</span>
-                </div>
-                <div class="main-content-pagination-pages">
-                    <span class="main-content-pagination-page-lt">&lt;</span>
-                    <div>
-                        <span>1</span>
-                        <span>2</span>
-                        <span>3</span>
-                        <span>4</span>
-                        <span>...</span>
-                        <span>11</span>
-                        <span>12</span>
-                    </div>
-                    <span class="main-content-pagination-page-gt">&gt;</span>
-                </div>
-            </div>
+        <div class="main-header-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search" />
         </div>
+      </div>
+      <div class="main-content">
+        <div class="main-content-table-container">
+          <table class="main-content-table">
+            <thead class="main-content-table-head">
+              <tr>
+                <th>
+                  <label class="custom-checkbox">
+                    <input
+                      type="checkbox"
+                      onclick="toggleAllCheckboxes(this)"
+                    />
+                  </label>
+                </th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Category</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody class="main-content-table-body">
+              <tr>
+                <td>
+                  <label class="custom-checkbox">
+                    <input type="checkbox" onclick="toggleCheckbox(this)" />
+                  </label>
+                </td>
+                <td>
+                  <img
+                    src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="product image"
+                  />
+                </td>
+                <td>Product A</td>
+                <td>1000</td>
+                <td>10</td>
+                <td>Category A</td>
+                <td>
+                  <button><i class="fas fa-edit"></i></button>
+                  <button><i class="fas fa-trash"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="custom-checkbox">
+                    <input type="checkbox" onclick="toggleCheckbox(this)" />
+                  </label>
+                </td>
+                <td>
+                  <img
+                    src="https://images.pexels.com/photos/2587370/pexels-photo-2587370.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="product image"
+                  />
+                </td>
+                <td>Product B</td>
+                <td>2000</td>
+                <td>20</td>
+                <td>Category B</td>
+                <td>
+                  <button><i class="fas fa-edit"></i></button>
+                  <button><i class="fas fa-trash"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="main-content-pagination">
+          <div class="main-content-pagination-show">
+            <span>Showing 10 of 100 entries</span>
+          </div>
+          <div class="main-content-pagination-pages">
+            <span class="main-content-pagination-page-lt">&lt;</span>
+            <div>
+              <span>1</span>
+              <span>2</span>
+              <span>3</span>
+              <span>4</span>
+              <span>...</span>
+              <span>11</span>
+              <span>12</span>
+            </div>
+            <span class="main-content-pagination-page-gt">&gt;</span>
+          </div>
+        </div>
+      </div>
     </main>
     <div class="modal-container">
-        <!-- Modals -->
-        <div class="modal" style="display: none;">
-            <div class="modal-content">
-                <div class="modal-content-header">
-                    <h2>New Product Information</h2>
-                    <span>&times;</span>
-                </div>
-                <div class="modal-content-image-container">
-                    <label for="profile-image-input">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQinI_44p5jN05YioLyPBhn_1j5tsl7q85rfA&s" alt="Profile">
-                    </label>
-                    <input type="file" id="image-input" accept="image/*" style="display: none;">
-                </div>
-                <form class="modal-content-form">
-                    <div class="modal-content-form-group">
-                        <label for="productName">Name</label>
-                        <input type="text" id="productName" name="productName">
-                    </div>
-                    <div class="modal-content-form-group">
-                        <label for="product-description">Description <span>(Optional)</span></label>
-                        <textarea id="product-description" name="product-description"></textarea>
-                    </div>
-                    <div class="modal-content-form-group">
-                        <select id="category" name="category">
-                            <option value="" selected disabled>Select a category</option>
-                            <option value="Category A">Category A</option>
-                            <option value="Category B">Category B</option>
-                            <option value="Category C">Category C</option>
-                            <option value="Category D">Category D</option>
-                            <option value="Category E">Category E</option>
-                        </select>
-                    </div>
-                    <div class="modal-content-form-group">
-                        <label for="productPrice">Price</label>
-                        <input type="number" id="productPrice" name="productPrice">
-                    </div>
-                    <div class="modal-content-form-group">
-                        <label for="stockQuantity">Quantity</label>
-                        <input type="number" id="stockQuantity" name="stockQuantity">
-                    </div>
-                    <button>Add Product</button>
-                </form>
+      <!-- Modals -->
+      <div class="modal" style="display: none">
+        <div class="modal-content">
+          <div class="modal-content-header">
+            <h2>New Product Information</h2>
+            <span>&times;</span>
+          </div>
+          <div class="modal-content-image-container">
+            <label for="profile-image-input">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQinI_44p5jN05YioLyPBhn_1j5tsl7q85rfA&s"
+                alt="Profile"
+              />
+            </label>
+            <input
+              type="file"
+              id="image-input"
+              accept="image/*"
+              style="display: none"
+            />
+          </div>
+          <form class="modal-content-form">
+            <div class="modal-content-form-group">
+              <label for="productName">Name</label>
+              <input type="text" id="productName" name="productName" />
             </div>
+            <div class="modal-content-form-group">
+              <label for="product-description"
+                >Description <span>(Optional)</span></label
+              >
+              <textarea
+                id="product-description"
+                name="product-description"
+              ></textarea>
+            </div>
+            <div class="modal-content-form-group">
+              <select id="category" name="category">
+                <option value="" selected disabled>Select a category</option>
+                <option
+                  th:each="category:${categories}"
+                  th:value="${category.categoryId}"
+                  th:text="${category.categoryName}"
+                ></option>
+              </select>
+            </div>
+            <div class="modal-content-form-group">
+              <label for="productPrice">Price</label>
+              <input type="number" id="productPrice" name="productPrice" />
+            </div>
+            <div class="modal-content-form-group">
+              <label for="stockQuantity">Quantity</label>
+              <input type="number" id="stockQuantity" name="stockQuantity" />
+            </div>
+            <button>Add Product</button>
+          </form>
         </div>
-
+      </div>
     </div>
-    <script th:src="@{/js/adminSideBarNav.js}">
-    </script> 
+    <script th:src="@{/js/adminSideBarNav.js}"></script>
     <script>
-        function toggleCheckbox(checkbox) {
-            const label = checkbox.parentElement;
-            if (checkbox.checked) {
-                label.classList.add('checked');
-            } else {
-                label.classList.remove('checked');
-            }
+      function toggleCheckbox(checkbox) {
+        const label = checkbox.parentElement;
+        if (checkbox.checked) {
+          label.classList.add("checked");
+        } else {
+          label.classList.remove("checked");
         }
-    
-        function toggleAllCheckboxes(masterCheckbox) {
-            const checkboxes = document.querySelectorAll('.main-content-table-body .custom-checkbox input[type="checkbox"]');
-            checkboxes.forEach(cb => {
-                cb.checked = masterCheckbox.checked;
-                toggleCheckbox(cb);
-            });
-        }
+      }
+
+      function toggleAllCheckboxes(masterCheckbox) {
+        const checkboxes = document.querySelectorAll(
+          '.main-content-table-body .custom-checkbox input[type="checkbox"]'
+        );
+        checkboxes.forEach((cb) => {
+          cb.checked = masterCheckbox.checked;
+          toggleCheckbox(cb);
+        });
+      }
     </script>
     <script>
-        const modal = document.querySelector(".modal");
-        const addProductBtn = document.getElementById("addProductbtn");
-        const closeModal = document.querySelector(".modal-content-header span");
-        const imageInput = document.getElementById("image-input");
-        const imagePreview = document.querySelector(".modal-content-image-container img");
+      const modal = document.querySelector(".modal");
+      const addProductBtn = document.getElementById("addProductbtn");
+      const closeModal = document.querySelector(".modal-content-header span");
+      const imageInput = document.getElementById("image-input");
+      const imagePreview = document.querySelector(
+        ".modal-content-image-container img"
+      );
 
-        addProductBtn.addEventListener("click", () => {
-            modal.style.display = "flex";
-        });
+      addProductBtn.addEventListener("click", () => {
+        modal.style.display = "flex";
+      });
 
-        closeModal.addEventListener("click", () => {
-            modal.style.display = "none";
-        });
+      closeModal.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
 
-        window.addEventListener("click", (event) => {
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
-        });
+      window.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
 
-        imagePreview.addEventListener("click", () => {
-            imageInput.click();
-        });
+      imagePreview.addEventListener("click", () => {
+        imageInput.click();
+      });
 
-        imageInput.addEventListener("change", (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    imagePreview.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+      imageInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            imagePreview.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
     </script>
-    
-</body>
+    <script>
+        document.getElementById("addProductForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the form from submitting the traditional way
 
+        // Create a new FormData object
+        var formData = new FormData();
+
+        // Add form fields to FormData
+        formData.append("productName", document.getElementById("productName").value);
+        formData.append("description", document.getElementById("product-description").value);
+        formData.append("productPrice", document.getElementById("productPrice").value);
+        formData.append("stockQuantity", document.getElementById("stockQuantity").value);
+        formData.append("categoryId", document.getElementById("category").value);
+
+        // If there is a profile image, append it to FormData
+        var profileImage = document.getElementById("image-input").files[0];
+        if (profileImage) {
+            formData.append("profileImage", profileImage);
+        }
+
+        // Send the form data to the backend using AJAX
+        fetch('/shopowner/addProduct', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // Handle success (e.g., show a success message, refresh the product list, etc.)
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Handle error (e.g., show an error message)
+        });
+    });
+
+    </script>
+  </body>
 </html>

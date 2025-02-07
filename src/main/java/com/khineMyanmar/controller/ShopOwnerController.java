@@ -17,16 +17,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.khineMyanmar.model.Category;
 import com.khineMyanmar.model.Delivery;
 import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.model.User;
+import com.khineMyanmar.service.CategoryService;
 import com.khineMyanmar.service.DeliveryService;
+import com.khineMyanmar.service.ProductService;
 import com.khineMyanmar.service.ShopOwnerService;
 import com.khineMyanmar.service.ShopService;
 
 import jakarta.servlet.http.HttpSession;
-
 @Controller
 @RequestMapping("/shopowner")
 public class ShopOwnerController {
@@ -39,6 +41,12 @@ public class ShopOwnerController {
 
     @Autowired
     DeliveryService deliveryService;
+
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    ProductService productService;
 
 	@GetMapping("/shopownersignup")
 	public String SignUp(Model model) {
@@ -81,7 +89,9 @@ public class ShopOwnerController {
     @RequestMapping("/products")
     public String product(HttpSession session, Model model) {
         ShopOwner user=(ShopOwner) session.getAttribute("shopSession");
+        List<Category> categories = categoryService.getAllCategories();
         model.addAttribute("shopowner", user);
+        model.addAttribute("categories", categories);
        // System.out.println(user.getUserId()+" products");
         return "shopowner/shopOwnerProducts";
     }
@@ -195,5 +205,30 @@ public class ShopOwnerController {
         }
 	}
 
+    @RequestMapping("/addProduct")
+    @ResponseBody
+    public ResponseEntity<?> addProduct(@RequestParam Map<String, String> updates,
+                                        @RequestParam(required = false) MultipartFile profileImage,
+                                        HttpSession session) {
+
+        ShopOwner shopOwner = (ShopOwner) session.getAttribute("shopowner");
+        if (shopOwner == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); 
+        }
+
+        Shop shop = shopOwner.getShop();
+        if (shop == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
+        }
+
+        // Assuming ProductService.saveProduct returns a boolean
+        boolean isSaved = productService.saveProduct(shop, updates, profileImage);
+
+        if (isSaved) {
+            return new ResponseEntity<>(HttpStatus.OK); // Success response with no body
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Error response with no body
+        }
+    }    
 	
 }
