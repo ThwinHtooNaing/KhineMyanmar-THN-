@@ -211,12 +211,13 @@ public class ShopOwnerController {
                                         @RequestParam(required = false) MultipartFile profileImage,
                                         HttpSession session) {
 
-        ShopOwner shopOwner = (ShopOwner) session.getAttribute("shopowner");
+        ShopOwner shopOwner = (ShopOwner) session.getAttribute("shopSession");
         if (shopOwner == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); 
         }
 
         Shop shop = shopOwner.getShop();
+        System.out.println(shop.getShopName()+" "+shopOwner);
         if (shop == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
         }

@@ -36,6 +36,7 @@ public class ProductService {
 
             Long categoryId = Long.parseLong(updates.get("categoryId"));
             Category category = categoryService.getCategoryById(categoryId);
+            System.out.println("categoryId: " + category);
             if (category == null) {
                 return false; // Invalid category
             }
@@ -46,6 +47,8 @@ public class ProductService {
             product.setDescription(updates.get("description"));
             product.setCategory(category);
             product.setProductImagePath("/img/products/product_default.png"); // Default image
+
+            System.out.println("Product "+product);
 
             product = productRepository.save(product); // Save product to get ID
 
@@ -68,6 +71,7 @@ public class ProductService {
 
             // Save product-shop relationship
             productShopService.saveProductAndShop(product, productPrice, stockQuantity, shop);
+            System.out.println("ProductShop");
 
             return true;
         } catch (Exception e) {

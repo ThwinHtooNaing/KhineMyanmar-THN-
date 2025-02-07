@@ -20,6 +20,8 @@ public class ProductShopService {
         productShop.setProduct(product);
         productShop.setStockQuantity(quantity);
         productShop.setShopPrice(price);
+        productShop.setShop(shop);
         productShopRepository.save(productShop);
+        System.out.println("ProductShop :"+ productShop);
     }
 }
