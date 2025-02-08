@@ -4,6 +4,8 @@ import com.khineMyanmar.model.Product;
 import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.model.ProductShop;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +29,9 @@ public class ProductShopService {
 
     public boolean existsByShopAndProductName(Shop shop, String productName) {
         return productShopRepository.existsByShopAndProduct_ProductName(shop, productName);
+    }
+
+    public List<ProductShop> findByShop(Shop shop){
+        return productShopRepository.findByShop(shop);
     }
 }

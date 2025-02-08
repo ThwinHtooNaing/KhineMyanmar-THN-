@@ -1,5 +1,7 @@
 package com.khineMyanmar.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,12 +21,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.khineMyanmar.model.Category;
 import com.khineMyanmar.model.Delivery;
+import com.khineMyanmar.model.Product;
+import com.khineMyanmar.model.ProductShop;
 import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.model.User;
 import com.khineMyanmar.service.CategoryService;
 import com.khineMyanmar.service.DeliveryService;
 import com.khineMyanmar.service.ProductService;
+import com.khineMyanmar.service.ProductShopService;
 import com.khineMyanmar.service.ShopOwnerService;
 import com.khineMyanmar.service.ShopService;
 
@@ -47,6 +52,9 @@ public class ShopOwnerController {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    ProductShopService productShopService;
 
 	@GetMapping("/shopownersignup")
 	public String SignUp(Model model) {
@@ -230,5 +238,35 @@ public class ShopOwnerController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Error response with no body
         }
     }    
+
+     @GetMapping("/getAllProducts")
+    @ResponseBody
+    public ResponseEntity<List<Map<String, Object>>> getAllProducts(HttpSession session) {
+        ShopOwner shopOwner = (ShopOwner) session.getAttribute("shopSession");
+        if (shopOwner == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        
+        Shop shop = shopOwner.getShop();
+        if (shop == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        
+        List<ProductShop> productShops = productShopService.findByShop(shop);
+        List<Map<String, Object>> products = new ArrayList<>();
+        
+        for (ProductShop ps : productShops) {
+            Product product = ps.getProduct();
+            Map<String, Object> productData = new HashMap<>();
+            productData.put("id", product.getProductId());
+            productData.put("name", product.getProductName());
+            productData.put("image", product.getProductImagePath());
+            productData.put("price", ps.getShopPrice());
+            productData.put("quantity", ps.getStockQuantity());
+            productData.put("category", product.getCategory().getCategoryName());
+            products.add(productData);
+        }
+        return ResponseEntity.ok(products);
+    }
 	
 }
