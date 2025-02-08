@@ -11,6 +11,8 @@ import com.khineMyanmar.model.Product;
 import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.repository.IProductRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ProductService {
     @Autowired
@@ -43,8 +45,6 @@ public class ProductService {
             }
 
             String productName = updates.get("productName");
-
-        // Check if the product already exists in the shop
             boolean productExists = productShopService.existsByShopAndProductName(shop, productName);
             if (productExists) {
                 return false; // Product already exists in this shop
@@ -86,5 +86,14 @@ public class ProductService {
             return false; // Handle unexpected errors
         }
     }
+
+    @Transactional
+    public void deleteProduct(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        productRepository.delete(product);
+    }
+
 
 }
