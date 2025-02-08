@@ -1,6 +1,7 @@
 package com.khineMyanmar.service;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,6 +94,17 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
         productRepository.delete(product);
+    }
+
+    @Transactional
+    public Optional<Product> editProduct(Long id, Shop shop) {
+        Optional<Product> productOpt = productRepository.findById(id);
+        System.out.println(productOpt.get());
+        if (productOpt.isPresent()) {
+            Product product = productOpt.get();
+            return Optional.of(product);
+        }
+        return Optional.empty();
     }
 
 

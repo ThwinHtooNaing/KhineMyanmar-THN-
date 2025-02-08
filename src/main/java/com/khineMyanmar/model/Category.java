@@ -2,6 +2,8 @@ package com.khineMyanmar.model;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +22,7 @@ public class Category {
 	private String categoryName;
 	
 	@OneToMany(mappedBy = "category")
+	@JsonIgnore
 	private Set<Product> products;
 
 	public Long getCategoryId() {

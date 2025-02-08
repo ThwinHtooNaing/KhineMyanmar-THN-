@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -276,6 +278,33 @@ public class ShopOwnerController {
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/editProduct")
+    @ResponseBody
+    public ResponseEntity<?> editProduct(@RequestBody Map<String, Long> requestData, HttpSession session) {
+        ShopOwner shopOwner = (ShopOwner) session.getAttribute("shopSession");
+        
+        if (shopOwner == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error: Unauthorized access.");
+        }
+
+        Long id = requestData.get("id");
+        if (id == null) {
+            return ResponseEntity.badRequest().body("Error: Product ID is required.");
+        }
+
+        System.out.println("Shop owner: " + shopOwner.getFirstName() + " " + shopOwner.getLastName() + " requested product ID: " + id);
+
+        Shop shop = shopOwner.getShop();
+        if (shop == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Shop not found for this owner.");
+        }
+
+        Optional<Product> productOpt = productService.editProduct(id, shop);
+        return productOpt
+            .map(product -> ResponseEntity.ok().body(product)) // Ensure consistent return type
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
     

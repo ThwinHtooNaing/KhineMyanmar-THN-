@@ -2,6 +2,7 @@ package com.khineMyanmar.model;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -101,4 +102,9 @@ public class Product {
 		super();
 	}
 		
+	@Override
+	public String toString() {
+        return "Product [productId=" + productId + ", productName=" + productName + ", productImagePath="
+                + productImagePath + ", description=" + description + "]";
+    }
 }
