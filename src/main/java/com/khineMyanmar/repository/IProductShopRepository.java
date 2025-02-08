@@ -15,4 +15,5 @@ public interface IProductShopRepository extends JpaRepository<ProductShop,Long>{
     boolean existsByShopAndProduct_ProductName(Shop shop, String productName);
     List<ProductShop> findByShop(Shop shop);
     Optional<ProductShop> findByProductAndShop(Product product,Shop shop);
+    Optional<ProductShop> findByProduct(Product product);
 }

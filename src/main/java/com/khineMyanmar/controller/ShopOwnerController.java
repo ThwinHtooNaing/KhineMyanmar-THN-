@@ -307,5 +307,50 @@ public class ShopOwnerController {
             .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
+    @PostMapping("/updateProduct")
+    @ResponseBody
+    public ResponseEntity<?> updateProduct(
+            @RequestParam Map<String, String> updates,
+            @RequestParam(required = false) MultipartFile productImage,
+            HttpSession session) {
+        
+        // Get the shop owner session
+        
+        ShopOwner shopowner = (ShopOwner) session.getAttribute("shopSession");
+        if (shopowner == null || shopowner.getShop() == null) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "No shop associated with the current session"));
+        }
+
+        Shop shop = shopowner.getShop();
+
+        // Validate if the product exists
+        Long productId;
+        try {
+            productId = Long.parseLong(updates.get("id"));
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Invalid product ID"));
+        }
+        System.out.println(productImage);
+        Product existingProduct = productService.getProductById(productId);
+        if (existingProduct == null) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Product not found"));
+        }
+
+        try {
+            // Call service to update product details
+            Product updatedProduct = productService.updateProduct(existingProduct, updates, productImage,shop);
+
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "message", "Product updated successfully",
+                    "productId", updatedProduct.getProductId()
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("success", false, "message", e.getMessage()));
+        }
+    }
+
+
     
 }

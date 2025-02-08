@@ -60,9 +60,8 @@ public class ProductService {
 
             System.out.println("Product "+product);
 
-            product = productRepository.save(product); // Save product to get ID
+            product = productRepository.save(product); 
 
-            // Handle product image upload
             if (productImage != null && !productImage.isEmpty()) {
                 String imageUrl = storageService.saveProductPicture(productImage, shop, product);
                 product.setProductImagePath(imageUrl);
@@ -105,6 +104,40 @@ public class ProductService {
             return Optional.of(product);
         }
         return Optional.empty();
+    }
+
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
+    public Product updateProduct(Product product, Map<String, String> updates, MultipartFile productImage,Shop shop) throws Exception {
+        // Update product details from request parameters
+        product.setProductName(updates.get("productName"));
+        product.setDescription(updates.get("description"));
+
+        // Update category
+        Long categoryId = Long.parseLong(updates.get("categoryId"));
+        Category category = categoryService.getCategoryById(categoryId);
+        product.setCategory(category);
+
+        if (productImage != null && !productImage.isEmpty()) {
+            String imagePath = storageService.saveProductPicture(productImage,shop,product); // Save file
+            product.setProductImagePath(imagePath); 
+            System.out.println(imagePath);// Set new image path
+        }
+
+        double productPrice;
+        int stockQuantity;
+        try {
+            productPrice = Double.parseDouble(updates.get("shopPrice"));
+            stockQuantity = Integer.parseInt(updates.get("stockQuantity"));
+        } catch (NumberFormatException e) {
+            return null; 
+        }
+        productShopService.updateProduct(product, productPrice, stockQuantity);
+        System.out.println(product.getProductImagePath());
+
+        return productRepository.save(product); 
     }
 
 

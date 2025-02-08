@@ -28,6 +28,14 @@ public class ProductShopService {
         System.out.println("ProductShop :"+ productShop);
     }
 
+    public void updateProduct(Product product,double price,int quantity){
+        ProductShop productShop = productShopRepository.findByProduct(product).get();
+        productShop.setStockQuantity(quantity);
+        productShop.setShopPrice(price);
+        productShopRepository.save(productShop);
+        System.out.println("ProductShop updated :"+ productShop);
+    }
+
     public boolean existsByShopAndProductName(Shop shop, String productName) {
         return productShopRepository.existsByShopAndProduct_ProductName(shop, productName);
     }

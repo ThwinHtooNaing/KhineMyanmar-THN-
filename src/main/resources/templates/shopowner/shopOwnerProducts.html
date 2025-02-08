@@ -743,7 +743,7 @@
               <label for="stockQuantity">Quantity</label>
               <input type="number" id="stockQuantity" name="stockQuantity" />
             </div>
-            <button type="submit" id="editProductbtn">Edit Product</button>
+            <button type="submit" id="editProductbtn" disabled>Edit Product</button>
           </form>
         </div>
       </div>
@@ -952,42 +952,6 @@
           });
       }
 
-      function editProduct(id) {
-        console.log("Edit product with ID:", id);
-        fetch(`/shopowner/editProduct`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ id: id })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(product => {
-            document.querySelector("#edit-modal #productName").value = product.productName;
-            document.querySelector("#edit-modal #product-description").value = product.description || "";
-            document.querySelector("#edit-modal #category").value = product.category.categoryId;
-
-            if (product.productShops && product.productShops.length > 0) {
-                document.querySelector("#edit-modal #productPrice").value = product.productShops[0].shopPrice;
-                document.querySelector("#edit-modal #stockQuantity").value = product.productShops[0].stockQuantity;
-            }
-
-            const imageElement = document.querySelector("#edit-modal .modal-content-image-container img");
-            if (product.productImagePath) {
-                imageElement.src = product.productImagePath;
-            }
-
-            // Show the edit modal
-            document.getElementById("edit-modal").style.display = "flex";
-        })
-        .catch(error => console.error("Error fetching product data:", error));
-    }
-
     </script>
     <script>
       const editmodal = document.getElementById("edit-modal");
@@ -1010,16 +974,115 @@
         editimageInput.click();
       });
 
-      editimageInput.addEventListener("change", (event) => {
-        const file = event.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            editimagePreview.src = e.target.result;
-          };
-          reader.readAsDataURL(file);
+    </script>
+    <script>
+        let originalProductData = {};
+        const editForm = document.getElementById("editProductForm");
+
+        function checkForChanges() {
+            let hasChanges = false;
+
+            hasChanges = document.getElementById("productName").value !== originalProductData.productName ||
+                document.getElementById("product-description").value !== originalProductData.description ||
+                document.getElementById("category").value !== originalProductData.categoryId ||
+                document.getElementById("productPrice").value !== originalProductData.shopPrice ||
+                document.getElementById("stockQuantity").value !== originalProductData.stockQuantity ||
+                originalProductData.imageUpdated;  // Check if image was updated
+
+            editProductBtn.disabled = !hasChanges;
         }
-      });
+
+        function editProduct(id) {
+            console.log("Edit product with ID:", id);
+            fetch(`/shopowner/editProduct`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: id })
+            })
+            .then(response => response.json())
+            .then(product => {
+                originalProductData = { 
+                    productId: id,
+                    productName: product.productName,
+                    description: product.description || "",
+                    categoryId: product.category.categoryId,
+                    shopPrice: product.productShops?.[0]?.shopPrice || "",
+                    stockQuantity: product.productShops?.[0]?.stockQuantity || "",
+                    productImagePath: product.productImagePath || "",
+                    imageUpdated: false  // Track if image has been changed
+                };
+
+                document.querySelector("#edit-modal #productName").value = product.productName;
+                document.querySelector("#edit-modal #product-description").value = product.description || "";
+                document.querySelector("#edit-modal #category").value = product.category.categoryId;
+
+                if (product.productShops && product.productShops.length > 0) {
+                    document.querySelector("#edit-modal #productPrice").value = product.productShops[0].shopPrice;
+                    document.querySelector("#edit-modal #stockQuantity").value = product.productShops[0].stockQuantity;
+                }
+
+                // Display the product image if available
+                const imageElement = document.querySelector("#edit-modal .modal-content-image-container img");
+                if (product.productImagePath) {
+                    imageElement.src = product.productImagePath;
+                }
+
+                document.getElementById("edit-modal").style.display = "flex";
+                console.log("Original Product Data:", originalProductData);
+            })
+            .catch(error => console.error("Error fetching product data:", error));
+        }
+
+        editForm.addEventListener("input", checkForChanges);
+        editimageInput.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    editimagePreview.src = e.target.result;
+                    originalProductData.imageUpdated = true; // Mark image as changed
+                    checkForChanges();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Handle form submission
+        editForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            console.log(originalProductData);
+
+            const formData = new FormData();
+            formData.append("id", originalProductData.productId);
+            formData.append("productName", document.querySelector("#edit-modal #productName").value);
+            formData.append("description", document.querySelector("#edit-modal #product-description").value);
+            formData.append("categoryId", document.querySelector("#edit-modal #category").value);
+            formData.append("shopPrice", document.querySelector("#edit-modal #productPrice").value);
+            formData.append("stockQuantity", document.querySelector("#edit-modal #stockQuantity").value);
+
+            if (originalProductData.imageUpdated && editimageInput.files.length > 0) {
+                formData.append("productImage", editimageInput.files[0]); // Append image file
+            }
+
+           console.log("Updating Product:", Object.fromEntries(formData.entries()));
+            fetch(`/shopowner/updateProduct`, {
+                method: "POST",
+                body: formData  // Send as FormData for image upload
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    throw new Error(data.message || "Unknown error occurred");
+                }
+                console.log("Product updated successfully:", data);
+                document.getElementById("edit-modal").style.display = "none";
+            })
+            .catch(error => {
+                console.error("Error updating product:", error);
+                alert("Error: " + error.message); // Show user-friendly error message
+            });
+        });
+
     </script>
   </body>
 </html>

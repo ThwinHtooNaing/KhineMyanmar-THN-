@@ -72,7 +72,7 @@ public class StorageServiceImpl implements StorageService {
         }
         try{
             String sanitizedProductName = (product.getProductName()+"_"+product.getProductId()).toLowerCase().replaceAll("\\s+", "");
-            String UPLOAD_DIR = BASE_UPLOAD_DIR_PRODUCT + shop.getShopId() + "/" + sanitizedProductName;
+            String UPLOAD_DIR = BASE_UPLOAD_DIR_PRODUCT + shop.getShopId()+"_"+ shop.getShopName() + "/" + sanitizedProductName;
             Path productDir = Paths.get(UPLOAD_DIR);
             Files.createDirectories(productDir);
 
@@ -80,7 +80,7 @@ public class StorageServiceImpl implements StorageService {
             Path filePath = productDir.resolve(fileName);
             Files.write(filePath, file.getBytes()); // Save the file
 
-            return "/img/products/" + shop.getShopId() + "/" + sanitizedProductName + "/" + fileName; // Set the product image path
+            return "/img/products/" + shop.getShopId()+"_"+ shop.getShopName() + "/" + sanitizedProductName + "/" + fileName; // Set the product image path
         }catch (IOException e) {
             throw new RuntimeException("Error saving product picture", e);
         }

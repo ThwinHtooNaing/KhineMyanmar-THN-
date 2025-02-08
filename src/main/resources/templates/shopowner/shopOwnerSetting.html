@@ -518,7 +518,7 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = () => {
-                        profileImage.src = reader.result;
+                    profileImage.src = reader.result;
                     changedValues["profileImage"] = file; 
                     saveButton.classList.remove("hidden");
                 };
