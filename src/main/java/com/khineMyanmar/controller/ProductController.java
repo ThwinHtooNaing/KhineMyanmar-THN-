@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,19 +29,21 @@ public class ProductController {
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "6") int size,
         @RequestParam(defaultValue = "productName") String sortBy,
-        @RequestParam(required = false) String category,
-        @RequestParam(required = false) String shop
+        @RequestParam(defaultValue = "ascend") String sortOrder,
+        @RequestParam(required = false) String groupBy
     ) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        Sort.Direction direction = sortOrder.equalsIgnoreCase("descend") ? Sort.Direction.DESC : Sort.Direction.ASC;
 
-        Page<Product> productPage;
-        if (category != null && !category.isEmpty()) {
-            productPage = productRepository.findByCategory_CategoryName(category, pageable);
-        } else if (shop != null && !shop.isEmpty()) {
-            productPage = productRepository.findByProductShops_Shop_ShopName(shop, pageable);
-        } else {
-            productPage = productRepository.findAll(pageable);
+        // Apply grouping logic
+        if ("shopname".equalsIgnoreCase(groupBy)) {
+            sortBy = "productShops.shop.shopName";
+        } else if ("category".equalsIgnoreCase(groupBy)) {
+            sortBy = "category.categoryName";
         }
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+
+        Page<Product> productPage = productRepository.findAll(pageable);
 
         return productPage.map(product -> new ProductDTO(
             product.getProductId(),

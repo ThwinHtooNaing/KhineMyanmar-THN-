@@ -677,7 +677,6 @@
                                 <option value="category">Category</option>
                             </select>
                         </div>
-                        
                     </div>
                 </div>
                 <table>
@@ -743,7 +742,6 @@
                     </div>   
                     <ul id="category-list">
                         <li th:each="category : ${categories}" th:data-id="${category.categoryId}" th:text="${category.categoryName}"></li>
-
                     </ul>
                 </div>
             </div>
@@ -1032,21 +1030,20 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             fetchProducts(1);
-            
+
             document.getElementById("sort").addEventListener("change", () => fetchProducts(1));
             document.getElementById("shops").addEventListener("change", () => fetchProducts(1));
         });
 
         function fetchProducts(page) {
-            const sortBy = document.getElementById("sort").value || "productName";
-            const shop = document.getElementById("shops").value || "";
-            
-            const url = `/product/getAllpaginatedproducts?page=${page - 1}&size=6&sortBy=${sortBy}&shop=${shop}`;
-            
+            const sortOrder = document.getElementById("sort").value || "ascend";
+            const groupBy = document.getElementById("shops").value || "";
+
+            const url = `/product/getAllpaginatedproducts?page=${page - 1}&size=6&sortOrder=${sortOrder}&groupBy=${groupBy}`;
+
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     renderTable(data.content);
                     updatePagination(data, page);
                 })
@@ -1087,7 +1084,6 @@
                 pagination.innerHTML += `<button class="next-btn btn" onclick="fetchProducts(${currentPage + 1})">Next</button>`;
             }
         }
-
 
     </script>
     
