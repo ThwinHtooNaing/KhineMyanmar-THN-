@@ -1,5 +1,6 @@
 package com.khineMyanmar.service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -139,6 +140,13 @@ public class ProductService {
 
         return productRepository.save(product); 
     }
+
+    @Transactional 
+    public void deleteProductsByIds(List<Long> productIds) {
+        // productRepository.deleteByIdIn(productIds);
+        productRepository.deleteByProductIdIn(productIds);
+    }
+
 
 
 }

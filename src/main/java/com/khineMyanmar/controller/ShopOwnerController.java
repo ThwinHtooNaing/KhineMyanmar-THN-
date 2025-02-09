@@ -369,6 +369,24 @@ public class ShopOwnerController {
         }
     }
 
+    @PostMapping("/deleteProducts")
+    @ResponseBody
+    public ResponseEntity<?> deleteProducts(@RequestBody Map<String, List<Long>> request) {
+        List<Long> productIds = request.get("productIds");
+        System.out.println(productIds);
+        if (productIds == null || productIds.isEmpty()) {
+            return ResponseEntity.badRequest().body("No products selected for deletion.");
+        }
+
+        System.out.println(productIds);
+
+        // Call service layer to delete products by their IDs
+        productService.deleteProductsByIds(productIds);
+
+        return ResponseEntity.ok().body(Map.of("success", true));
+    }
+
+
 
     
 }

@@ -9,9 +9,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.css" />
-
     <style>
       body {
         margin: 0;
@@ -754,25 +751,75 @@
     <script th:src="@{/js/adminSideBarNav.js}"></script>    <!-- SweetAlert2 CSS and JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-      function toggleCheckbox(checkbox) {
-            const label = checkbox.parentElement;
-            const row = checkbox.closest("tr");
-            if (checkbox.checked) {
-                label.classList.add("checked");
-                row.style.backgroundColor = "#fbf6eb";
-            } else {
-                label.classList.remove("checked");
-                 row.style.backgroundColor = "";
-            }
-        }
+      let selectedProducts = [];
 
-        function toggleAllCheckboxes(masterCheckbox) {
-            const checkboxes = document.querySelectorAll('.main-content-table-body .custom-checkbox input[type="checkbox"]');
-            checkboxes.forEach(cb => {
-                cb.checked = masterCheckbox.checked;
-                toggleCheckbox(cb);
-            });
-        }
+      function toggleCheckbox(checkbox) {
+          const label = checkbox.parentElement;
+          const row = checkbox.closest("tr");
+          const productId = row.getAttribute("productid");
+          console.log(row.getAttribute("productid"));  // Use the checkbox's ID for product ID
+
+          if (checkbox.checked) {
+              label.classList.add("checked");
+              row.style.backgroundColor = "#fbf6eb";
+              selectedProducts.push(productId);  // Add product ID to selected list
+          } else {
+              label.classList.remove("checked");
+              row.style.backgroundColor = "";
+              selectedProducts = selectedProducts.filter(id => id !== productId);  // Remove from selected list
+          }
+
+          console.log(selectedProducts);
+      }
+
+      function toggleAllCheckboxes(masterCheckbox) {
+          const checkboxes = document.querySelectorAll('.main-content-table-body .custom-checkbox input[type="checkbox"]');
+          checkboxes.forEach(cb => {
+              cb.checked = masterCheckbox.checked;
+              toggleCheckbox(cb);
+          });
+      }
+      document.getElementById("deleteSelectedProductbtn").addEventListener("click", function () {
+          if (selectedProducts.length === 0) {
+              alert("Please select products to delete.");
+              return;
+          }
+
+          // Call function to delete selected products
+          deleteSelectedProducts();
+      });
+
+      function deleteSelectedProducts() {
+    // Send delete request to the backend
+        fetch("/shopowner/deleteProducts", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ productIds: selectedProducts })  // Send the selected product IDs to the server
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  alert("Selected products deleted successfully!");
+                  // Remove the selected rows from the table
+                  selectedProducts.forEach(productId => {
+                      const row = document.querySelector(`tr[productid='${productId}']`);
+                      if (row) {
+                          row.remove();
+                      }
+                  });
+                  selectedProducts = [];  // Clear selected products
+              } else {
+                  alert("Error deleting products. Please try again.");
+              }
+          })
+          .catch(error => {
+              console.error("Error:", error);
+              alert("An error occurred while deleting the products.");
+          });
+      }
+
     </script>
     <script>
       const modal = document.querySelector(".modal");
@@ -1086,6 +1133,8 @@
 
           products.forEach(product => {
               const row = document.createElement("tr");
+              const productId = product.id;
+              row.setAttribute("productid",productId);
               row.innerHTML = `
                   <td>
                       <label class="custom-checkbox">
@@ -1117,20 +1166,10 @@
             startPage = Math.max(1, endPage - 7);
         }
 
-        // Previous button
-        // if (currentPage > 1) {
-        //     paginationContainer.innerHTML += `<span class="page-nav" onclick="changePage(${currentPage - 1})">&lt;</span>`;
-        // }
-
         // Generate page numbers
         for (let i = startPage; i <= endPage; i++) {
             paginationContainer.innerHTML += `<span class="page-number ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</span>`;
         }
-
-        // Next button
-        // if (currentPage < totalPages) {
-        //     paginationContainer.innerHTML += `<span class="page-nav" onclick="changePage(${currentPage + 1})">&gt;</span>`;
-        // }
     }
 
     function changePage(page) {
@@ -1149,5 +1188,6 @@
     });
 
     </script>
+
   </body>
 </html>
