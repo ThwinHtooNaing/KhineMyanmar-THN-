@@ -781,7 +781,7 @@
       }
       document.getElementById("deleteSelectedProductbtn").addEventListener("click", function () {
           if (selectedProducts.length === 0) {
-              alert("Please select products to delete.");
+              showModal(false, "No products selected.");
               return;
           }
 
@@ -790,33 +790,44 @@
       });
 
       function deleteSelectedProducts() {
-    // Send delete request to the backend
-        fetch("/shopowner/deleteProducts", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify({ productIds: selectedProducts })  // Send the selected product IDs to the server
-          })
-          .then(response => response.json())
-          .then(data => {
-              if (data.success) {
-                  alert("Selected products deleted successfully!");
-                  // Remove the selected rows from the table
-                  selectedProducts.forEach(productId => {
-                      const row = document.querySelector(`tr[productid='${productId}']`);
-                      if (row) {
-                          row.remove();
+
+          Swal.fire({
+              title: "Are you sure?",
+              text: "This action cannot be undone!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#d33",
+              cancelButtonColor: "#3085d6",
+              confirmButtonText: "Yes, delete them!"
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  fetch("/shopowner/deleteProducts", {
+                      method: "POST",
+                      headers: {
+                          "Content-Type": "application/json"
+                      },
+                      body: JSON.stringify({ productIds: selectedProducts })
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                      if (data.success) {
+                          showModal(true, "Selected products deleted successfully!");
+                          selectedProducts.forEach(productId => {
+                              const row = document.querySelector(`tr[productid='${productId}']`);
+                              if (row) {
+                                  row.remove();
+                              }
+                          });
+                          selectedProducts = []; // Clear selected products
+                      } else {
+                          showModal(false, "Failed to delete products: " + data.message);
                       }
+                  })
+                  .catch(error => {
+                      console.error("Error deleting products:", error);
+                      showModal(false, "An error occurred while deleting the products.");
                   });
-                  selectedProducts = [];  // Clear selected products
-              } else {
-                  alert("Error deleting products. Please try again.");
               }
-          })
-          .catch(error => {
-              console.error("Error:", error);
-              alert("An error occurred while deleting the products.");
           });
       }
 
