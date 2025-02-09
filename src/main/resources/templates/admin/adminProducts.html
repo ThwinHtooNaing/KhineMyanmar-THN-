@@ -313,8 +313,7 @@
             background-color: #fff; /* Light gray background */
             padding: 15px;
             border-radius: 8px;
-            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-            /* text-align: center; */            
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);          
         }
 
         .product-detail-box h2 {
@@ -595,6 +594,13 @@
             background: #f0f0f0;
         }
 
+        .productd-detail-box-container-img{
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            margin-left: 5%;
+            width: 90%;
+            height: 250px;
+        }
 
 
 
@@ -728,6 +734,11 @@
                             <i class="fas fa-exclamation-circle"></i>
                             <p>Select a product to see details here.</p>
                         </div>
+                    </div>
+                    <div class="productd-detail-box-container" style="display: none;">
+                        <img class="productd-detail-box-container-img"/>
+                        <h3 class="productd-detail-box-container-title">Product Description</h3>
+                        <span class="productd-detail-box-container-description">Hello World, My name is thwin htoo naing</span>
                     </div>
                 </div>
                 
@@ -1055,7 +1066,9 @@
             tbody.innerHTML = "";
 
             products.forEach((product, index) => {
-                const row = `<tr>
+                const row = document.createElement("tr"); // ✅ Creates an actual DOM element
+                row.setAttribute("data-id", product.id);
+                row.innerHTML = `
                     <td>${index + 1}</td>
                     <td><img src="${product.image || 'https://via.placeholder.com/100'}" alt="Product" width="50"></td>
                     <td>${product.name}</td>
@@ -1063,10 +1076,56 @@
                     <td>${product.price}</td>
                     <td>${product.stock}</td>
                     <td>${product.shopName}</td>
-                </tr>`;
-                tbody.innerHTML += row;
+                `;
+                tbody.appendChild(row); // ✅ Adds row to the DOM without resetting innerHTML
+            });
+
+            addRowClickEvents();
+        }
+
+        function addRowClickEvents() {
+            document.querySelectorAll("table tbody tr").forEach(row => {
+                row.addEventListener("click", function () {
+                    // Check if the clicked row already has 'tableactive'
+                    const isActive = this.classList.contains("tableactive");
+
+                    // Remove 'tableactive' from all rows
+                    document.querySelectorAll("table tbody tr").forEach(r => r.classList.remove("tableactive"));
+
+                    // If it was not active, activate it; if it was active, keep it removed
+                    if (!isActive) {
+                        this.classList.add("tableactive");
+
+                        // Fetch product details
+                        const productId = this.getAttribute("data-id");
+                        fetchProductDetails(productId);
+                    }
+                });
             });
         }
+
+        function fetchProductDetails(productId) {
+            fetch(`/product/details/${productId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Product Details:", data);
+                    // Hide the message box and show the details container
+                    const messageBox = document.querySelector(".product-message-box");
+                    const detailsBox = document.querySelector(".productd-detail-box-container");
+
+                    messageBox.style.display = 'none'; // Hide the message box
+                    detailsBox.style.display = 'block'; // Show the details box
+                    
+                    // Insert the product image and description into the product detail box
+                    const imageElement = detailsBox.querySelector(".productd-detail-box-container-img");
+                    const descriptionElement = detailsBox.querySelector(".productd-detail-box-container-description");
+
+                    imageElement.src = data.imagePath || 'https://via.placeholder.com/150'; // Set the image source
+                    descriptionElement.textContent = data.description || "No description available."; // Set the description text
+                })
+                .catch(error => console.error('Error fetching product details:', error));
+        }
+
 
         function updatePagination(data, currentPage) {
             const pagination = document.querySelector(".pagination");
@@ -1084,6 +1143,9 @@
                 pagination.innerHTML += `<button class="next-btn btn" onclick="fetchProducts(${currentPage + 1})">Next</button>`;
             }
         }
+
+    </script>
+    <script>
 
     </script>
     
