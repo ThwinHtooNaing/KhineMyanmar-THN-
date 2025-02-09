@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -245,21 +248,27 @@ public class ShopOwnerController {
 
     @GetMapping("/getAllProducts")
     @ResponseBody
-    public ResponseEntity<List<Map<String, Object>>> getAllProducts(HttpSession session) {
+    public ResponseEntity<Map<String, Object>> getAllProducts(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "6") int size, // Set default size to 6
+            HttpSession session) {
+
         ShopOwner shopOwner = (ShopOwner) session.getAttribute("shopSession");
         if (shopOwner == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        
+
         Shop shop = shopOwner.getShop();
         if (shop == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
+        // Fetch paginated products
+        Page<ProductShop> productPage = productShopService.findByShop(shop, PageRequest.of(page - 1, size));
         
-        List<ProductShop> productShops = productShopService.findByShop(shop);
         List<Map<String, Object>> products = new ArrayList<>();
         
-        for (ProductShop ps : productShops) {
+        for (ProductShop ps : productPage.getContent()) {
             Product product = ps.getProduct();
             Map<String, Object> productData = new HashMap<>();
             productData.put("id", product.getProductId());
@@ -270,8 +279,17 @@ public class ShopOwnerController {
             productData.put("category", product.getCategory().getCategoryName());
             products.add(productData);
         }
-        return ResponseEntity.ok(products);
+
+        // Return paginated response
+        Map<String, Object> response = new HashMap<>();
+        response.put("products", products);
+        response.put("totalProducts", productPage.getTotalElements());
+        response.put("totalPages", productPage.getTotalPages());
+        response.put("currentPage", page);
+
+        return ResponseEntity.ok(response);
     }
+
 	
     @DeleteMapping("/deleteProduct/{id}")
     @ResponseBody

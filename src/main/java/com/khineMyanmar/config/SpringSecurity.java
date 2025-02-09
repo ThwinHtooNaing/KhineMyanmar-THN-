@@ -29,6 +29,7 @@ public class SpringSecurity {
             
                     .requestMatchers("/favicon.ico").permitAll()
                     .requestMatchers("/user/**").permitAll()
+                    .requestMatchers("/product/**").permitAll()
                     .requestMatchers("/ecom/**").permitAll()
                     .requestMatchers("/login/**").permitAll()
                     .requestMatchers("/admin/**").permitAll()
