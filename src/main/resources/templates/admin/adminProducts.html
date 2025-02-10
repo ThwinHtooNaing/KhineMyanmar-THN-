@@ -601,7 +601,7 @@
             width: 90%;
             height: 250px;
             object-fit: contain;
-            background-size: 100%;
+            /* background-size: 100%; */
         }
 
 
@@ -626,7 +626,6 @@
                 <span th:text="${(admin.firstName ?: '') + ' ' + (admin.lastName ?: '') == ' ' ? 'Admin' : (admin.firstName ?: '') + ' ' + (admin.lastName ?: '')}"></span>
                 <i class="fas fa-angle-down"></i>
             </div>
-            
         </div>
     </header>
     <aside class="sidebar">
@@ -757,8 +756,8 @@
             </div>
             
         </div>
-        
     </main> 
+    
     <div id="categoryModal" class="modal">
         <div class="modal-content">
             <h2 class="modal-title">Add Category</h2>

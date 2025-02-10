@@ -2,7 +2,7 @@
 * {
     margin: 0;
     padding: 0;
-    /* font-family: 'Opensans','Open Sans',sans-serif; */
+
     box-sizing: border-box;
 }
 
@@ -15,6 +15,7 @@ header {
     font-size: 18px;
     padding: 10px 0;
     /* background-color: #97816a; Optional */
+    /* position: fixed; */
 }
 
 header nav {
@@ -184,7 +185,6 @@ header nav ul li:hover{
     text-align: center;
 }
 
-/* Example slide background colors */
 
 /* Updated carousel-indicators styling */
 .carousel-indicators {
@@ -293,10 +293,10 @@ header nav ul li:hover{
 }
 
 #search-input {
-    padding: 8px 35px 8px 10px; /* Space on the right for the icon */
+    padding: 8px 35px 8px 10px; 
     font-size: 14px;
     border: 1px solid #ccc;
-    border-radius: 20px; /* Rounded corners */
+    border-radius: 20px; 
     width: 250px; /* Increase the width to make the input field longer */
     outline: none;
     font-family: Arial, sans-serif;
@@ -312,11 +312,11 @@ header nav ul li:hover{
 }
 
 #search-input::placeholder {
-    padding-left: 5px; /* Further adjusts the position of the placeholder */
-    color: #999; /* Optional: change the color of the placeholder */
+    padding-left: 5px; 
+    color: #999; 
     text-indent: 0;
 }
-/* Change border color when input is focused */
+
 #search-input:focus {
     border-color: #b48a47; /* Set border color to your custom color */
     box-shadow: 0 0 8px rgba(244, 191, 105, 0.6); /* Add a glowing effect with the same color */
@@ -325,10 +325,10 @@ header nav ul li:hover{
 /* Styling the Font Awesome magnifying glass */
 .lens-icon {
     position: absolute; /* Position it inside the search input */
-    right: 10px; /* Align the icon to the right side of the input field */
-    color: #666; /* Icon color */
-    font-size: 16px; /* Icon size */
-    pointer-events: none; /* Prevent icon from interfering with input clicks */
+    right: 10px; 
+    color: #666; 
+    font-size: 16px; 
+    pointer-events: none; 
 }
 
 #login-btn{
