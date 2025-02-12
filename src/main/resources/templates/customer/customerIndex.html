@@ -238,14 +238,18 @@
         margin: 0px 40px;
       }
 
+      #section1{
+        margin-bottom: 100px;
+      }
+
       #section1 .title{
-        margin: 50px 0px;
+        margin: 20px 10px;
         font-size: 38px;
         font-weight: 900;
       }
 
       .product-container{
-          margin-top: 20px;
+          margin-top: 40px;
       }
 
       .product-container-body {
@@ -272,10 +276,11 @@
           text-align: left;  
           padding: 20px;
           font-size: 16px;
+          color: #f5a623;
       }
 
       footer {
-          background-color: #3a342c;
+          background-color: #2d2b28;
           color: #fff;
           padding: 40px 0;
       }
@@ -331,6 +336,211 @@
           color: #585858;
       }
 
+      .slider-wrapper {
+          /* margin-top: 30px; */
+          position: relative;
+          width: 100%;
+          margin: auto;
+          overflow: hidden;
+      }
+
+      .cat-container {
+          display: flex;
+          gap: 15px;
+          overflow-x: auto;
+          scroll-behavior: smooth;
+          padding: 10px;
+          white-space: nowrap;
+          scrollbar-width: none;
+      }
+
+      .cat-container::-webkit-scrollbar {
+          display: none;
+      }
+
+      .box {
+          min-width: 250px;
+          height: 150px;
+          text-align: center;
+          border-radius: 12px;
+          background: #fff;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          border: 1px solid #ddd;
+          transition: 0.3s;
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+      }
+
+      .box i {
+          font-size: 30px;
+          display: block;
+          margin-bottom: 25px;
+      }
+
+      .box:hover {
+          background: #f5a623;
+          color: #fff;
+      }
+
+      .nav-btn {
+          position: absolute;
+          width: 50px;
+          height: 50px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgb(255, 255, 255);
+          color: white;
+          border: 1px solid #ddd;
+          cursor: pointer;
+          border-radius: 50%;
+          font-size: 18px;
+          transition: opacity 0.3s ease-in-out;
+      }
+      .nav-btn i{
+        color: #f5a623;
+      }
+
+      .left {
+          left: 10px;
+          opacity: 0; /* Initially hidden */
+      }
+
+      .right {
+          right: 10px;
+      }
+      #category-section{
+        margin: 30px 45px 70px 45px;
+      }
+
+      .slider-indicators {
+        position: absolute;
+        bottom: 15px;  
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 25px;
+        align-items: center;
+        justify-content: center;
+        z-index: 10; 
+        padding: 5px 10px;
+        border-radius: 10px;
+      }
+
+      .indicator {
+        width: 10px;
+        height: 10px;
+        background-color: #ccc; /* Inactive dots */
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .indicator.active {
+        width: 50px;  /* Wider for current slide */
+        height: 10px;
+        border-radius: 5px; /* Rounded bar */
+        background-color: #f5a623; /* Your theme color */
+      }
+
+      .shop-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+          gap: 30px; /* Keeps spacing consistent */
+          justify-content: center;
+      }
+
+      .shop {
+          background: #fff;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          transition: transform 0.2s ease-in-out;
+          position: relative;
+      }
+
+      .shop img {
+          width: 100%;
+          height: 250px;
+          object-fit: cover;
+      }
+
+      .shop-content {
+          padding: 15px;
+          text-align: left;
+          font-size: 14px;
+          color: #333;
+      }
+
+      #shop-section .title{
+        margin: 20px 10px;
+        margin-bottom: 40px;
+        font-size: 38px;
+        font-weight: 900;
+      }
+
+      .shop-title{
+        font-size: 20px;
+        font-weight: 900;
+        margin-bottom: 8px;
+        color: #f5a623;
+      }
+
+      .shop-address{
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+
+      #shop-section{
+        margin-bottom: 100px;
+      }
+
+
+      .service {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+      }
+
+      .service img {
+          width: 200px;
+          height: 200px;
+          background-size: 100%;
+          object-fit:cover;
+          border-radius: 50%;
+          margin-bottom: 25px;
+      }
+
+      .service h2 {
+          font-size: 1.5em;
+          margin-bottom: 10px;
+          font-weight: bold;
+      }
+
+      .service p {
+        text-align: center;
+        width: 70%;
+        margin-top: 8px;
+        color: #666;
+        font-size: 1em;
+      }
+      #available-services{
+        background-color: #f3f3f3f3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 100px 0px 80px 0px ;
+      }
+
+      .last-section{
+        background-color: #f3f3f3f3;
+        padding: 0px 0px 60px 0px;
+      }
+
     </style>
   </head>
   <body>
@@ -378,10 +588,33 @@
               <img th:src="@{/img/three-glasses-of-fizzy-drinks.jpg}" alt="Slide 4" />
           </div>
       </div>
+      <div class="slider-indicators">
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>  <!-- Current slide -->
+        <div class="indicator"></div>
+      </div>
     </div>
-
+    <section class="section" id="category-section">
+      <div class="slider-wrapper">
+          <button class="nav-btn left"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="cat-container">
+              <div class="box"><i class="fa-solid fa-tv"></i><p>Consumer Electronic</p></div>
+              <div class="box"><i class="fa-solid fa-heart-pulse"></i><p>Health & Beauty</p></div>
+              <div class="box"><i class="fa-solid fa-house"></i><p>Home & Garden</p></div>
+              <div class="box"><i class="fa-solid fa-utensils"></i><p>Food & Drinks</p></div>
+              <div class="box"><i class="fa-solid fa-gem"></i><p>Accessories</p></div>
+              <div class="box"><i class="fa-solid fa-shirt"></i><p>Clothing</p></div>
+              <div class="box"><i class="fa-solid fa-car"></i><p>Automotive</p></div>
+              <div class="box"><i class="fa-solid fa-laptop"></i><p>Computers</p></div>
+              <div class="box"><i class="fa-solid fa-basketball"></i><p>Sports</p></div>
+          </div>
+          <button class="nav-btn right"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </section>
+    
     <section class="section" id="section1">
-      <h1 class="title"> Welcome ! How can we help you today ?</h1> 
+      <h1 class="title">Availbe Products</h1> 
       <div class="product-container">
         <div class="product-container-body">
             <div class="product-item">
@@ -417,13 +650,78 @@
                 <h3>Weekend Treats</h3>
             </div>
         </div>
+        <!-- <hr> -->
     </div>
     </section>
-    <section class="section" id="section2">
+    <section class="section" id="shop-section">
+      <h1 class="title">Available Shops</h1>
+      <div class="shop-container">
+          <div class="shop">
+              <img src="https://cdn.shopify.com/s/files/1/0535/3730/8854/files/iPhone_product_photography_cover_1024x1024.jpg?v=1655147415" alt="Shop">
+              <div class="shop-content">
+                  <p class="shop-title">Shop Name 1</p>
+                  <p class="shop-address">Address 1</p>
+                  <p class="shop-phNo">Phone Number 1</p>
+              </div>
+          </div>
 
+          <div class="shop">
+              <img src="https://images.pexels.com/photos/3769747/pexels-photo-3769747.jpeg" alt="Shop">
+              <div class="shop-content">
+                  <p class="shop-title">Shop Name 2</p>
+                  <p class="shop-address">Address 2</p>
+                  <p class="shop-phNo">Phone Number 2</p>
+              </div>
+          </div>
+
+          <div class="shop">
+              <img src="https://images.pexels.com/photos/1488463/pexels-photo-1488463.jpeg" alt="Shop">
+              <div class="shop-content">
+                  <p class="shop-title">Shop Name 3</p>
+                  <p class="shop-address">Address 3</p>
+                  <p class="shop-phNo">Phone Number 3</p>
+              </div>
+          </div>
+
+          <div class="shop">
+              <img src="https://media-cdn.tripadvisor.com/media/photo-s/06/ee/e1/49/mingalabar-myanmar-restaurant.jpg" alt="Shop">
+              <div class="shop-content">
+                  <p class="shop-title">Shop Name 4</p>
+                  <p class="shop-address">Address 4</p>
+                  <p class="shop-phNo">Phone Number 4</p>
+              </div>
+          </div>
+
+          <div class="shop">
+              <img src="https://www.heddels.com/wp-content/uploads/2020/02/a-general-guide-to-vintage-clothing.jpg" alt="Shop">
+              <div class="shop-content">
+                  <p class="shop-title">Shop Name 5</p>
+                  <p class="shop-address">Address 5</p>
+                  <p class="shop-phNo">Phone Number 5</p>
+              </div>
+          </div>
+      </div>
     </section>
-  </body>
-  <footer>
+
+    <section id="available-services"> 
+        <div class="service">
+            <img src="https://img.freepik.com/free-vector/delivery-staff-ride-motorcycles-shopping-concept_1150-34879.jpg" alt="Delivery Service">
+            <h2>Delivery Services</h2>
+            <p>Fast and reliable delivery to your doorstep. Enjoy your favorite products without leaving home.</p>
+        </div>
+        <!-- <hr> -->
+        <div class="service">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzLtwL7m63EtmsRAUt0T-lfTPKT-JqbhEspQ&s" alt="Cash on Delivery">
+            <h2>Cash on Delivery</h2>
+            <p>Pay only when you receive your order. Secure and hassle-free shopping experience.</p>
+        </div>
+    </section>
+    <section class="last-section">
+      <h1 style="text-align: center;font-size: 45px;">Our Services</h1>
+    </section>
+
+
+    <footer>
         <div class="footer-container">
             <div class="footer-section">
                 <h3>Exclusive</h3>
@@ -466,6 +764,8 @@
             <p>&copy; Rimel 2024. All rights reserved.</p>
         </div>
     </footer>  
+  </body>
+  
     <script>
       document.querySelectorAll("header nav ul li").forEach((li) => {
           li.addEventListener("click", () => {
@@ -480,25 +780,28 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         let slides = document.querySelectorAll(".slide");
+        let indicators = document.querySelectorAll(".indicator");
         let currentIndex = 0;
         const displayTime = 5000; // 5 seconds
 
         // Initialize first slide
         slides[currentIndex].classList.add("active");
+        indicators[currentIndex].classList.add("active");
 
-        function nextSlide() {
-            // Remove active class from current slide
+        function updateSlide() {
             slides[currentIndex].classList.remove("active");
-            
+            indicators[currentIndex].classList.remove("active");
+
             // Calculate next index
             currentIndex = (currentIndex + 1) % slides.length;
-            
-            // Add active class to next slide
+
             slides[currentIndex].classList.add("active");
+            indicators[currentIndex].classList.add("active");
         }
 
-        setInterval(nextSlide, displayTime);
+        setInterval(updateSlide, displayTime);
     });
+
     window.addEventListener("scroll", function() {
       document.querySelector("header").classList.toggle("scrolled", window.scrollY > 50);
     });
@@ -506,5 +809,51 @@
     function navigateTo(path) {
         window.location.href = path;
     }
+    </script>
+    <script>
+        const catContainer = document.querySelector('.cat-container');
+        const leftBtn = document.querySelector('.left');
+        const rightBtn = document.querySelector('.right');
+
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        // Mouse Dragging
+        catContainer.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - catContainer.offsetLeft;
+            scrollLeft = catContainer.scrollLeft;
+        });
+
+        catContainer.addEventListener('mouseleave', () => {
+            isDown = false;
+        });
+
+        catContainer.addEventListener('mouseup', () => {
+            isDown = false;
+        });
+
+        catContainer.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - catContainer.offsetLeft;
+            const walk = (x - startX) * 2; // Adjust speed
+            catContainer.scrollLeft = scrollLeft - walk;
+        });
+
+        // Left & Right Button Navigation
+        leftBtn.addEventListener('click', () => {
+            catContainer.scrollBy({ left: -550, behavior: 'smooth' });
+        });
+
+        rightBtn.addEventListener('click', () => {
+            catContainer.scrollBy({ left: 550, behavior: 'smooth' });
+        });
+
+        // Show/hide left button on scroll
+        catContainer.addEventListener('scroll', () => {
+            leftBtn.style.opacity = catContainer.scrollLeft > 0 ? '1' : '0';
+        });
     </script>
 </html>
