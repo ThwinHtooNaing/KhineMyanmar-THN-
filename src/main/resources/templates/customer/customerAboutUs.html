@@ -47,6 +47,8 @@
         color: #f5a623;
        }
 
+       
+
        header.scrolled nav ul li::after{
          bottom: -25px;
        }
@@ -306,10 +308,10 @@
       <nav>
         <p id="name">Khine Myanmar</p>
         <ul>
-          <li class="active">Home</li>
-          <li>Products</li>
-          <li>Shops</li>
-          <li>About us</li>
+            <li onclick="navigateTo('/customer/index')">Home</li>
+            <li onclick="navigateTo('/customer/product')">Products</li>
+            <li onclick="navigateTo('/customer/shop')">Shops</li>
+            <li class="active" onclick="navigateTo('/customer/aboutUs')">About Us</li>
         </ul>
         <div class="search-container">
           <input type="text" placeholder="Search..." id="search-input" />
@@ -417,5 +419,8 @@
     window.addEventListener("scroll", function() {
       document.querySelector("header").classList.toggle("scrolled", window.scrollY > 50);
     });
+    function navigateTo(path) {
+        window.location.href = path;
+    }
     </script>
 </html>

@@ -28,7 +28,7 @@ public class SpringSecurity {
             .authorizeHttpRequests(authorize -> authorize
             
                     .requestMatchers("/favicon.ico").permitAll()
-                    .requestMatchers("/user/**").permitAll()
+                    .requestMatchers("/customer/**").permitAll()
                     .requestMatchers("/product/**").permitAll()
                     .requestMatchers("/ecom/**").permitAll()
                     .requestMatchers("/login/**").permitAll()

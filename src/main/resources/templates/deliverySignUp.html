@@ -416,7 +416,7 @@
                 <img th:src="@{/img/profiles/default-profile.jpg}" alt="Profile Picture">
                 <div class="custom-select">
                     <select onchange="changePath(this)">
-                        <option th:value="@{/user/usersignup}" th:text="'Customer'">Customer</option>
+                        <option th:value="@{/customer/customersignup}" th:text="'Customer'">Customer</option>
                         <option th:value="@{/delivery/deliverysignup}" th:text="'Delivery'" selected>Delivery</option>
                         <option th:value="@{/shopowner/shopownersignup}" th:text="'Shop Owner'" >Shop Owner</option>
                     </select>
