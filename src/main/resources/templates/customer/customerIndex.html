@@ -153,17 +153,22 @@
       .cart {
         border-radius: 8px;
         background-color: #e1e0e0d1;
-        width: 35px;
-        height: 35px;
+        padding: 0 8px;
+        width: auto;
+        height: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
       }
+      .cart-count {
+        margin-left: 5px;
+        font-size: 16px;
+      }
       .notification {
         position: relative;
         background-color: #e2e2e2;
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
         border-radius: 10px;
         display: flex;
         justify-content: center;
@@ -180,8 +185,8 @@
         position: absolute;
         top: 5px;
         right: 5px;
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         background-color: red;
         border-radius: 50%;
       }
@@ -595,17 +600,21 @@
         transform: scale(1.05);
       }
 
+      .grid-item:hover .overlay {
+        transform: scale(1.05);
+      }
+
       .grid2 {
         display: grid !important;
         gap: 1.5rem;
         grid-template-rows: repeat(2, minmax(200px, 1fr));
       }
 
-      .grid2-item{
+      .grid2-item {
         position: relative;
       }
 
-      .grid3-item{
+      .grid3-item {
         position: relative;
       }
 
@@ -624,6 +633,7 @@
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+        transition: transform 0.3s ease;
       }
 
       .overlay h2 {
@@ -672,6 +682,63 @@
           min-height: 250px;
         }
       }
+
+      .modal-container {
+        position: fixed;
+        top: 75px;
+        right: 10px;
+      }
+
+      .modal {
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        border-radius: 5px;
+        width: 170px;
+        /* padding: 0;
+        margin: 0; */
+        z-index: 1000;
+      }
+
+      .modal ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .modal ul li {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .modal ul li i {
+        margin-right: 10px;
+        font-size: 18px;
+        color: #e09f38;
+      }
+
+      .modal ul li a {
+        text-decoration: none;
+        color: #b48a47;
+        /* font-weight: 600; */
+      }
+
+      .modal ul li:hover {
+        border-radius: 8px;
+        background-color: #c0bdb847;
+        color: white;
+      }
+
+      .triangle {
+        position: absolute;
+        top: -10px;
+        right: 30px;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid #fff;
+      }
     </style>
   </head>
   <body>
@@ -684,13 +751,14 @@
           <li onclick="navigateTo('/customer/shop')">Shops</li>
           <li onclick="navigateTo('/customer/aboutUs')">About Us</li>
         </ul>
-        <div class="search-container">
+        <div class="search-container" style="opacity: 0">
           <input type="text" placeholder="Search..." id="search-input" />
           <i class="fas fa-search lens-icon"></i>
         </div>
         <div class="extra-icons">
           <div class="icon-container cart">
             <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count"></span>
           </div>
           <div class="notification">
             <i class="fa-solid fa-bell bell-icon"></i>
@@ -785,59 +853,59 @@
       </div>
     </section>
 
-      <section class="section" id="arrival-section">
-        <p class="section-title">Featured</p>
-        <h1>New Arrival</h1>
-        <div class="grid-container">
-          <div class="grid-item">
+    <section class="section" id="arrival-section">
+      <p class="section-title">Featured</p>
+      <h1>New Arrival</h1>
+      <div class="grid-container">
+        <div class="grid-item">
+          <img
+            src="https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D"
+            alt="Women's Collections"
+          />
+          <div class="overlay">
+            <h2>Women's Collections</h2>
+            <p>Featured woman collections that give you another vibe.</p>
+            <a href="#">Shop Now</a>
+          </div>
+        </div>
+        <div class="grid-item grid2">
+          <div class="grid2-item">
             <img
-              src="https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D"
-              alt="Women's Collections"
+              src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3Ds"
             />
             <div class="overlay">
-              <h2>Women's Collections</h2>
-              <p>Featured woman collections that give you another vibe.</p>
+              <h2>Sunglasses</h2>
+              <p>Featured you different feeling about the glasses.</p>
               <a href="#">Shop Now</a>
             </div>
           </div>
-          <div class="grid-item grid2">
-            <div class="grid2-item">
+          <div class="grid2-item grid3">
+            <div class="grid3-item">
               <img
-                src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3Ds"
+                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D"
+                alt="Women's Collections"
               />
               <div class="overlay">
-                <h2>Sunglasses</h2>
-                <p>Featured you different feeling about the glasses.</p>
+                <h2>Shoes</h2>
+                <p>Featured you different walking feeling.</p>
                 <a href="#">Shop Now</a>
               </div>
             </div>
-            <div class="grid2-item grid3">
-              <div class="grid3-item">
-                <img
-                  src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D"
-                  alt="Women's Collections"
-                />
-                <div class="overlay">
-                  <h2>Shoes</h2>
-                  <p>Featured you different walking feeling.</p>
-                  <a href="#">Shop Now</a>
-                </div>
-              </div>
-              <div class="grid3-item">
-                <img
-                  src="https://plus.unsplash.com/premium_photo-1679913792906-13ccc5c84d44?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D"
-                  alt="Women's Collections"
-                />
-                <div class="overlay">
-                  <h2>Headphones</h2>
-                  <p>Featured give you pleasant sound to hear.</p>
-                  <a href="#">Shop Now</a>
-                </div>
+            <div class="grid3-item">
+              <img
+                src="https://plus.unsplash.com/premium_photo-1679913792906-13ccc5c84d44?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D"
+                alt="Women's Collections"
+              />
+              <div class="overlay">
+                <h2>Headphones</h2>
+                <p>Featured give you pleasant sound to hear.</p>
+                <a href="#">Shop Now</a>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
     <section class="section" id="section1">
       <p class="section-title">Available</p>
@@ -998,6 +1066,16 @@
     <section class="last-section">
       <h1 style="text-align: center; font-size: 45px">Our Services</h1>
     </section>
+    <div class="modal-container">
+      <div id="profile-modal" class="modal">
+        <div class="triangle"></div>
+        <ul>
+          <li><i class="fas fa-user"></i><a href="#">Profile</a></li>
+          <li><i class="fas fa-history"></i><a href="#">History</a></li>
+          <li><i class="fas fa-sign-out-alt"></i><a href="#">Log Out</a></li>
+        </ul>
+      </div>
+    </div>
 
     <footer>
       <div class="footer-container">
