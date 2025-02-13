@@ -1129,7 +1129,6 @@
       let currentIndex = 0;
       const displayTime = 5000; // 5 seconds
 
-      // Initialize first slide
       slides[currentIndex].classList.add("active");
       indicators[currentIndex].classList.add("active");
 
@@ -1137,7 +1136,6 @@
         slides[currentIndex].classList.remove("active");
         indicators[currentIndex].classList.remove("active");
 
-        // Calculate next index
         currentIndex = (currentIndex + 1) % slides.length;
 
         slides[currentIndex].classList.add("active");
@@ -1166,7 +1164,6 @@
     let startX;
     let scrollLeft;
 
-    // Mouse Dragging
     catContainer.addEventListener("mousedown", (e) => {
       isDown = true;
       startX = e.pageX - catContainer.offsetLeft;
@@ -1189,7 +1186,7 @@
       catContainer.scrollLeft = scrollLeft - walk;
     });
 
-    // Left & Right Button Navigation
+    
     leftBtn.addEventListener("click", () => {
       catContainer.scrollBy({ left: -550, behavior: "smooth" });
     });
@@ -1198,7 +1195,7 @@
       catContainer.scrollBy({ left: 550, behavior: "smooth" });
     });
 
-    // Show/hide left button on scroll
+  
     catContainer.addEventListener("scroll", () => {
       leftBtn.style.opacity = catContainer.scrollLeft > 0 ? "1" : "0";
     });
