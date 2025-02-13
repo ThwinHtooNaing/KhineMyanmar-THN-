@@ -1,822 +1,810 @@
-/* General reset for consistent alignment */
 * {
-    margin: 0;
-    padding: 0;
-
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
+  margin: 0;
 }
 
 header {
-    width: 100%;
-    font-size: 18px;
-    padding: 10px 0;
-    /* background-color: #97816a; Optional */
-    /* position: fixed; */
+  width: 100%;
+  font-size: 18px;
+  padding: 10px 0;
 }
 
 header nav {
-    display: flex;
-    align-items: center; /* Vertically align all items */
-    justify-content: space-between;
-    padding: 10px 20px; /* Add some padding for spacing */
-    box-shadow: 0px 5px 15px rgba(194, 192, 192, 0.3);
+  display: flex;
+  align-items: center; /* Vertically align all items */
+  justify-content: space-between;
+  padding: 10px 20px;
+  box-shadow: 0px 5px 15px rgba(194, 192, 192, 0.3);
 }
 
 #name {
-    font-weight: bold;
-    font-size: 22px;
-    margin-left: 30px;
+  font-weight: bold;
+  font-size: 22px;
+  margin-left: 30px;
 }
 
 header nav ul {
-    display: flex;
-    gap: 15px;
-    list-style: none; /* Remove default bullet points */
+  display: flex;
+  gap: 15px;
+  list-style: none; 
 }
 
 header nav ul li {
-    position: relative; /* Required for the positioning of the pseudo-element */
-    cursor: pointer;
-    transition: color 0.3s ease-in-out;
+  position: relative; 
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
 }
 
 header nav ul li::after {
-    content: "";
-    position: absolute;
-    bottom: -15.5px; /* Adjust this value to control the distance between the text and the line */
-    left: 0;
-    width: 0;
-    height: 3px; /* Thickness of the line */
-    background-color: #f5a623; /* Color of the line */
-    transition: width 0.3s ease-in-out; /* Smooth animation */
+  content: "";
+  position: absolute;
+  bottom: -15.5px; 
+  left: 0;
+  width: 0;
+  height: 3px;
+  background-color: #f5a623; 
+  transition: width 0.3s ease-in-out; /* Smooth animation */
 }
 
-/* Permant effect when `.active` class is added */
 header nav ul li.active::after {
-    width: 100%; /* Full width */
+  width: 100%;
 }
 header nav ul li.active {
-    color: #f5a623; /* Text color matches hover state */
+  color: #f5a623; 
 }
 
-header nav ul li:hover{
-	color: #f5a623;
+header nav ul li:hover {
+  color: #f5a623;
 }
 .icons {
-    display: flex;
-    gap: 15px;
+  display: flex;
+  gap: 15px;
 }
 
 .icons .icon {
-    width: 24px; /* Set a consistent width for icons */
-    height: 24px; /* Set a consistent height for icons */
-    background-color: gray; /* Placeholder for icon background */
-    border-radius: 50%; /* Make icons circular */
+  width: 24px;
+  height: 24px; 
+  background-color: gray; 
+  border-radius: 50%; 
 }
 
 .buttons {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    margin-right: 10px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-right: 10px;
 }
 
 .buttons a {
-    position: relative; /* Add this to enable positioning of the ::after element */
-    text-decoration: none; /* Optional: Remove underline for links */
-    transition: color 0.3s ease-in-out; /* Optional: Smooth color transition */
+  position: relative; 
+  text-decoration: none; 
+  transition: color 0.3s ease-in-out; 
 }
 
-/* Optional: Add hover effects */
+
 #close-modal:hover {
-    color: #f5a623;
-    cursor: pointer;
+  color: #f5a623;
+  cursor: pointer;
 }
-
-/*#login-btn:hover::after {
-    width: 100%; /* The line will expand to the full width of the text */
-/*}*/
 
 
 #section1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px; /* Add spacing between text and slider */
-    padding: 60px 100px 20px 20px; /* Add padding for spacing */
-    position: relative; /* Set relative positioning */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; 
+  padding: 60px 100px 20px 20px; 
+  position: relative;
 }
-#section1 #letter{
-    width: 60%;
-    /* background-color: aquamarine; */
-    padding-bottom: 80px;
-}
-
-#section1 #letter h1{
-	padding: 0 20px 0 0;
-    font-size: 45px;
-    padding-bottom:35px;
-}
-#section1 #letter p{
-	padding-bottom:50px;
-	width:64%;
+#section1 #letter {
+  width: 60%;
+  padding-bottom: 80px;
 }
 
-#section1 #letter h1,#section1 #letter p{
-	padding-left:35px;
+#section1 #letter h1 {
+  padding: 0 20px 0 0;
+  font-size: 45px;
+  padding-bottom: 35px;
+}
+#section1 #letter p {
+  padding-bottom: 50px;
+  width: 64%;
+}
+
+#section1 #letter h1,
+#section1 #letter p {
+  padding-left: 35px;
 }
 #section1 #slider {
-    display: flex;
-    justify-content: center; /* Center the slider */
-    align-items: center;
-    width: 40%;
-    margin: 0 auto; /* Center slider horizontally */
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  width: 40%;
+  margin: 0 auto; 
 }
 
-
-
-  /* Add the carousel-specific CSS */
 .carousel {
-    width: 80%; /* Adjust width as needed */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 50%; /* Make the entire carousel circular */
-    overflow: hidden; /* Hide overflowing parts */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 80%; 
+  height: auto; 
+  border-radius: 50%; 
+  overflow: hidden; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .carousel-track {
-    display: flex;
-    transition: transform 1s ease-in-out;
+  display: flex;
+  transition: transform 1s ease-in-out;
 }
 
 .carousel-slide {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    min-width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-    overflow: hidden; /* Ensure no image spills out */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: hidden; 
 }
 
 .carousel-image {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%; /* Make images circular */
-    object-fit: cover; /* Ensure images fit within the circle */
-    display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%; 
+  object-fit: cover; 
+  display: block;
 }
-#slider{
-    display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center; /* Center-align all elements horizontally */
-    margin-top: 10px;
+#slider {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  margin-top: 10px;
 }
-/* Adjusting the h2 tag for a better fit */
+
 #slider div h2 {
-    font-size: 32px; /* Adjust font size for better balance */
-    color: #fff; /* White text for better contrast */
-    margin: -60px 0 20px 0; /* Adjusted margin to place the text closer */
-    text-align: center;
+  font-size: 32px; 
+  color: #fff; 
+  margin: -60px 0 20px 0; 
+  text-align: center;
 }
 
-
-/* Updated carousel-indicators styling */
 .carousel-indicators {
-    position: absolute;
-    bottom: 30px; /* Distance from the bottom of the section */
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 16px;
-    z-index: 10; /* Ensure it stays above other elements */
+  position: absolute;
+  bottom: 30px; 
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 16px;
+  z-index: 10;
 }
 
 .indicator {
-    width: 40px;
-    height: 5px;
-    background-color: #ccc;
-    /* border-radius: 5px; */
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
+  width: 40px;
+  height: 5px;
+  background-color: #ccc;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .indicator.active {
-    background-color: #f5a623;
-    transform: scaleX(1.2);
-    width: 55px;
+  background-color: #f5a623;
+  transform: scaleX(1.2);
+  width: 55px;
 }
 
-/* Modal styling */
+
 #login-modal {
-    position: fixed;
-    top: 60px; /* Appears below the button */
-    right: 0px;
-    width: 300px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    display: none;
-    z-index: 1000;
-    overflow: auto;
+  position: fixed;
+  top: 60px; 
+  right: 0px;
+  width: 300px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: none;
+  z-index: 1000;
+  overflow: auto;
 }
 
 #login-modal h2 {
-    margin-bottom: 22px;
-    font-size: 23px;
-    text-align: center;
-    color:#ab8052;
+  margin-bottom: 22px;
+  font-size: 23px;
+  text-align: center;
+  color: #ab8052;
 }
-#login-modal form{
-    padding-bottom: 12px;
+#login-modal form {
+  padding-bottom: 12px;
 }
 #login-modal form label {
-    display: block;
-    font-size: 16px;
-    margin-bottom: 12px;
+  display: block;
+  font-size: 16px;
+  margin-bottom: 12px;
 }
 
 #login-modal form input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 #login-modal form button {
-	margin-top:10px;
-    width: 100%;
-    padding: 10px;
-    background-color: #ab8052;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  background-color: #ab8052;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 #login-modal form button:hover {
-    background-color: #91693d;
+  background-color: #91693d;
 }
 
 #close-modal {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 16px;
-    cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 /* Overlay */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: none;
-    z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 999;
 }
 
-#login-modal form input:focus{
-	border:2px solid #855a15;
-    outline: none;
+#login-modal form input:focus {
+  border: 2px solid #855a15;
+  outline: none;
 }
 
 #search-input {
-    padding: 8px 35px 8px 10px; 
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 20px; 
-    width: 250px; /* Increase the width to make the input field longer */
-    outline: none;
-    font-family: Arial, sans-serif;
-    text-indent: 5px; /* Indent the text/cursor position */
+  padding: 8px 35px 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  width: 250px; /* Increase the width to make the input field longer */
+  outline: none;
+  font-family: Arial, sans-serif;
+  text-indent: 5px; /* Indent the text/cursor position */
 }
 
 /* Make sure the search container adjusts to the new width */
 .search-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 #search-input::placeholder {
-    padding-left: 5px; 
-    color: #999; 
-    text-indent: 0;
+  padding-left: 5px;
+  color: #999;
+  text-indent: 0;
 }
 
 #search-input:focus {
-    border-color: #b48a47; /* Set border color to your custom color */
-    box-shadow: 0 0 8px rgba(244, 191, 105, 0.6); /* Add a glowing effect with the same color */
+  border-color: #b48a47; /* Set border color to your custom color */
+  box-shadow: 0 0 8px rgba(244, 191, 105, 0.6); /* Add a glowing effect with the same color */
 }
 
 /* Styling the Font Awesome magnifying glass */
 .lens-icon {
-    position: absolute; /* Position it inside the search input */
-    right: 10px; 
-    color: #666; 
-    font-size: 16px; 
-    pointer-events: none; 
+  position: absolute; /* Position it inside the search input */
+  right: 10px;
+  color: #666;
+  font-size: 16px;
+  pointer-events: none;
 }
 
-#login-btn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 85px;
-    height: 35px;
+#login-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 85px;
+  height: 35px;
 }
-#login-btn,#section1 #letter button{
-    color: #ffffff;
-    border: none;
-    background-color: #f5a623;
-    border-radius: 5px;
-    transition: all 0.2s ease-in-out;
+#login-btn,
+#section1 #letter button {
+  color: #ffffff;
+  border: none;
+  background-color: #f5a623;
+  border-radius: 5px;
+  transition: all 0.2s ease-in-out;
 }
 
-#login-btn:hover,#section1 #letter button:hover{
-    cursor: pointer;
-    background-color: #8e7040;
+#login-btn:hover,
+#section1 #letter button:hover {
+  cursor: pointer;
+  background-color: #8e7040;
 }
 
 /* Styling for Cart and Profile Icons */
 .extra-icons {
-    display: flex;
-    gap: 20px;
-    align-items: center;
+  display: flex;
+  gap: 20px;
+  align-items: center;
 }
 
 .icon-container {
-    font-size: 20px;
-    color: #555;
-    cursor: pointer;
-    transition: color 0.3s ease;
+  font-size: 20px;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .icon-container.cart:hover {
-    color: #f5a623; /* Hover color for the cart icon */
+  color: #f5a623; /* Hover color for the cart icon */
 }
 
 .icon-container.profile:hover {
-    color: #f5a623; /* Hover color for the profile icon */
+  color: #f5a623; /* Hover color for the profile icon */
 }
 
-#section1 #letter button{
-	margin-left:35px;
-    font-size:18px;
-    padding:10px 30px;
-} 
+#section1 #letter button {
+  margin-left: 35px;
+  font-size: 18px;
+  padding: 10px 30px;
+}
 /* Ribbon styling */
 .ribbon {
-    --angle: 0deg; /* HSL color degree */
-    --color1: hsl(var(--angle), 50%, 50%); /* Main ribbon color */
-    --color2: hsl(var(--angle), 50%, 40%); /* Darker shade for fold effect */
-    --color3: hsl(var(--angle), 50%, 25%); /* Darkest shade for fold effect */
-    --color4: #fff; /* Text color */
-    --size1: 3.5rem; /* Adjust size for more balanced look */
-    --size2: calc(var(--size1) * 0.75); /* Slightly smaller for better fit */
-    --size3: calc(var(--size1) * 0.2); /* Adjust this to avoid too much spacing */
-    background:
-        /* main */
-        linear-gradient(var(--color1) 0 0) 50% 0 / calc(100% - var(--size2) * 2) calc(100% - var(--size3)),
-        /* fold */
-        linear-gradient(to top right, #0000 50%, var(--color3) 0) var(--size2) 100% / var(--size3) var(--size3),
-        linear-gradient(to top left, #0000 50%, var(--color3) 0) calc(100% - var(--size2)) 100% / var(--size3) var(--size3),
-        /* back */
-        linear-gradient(to top right, #0000 50%, var(--color2) 0) 0 100% / var(--size1) var(--size2),
-        linear-gradient(to bottom right, #0000 50%, var(--color2) 0) 0 100% / var(--size1) var(--size2),
-        linear-gradient(to top left, #0000 50%, var(--color2) 0) 100% 100% / var(--size1) var(--size2),
-        linear-gradient(to bottom left, #0000 50%, var(--color2) 0) 100% 100% / var(--size1) var(--size2);
-    background-repeat: no-repeat;
-    box-sizing: border-box;
-    color: var(--color4);
-    font-weight: normal;
-    margin: 0;
-    margin-bottom: var(--size3);
-    min-height: var(--size1);
-    padding: var(--size3) var(--size1) var(--size3) var(--size1);
-    font-size: 32px; /* Adjust font size for better balance */
-    color: #fff; /* White text for better contrast */
-    margin: -60px 0 20px 0; /* Adjusted margin to place the text closer */
-    text-align: center;
-    display: flex;
-    justify-content: center; /* Horizontally center the text */
-    align-items: center; /* Vertically center the text */
-    /* text-transform: uppercase; */
+  --angle: 0deg; /* HSL color degree */
+  --color1: hsl(var(--angle), 50%, 50%); /* Main ribbon color */
+  --color2: hsl(var(--angle), 50%, 40%); /* Darker shade for fold effect */
+  --color3: hsl(var(--angle), 50%, 25%); /* Darkest shade for fold effect */
+  --color4: #fff; /* Text color */
+  --size1: 3.5rem; /* Adjust size for more balanced look */
+  --size2: calc(var(--size1) * 0.75); /* Slightly smaller for better fit */
+  --size3: calc(var(--size1) * 0.2); /* Adjust this to avoid too much spacing */
+  background:
+        /* main */ linear-gradient(var(--color1) 0 0) 50% 0 /
+      calc(100% - var(--size2) * 2) calc(100% - var(--size3)),
+    /* fold */ linear-gradient(to top right, #0000 50%, var(--color3) 0)
+      var(--size2) 100% / var(--size3) var(--size3),
+    linear-gradient(to top left, #0000 50%, var(--color3) 0)
+      calc(100% - var(--size2)) 100% / var(--size3) var(--size3),
+    /* back */ linear-gradient(to top right, #0000 50%, var(--color2) 0) 0 100% /
+      var(--size1) var(--size2),
+    linear-gradient(to bottom right, #0000 50%, var(--color2) 0) 0 100% /
+      var(--size1) var(--size2),
+    linear-gradient(to top left, #0000 50%, var(--color2) 0) 100% 100% /
+      var(--size1) var(--size2),
+    linear-gradient(to bottom left, #0000 50%, var(--color2) 0) 100% 100% /
+      var(--size1) var(--size2);
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  color: var(--color4);
+  font-weight: normal;
+  margin: 0;
+  margin-bottom: var(--size3);
+  min-height: var(--size1);
+  padding: var(--size3) var(--size1) var(--size3) var(--size1);
+  font-size: 32px; /* Adjust font size for better balance */
+  color: #fff; /* White text for better contrast */
+  margin: -60px 0 20px 0; /* Adjusted margin to place the text closer */
+  text-align: center;
+  display: flex;
+  justify-content: center; /* Horizontally center the text */
+  align-items: center; /* Vertically center the text */
+  /* text-transform: uppercase; */
 }
 
-
 /* section 2 */
-#section2{
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
-    padding-bottom: 20px;
+#section2 {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding-bottom: 20px;
 }
 
 #section2 h1 {
-	margin-left:45px;
-    font-size: 2.0rem;
-    margin-bottom: 40px;
-    color: #333;
+  margin-left: 45px;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #333;
 }
 
 .cat-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
 .box {
-    text-align: center;
-	display:flex;
-    flex-direction: column;
-    color: #fff;
-    width:180px;
-    padding:20px 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    gap: 10px; /* Space between icon and text */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  width: 180px;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  gap: 10px; /* Space between icon and text */
 }
 
 .box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
 .box i {
-    font-size: 2rem;
-    margin-bottom: 10px;
+  font-size: 2rem;
+  margin-bottom: 10px;
 }
 
 .box p {
-    font-size: 1rem;
-    font-weight: bold;
-    margin: 0;
-    text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+  text-align: center;
 }
 
 .cat-container .box:nth-child(1) {
-    background-color: #3fa344; /* Softer Green */
+  background-color: #3fa344; /* Softer Green */
 }
 
 .cat-container .box:nth-child(2) {
-    background-color: #e86f97; /* Softer Pink */
+  background-color: #e86f97; /* Softer Pink */
 }
 
 .cat-container .box:nth-child(3) {
-    background-color: #4a99d9; /* Softer Blue */
+  background-color: #4a99d9; /* Softer Blue */
 }
 
 .cat-container .box:nth-child(4) {
-    background-color: #e6a84c; /* Softer Orange */
+  background-color: #e6a84c; /* Softer Orange */
 }
 
 .cat-container .box:nth-child(5) {
-    background-color: #c152d4; /* Softer Purple */
+  background-color: #c152d4; /* Softer Purple */
 }
 
 .cat-container .box:nth-child(6) {
-    background-color: #dc5a5a; /* Softer Red */
+  background-color: #dc5a5a; /* Softer Red */
 }
 
 /* section 3*/
-#section3{
-    width: 100%;
-    padding-bottom: 100px;
+#section3 {
+  width: 100%;
+  padding-bottom: 100px;
 }
 /* section 4*/
-#section4{
-    width: 100%;
-    padding-bottom: 60px;
+#section4 {
+  width: 100%;
+  padding-bottom: 60px;
 }
 #section4 h1 {
-	margin-left:45px;
-    font-size: 2.0rem;
-    margin-bottom: 40px;
-    color: #333;
+  margin-left: 45px;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #333;
 }
 #section4 .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding:0 40px;
-    gap: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 40px;
+  gap: 5px;
 }
 
 #section4 .card {
-    width: 220px;
-    margin: 5px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 220px;
+  margin: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #section4 .card-content {
-    padding: 20px;
-    background-color: #fff;
+  padding: 20px;
+  background-color: #fff;
 }
 
 #section4 .card-content h2 {
-    font-size: 2rem;
-    margin: 0 0 10px;
+  font-size: 2rem;
+  margin: 0 0 10px;
 }
 
 #section4 .card-content p {
-    font-size: 0.9rem;
-    margin: 0;
-    color: #000;
+  font-size: 0.9rem;
+  margin: 0;
+  color: #000;
 }
 
 #section4 .card-photo {
-    height: 180px;
-    background-size: cover;
-    background-position: center;
+  height: 180px;
+  background-size: cover;
+  background-position: center;
 }
 
 #section4 .card:nth-child(1) .card-content {
-    background-color: #f4c6ca; /* Light Red */
+  background-color: #f4c6ca; /* Light Red */
 }
 
 #section4 .card:nth-child(1) .card-content h2 {
-    color: #aa2520; /* Bolder Red */
+  color: #aa2520; /* Bolder Red */
 }
 #section4 .card:nth-child(1):hover {
-    box-shadow: 0 1px 18px rgba(217, 83, 79, 0.6); /* Bolder Red */
+  box-shadow: 0 1px 18px rgba(217, 83, 79, 0.6); /* Bolder Red */
 }
 #section4 .card:nth-child(2) .card-content {
-    background-color: #bbedc6; /* Light Green */
+  background-color: #bbedc6; /* Light Green */
 }
 #section4 .card:nth-child(2):hover {
-    box-shadow: 0 1px 18px rgba(92, 184, 92, 0.6); /* Bolder Red */
+  box-shadow: 0 1px 18px rgba(92, 184, 92, 0.6); /* Bolder Red */
 }
 
 #section4 .card:nth-child(2) .card-content h2 {
-    color: #239723; /* Bolder Green */
+  color: #239723; /* Bolder Green */
 }
 #section4 .card:nth-child(3) .card-content {
-    background-color: #9ed9e4; /* Light Blue */
+  background-color: #9ed9e4; /* Light Blue */
 }
 #section4 .card:nth-child(3):hover {
-    box-shadow: 0 1px 18px rgba(91, 192, 222, 0.6); /* Bolder Red */
+  box-shadow: 0 1px 18px rgba(91, 192, 222, 0.6); /* Bolder Red */
 }
 
 #section4 .card:nth-child(3) .card-content h2 {
-    color: #187896; /* Bolder Blue */
+  color: #187896; /* Bolder Blue */
 }
 
 #section4 .card:nth-child(4) .card-content {
-    background-color: #f1dfa0; /* Light Yellow */
+  background-color: #f1dfa0; /* Light Yellow */
 }
 
 #section4 .card:nth-child(4):hover {
-    box-shadow: 0 1px 18px rgba(240, 173, 78, 0.6); /* Bolder Red */
+  box-shadow: 0 1px 18px rgba(240, 173, 78, 0.6); /* Bolder Red */
 }
 
 #section4 .card:nth-child(4) .card-content h2 {
-    color: #a36816; /* Bolder Yellow */
+  color: #a36816; /* Bolder Yellow */
 }
 
 #section4 .card:nth-child(5) .card-content {
-    background-color: #f3b7bd; /* Light Pink */
+  background-color: #f3b7bd; /* Light Pink */
 }
 
 #section4 .card:nth-child(5):hover {
-    box-shadow: 0 1px 18px rgba(217, 83, 79, 0.6); /* Bolder Red */
+  box-shadow: 0 1px 18px rgba(217, 83, 79, 0.6); /* Bolder Red */
 }
 
 #section4 .card:nth-child(5) .card-content h2 {
-    color: #b12c27; /* Bolder Pink */
+  color: #b12c27; /* Bolder Pink */
 }
 #section4 .card-content p:first-of-type {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #000;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000;
 }
 
 /* section 5*/
-#section5{
-    /* background-color: red; */
-    width: 100%;
-    height: 600px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    position: relative;
+#section5 {
+  /* background-color: red; */
+  width: 100%;
+  height: 600px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
 }
 
-#section5 #cashbox{
-    width: 380px;
-    height: 380px;
-    background-color: #e39311;
-    position: absolute;
-    top: 50%;
-    bottom: 50%;
-    left: 60%;
-    right: 30%;
-    transform: translateY(-50%);
-    margin: 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.365);
+#section5 #cashbox {
+  width: 380px;
+  height: 380px;
+  background-color: #e39311;
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  left: 60%;
+  right: 30%;
+  transform: translateY(-50%);
+  margin: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.365);
 }
-#section5 #cashbox #cashbox-content{
-    padding: 20px 40px;
-    padding-top: 40px;
+#section5 #cashbox #cashbox-content {
+  padding: 20px 40px;
+  padding-top: 40px;
 }
-#section5 #cashbox #cashbox-content h1{
-    font-size: 2.2rem;
-    color: #fff;
-    margin-bottom: 20px;
+#section5 #cashbox #cashbox-content h1 {
+  font-size: 2.2rem;
+  color: #fff;
+  margin-bottom: 20px;
 }
-#section5 #cashbox #cashbox-content p{
-    font-size: 1.0rem;
-    color: #fff;
-    margin-bottom: 20px;
+#section5 #cashbox #cashbox-content p {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 20px;
 }
-#section5 #cashbox a{
-    font-size: 1.1rem;
-    list-style: none;
-    border-radius: 47px;
-    border: solid 2px #fff;
-    color: #fff;
-    padding: 10px 20px;
-    margin: 0px 30px;
+#section5 #cashbox a {
+  font-size: 1.1rem;
+  list-style: none;
+  border-radius: 47px;
+  border: solid 2px #fff;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 0px 30px;
 }
 footer {
-    background-color: #151515;
-    color: #fff;
-    padding: 40px 0;
+  background-color: #151515;
+  color: #fff;
+  padding: 40px 0;
 }
 
 .footer-container {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .footer-section {
-    flex: 1;
-    min-width: 200px;
-    margin: 20px;
+  flex: 1;
+  min-width: 200px;
+  margin: 20px;
 }
 
 .footer-section h3 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
 }
 
 .footer-section ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .footer-section ul li {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .footer-section ul li a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
 }
 
 .footer-section ul li a:hover {
-    color: #f5a623;
+  color: #f5a623;
 }
 
 .footer-bottom {
-    text-align: center;
-    /* padding: 5px 0; */
-    /* border-top: 1px solid #444; */
-    margin-top: 20px;
+  text-align: center;
+  /* padding: 5px 0; */
+  /* border-top: 1px solid #444; */
+  margin-top: 20px;
 }
 
 .footer-bottom p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #585858;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #585858;
 }
 
 #section6 {
-    margin-top: 50px;
-    user-select: none;
-    padding-bottom: 60px;
+  margin-top: 50px;
+  user-select: none;
+  padding-bottom: 60px;
 }
 
 #section6 > * {
-    user-select: none;
+  user-select: none;
 }
 
 #section6 h1 {
-	margin-left:45px;
-    font-size: 2.0rem;
-    margin-bottom: 20px;
-    color: #333;
+  margin-left: 45px;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
 }
 
 .slider-container-new {
-    width: 97%;
-    max-width: 1200px;
-    margin: 0 auto;
-    overflow: hidden;
-    position: relative;
-    /* padding-bottom: 20px; */
+  width: 97%;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+  /* padding-bottom: 20px; */
 }
 
 .slider-new {
-    display: flex;
-    transition: transform 0.3s ease;
-    cursor: grab;
+  display: flex;
+  transition: transform 0.3s ease;
+  cursor: grab;
 }
 
 .slider-new:active {
-    cursor: grabbing;
+  cursor: grabbing;
 }
 
 .slide-new {
-    min-width: 33.33%;
-    box-sizing: border-box;
-    padding: 20px;
+  min-width: 33.33%;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
 .product-card-new {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .product-card-new img {
-    width: 80%;
-    margin: 20px 0;
+  width: 80%;
+  margin: 20px 0;
 }
 
 .product-info-new {
-    text-align: center;
-    padding: 20px;
+  text-align: center;
+  padding: 20px;
 }
 
 .product-info-new h2 {
-    font-size: 1.2em;
-    margin: 10px 0;
+  font-size: 1.2em;
+  margin: 10px 0;
 }
 
 .product-info-new p {
-    color: #555;
-    font-size: 0.9em;
+  color: #555;
+  font-size: 0.9em;
 }
 
 .product-info-new .price {
-    font-weight: bold;
-    margin: 10px 0;
+  font-weight: bold;
+  margin: 10px 0;
 }
 
 .product-info-new .rating {
-    color: #f5a623;
-    margin: 10px 0;
+  color: #f5a623;
+  margin: 10px 0;
 }
 
 .product-info-new button {
-    padding: 10px 20px;
-    background-color: #f5a623;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  padding: 10px 20px;
+  background-color: #f5a623;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .progress-bar-container-new {
-    /* padding: 20px 0; */
-    width: 100%;
-    height: 2px;
-    background-color: #ddd;
-    position: relative;
-    margin-top: 15px;
+  /* padding: 20px 0; */
+  width: 100%;
+  height: 2px;
+  background-color: #ddd;
+  position: relative;
+  margin-top: 15px;
 }
 
 .progress-bar-new {
-    width: 0%;
-    height: 100%;
-    background-color: #f5a623;
-    transition: width 0.3s ease;
+  width: 0%;
+  height: 100%;
+  background-color: #f5a623;
+  transition: width 0.3s ease;
 }
-
