@@ -1000,7 +1000,7 @@
                 document.getElementById("category").value !== originalProductData.categoryId ||
                 document.getElementById("productPrice").value !== originalProductData.shopPrice ||
                 document.getElementById("stockQuantity").value !== originalProductData.stockQuantity ||
-                originalProductData.imageUpdated;  // Check if image was updated
+                originalProductData.imageUpdated;  
 
             editProductBtn.disabled = !hasChanges;
         }
@@ -1053,7 +1053,7 @@
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     editimagePreview.src = e.target.result;
-                    originalProductData.imageUpdated = true; // Mark image as changed
+                    originalProductData.imageUpdated = true;
                     checkForChanges();
                 };
                 reader.readAsDataURL(file);
@@ -1074,13 +1074,13 @@
             formData.append("stockQuantity", document.querySelector("#edit-modal #stockQuantity").value);
 
             if (originalProductData.imageUpdated && editimageInput.files.length > 0) {
-                formData.append("productImage", editimageInput.files[0]); // Append image file
+                formData.append("productImage", editimageInput.files[0]); 
             }
 
            console.log("Updating Product:", Object.fromEntries(formData.entries()));
             fetch(`/shopowner/updateProduct`, {
                 method: "POST",
-                body: formData  // Send as FormData for image upload
+                body: formData 
             })
             .then(response => response.json())
             .then(data => {
@@ -1100,13 +1100,13 @@
     </script>
     <script>
      document.addEventListener("DOMContentLoaded", function () {
-          fetchProducts(1); // Load page 1 initially
+          fetchProducts(1); 
       });
 
       let currentPage = 1;
-      const productsPerPage = 6; // Set to 6 per page
+      const productsPerPage = 6; 
       let totalPages = 1;
-      let totalProducts = 0; // Track total products
+      let totalProducts = 0;
 
       function fetchProducts(page) {
           fetch(`/shopowner/getAllProducts?page=${page}&size=${productsPerPage}`)
@@ -1167,7 +1167,6 @@
             startPage = Math.max(1, endPage - 7);
         }
 
-        // Generate page numbers
         for (let i = startPage; i <= endPage; i++) {
             paginationContainer.innerHTML += `<span class="page-number ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</span>`;
         }
@@ -1180,7 +1179,6 @@
         }
     }
 
-    // Event listeners for previous/next buttons
     document.querySelector(".main-content-pagination-page-lt").addEventListener("click", () => {
         if (currentPage > 1) changePage(currentPage - 1);
     });
