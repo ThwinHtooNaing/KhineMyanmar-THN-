@@ -541,6 +541,23 @@
         padding: 0px 0px 60px 0px;
       }
 
+      .section-title::before {
+        content: "";
+        display: inline-block;
+        width: 10px;
+        height: 20px;
+        background-color: #f5a623;
+        border-radius: 3px;
+        margin-right: 8px;
+      }
+
+      .section-title{
+        display: inline-block;
+        font-size: 20px;
+        font-weight: bold;
+        color:#f5a623;
+      }
+
     </style>
   </head>
   <body>
@@ -614,7 +631,8 @@
     </section>
     
     <section class="section" id="section1">
-      <h1 class="title">Availbe Products</h1> 
+      <p class="section-title">Available</p>
+      <h1 class="title">Available Products</h1> 
       <div class="product-container">
         <div class="product-container-body">
             <div class="product-item">
@@ -654,6 +672,7 @@
     </div>
     </section>
     <section class="section" id="shop-section">
+      <p class="section-title">Available</p>
       <h1 class="title">Available Shops</h1>
       <div class="shop-container">
           <div class="shop">
