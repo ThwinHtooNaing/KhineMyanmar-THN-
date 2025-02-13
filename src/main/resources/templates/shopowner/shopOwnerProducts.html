@@ -53,7 +53,7 @@
       }
 
       .sidebar div:hover {
-        background-color: #f8dbad7b; /* Light orange hover background */
+        background-color: #f8dbad7b; 
         border-right: 3px solid transparent;
         cursor: pointer;
       }
@@ -68,7 +68,6 @@
         margin-bottom: 5px;
       }
 
-      /* Active Styles */
       .asideActive {
         border-right: 3px solid #faa722;
         background-color: #f4b95a7b;
@@ -158,8 +157,6 @@
       .main {
         margin-top: 70px;
         margin-left: 225px;
-        /* border: 1px solid red; */
-        /* height: 100px; */
         background-color: #ffffff;
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
       }
@@ -531,8 +528,7 @@
     </style>
   </head>
   <body>
-    <!-- <h1>Hello this is shopowner page</h1>
-    -->
+    
     <header class="header">
       <div class="icons">
         <div class="notification icon">
@@ -631,7 +627,7 @@
       </div>
     </main>
     <div class="modal-container">
-      <!-- Modals -->
+      
       <div class="modal" style="display: none">
         <div class="modal-content">
           <div class="modal-content-header">
@@ -748,7 +744,7 @@
         </div>
       </div>
     </div>
-    <script th:src="@{/js/adminSideBarNav.js}"></script>    <!-- SweetAlert2 CSS and JS -->
+    <script th:src="@{/js/adminSideBarNav.js}"></script>   
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
       let selectedProducts = [];
@@ -757,16 +753,16 @@
           const label = checkbox.parentElement;
           const row = checkbox.closest("tr");
           const productId = row.getAttribute("productid");
-          console.log(row.getAttribute("productid"));  // Use the checkbox's ID for product ID
+          console.log(row.getAttribute("productid")); 
 
           if (checkbox.checked) {
               label.classList.add("checked");
               row.style.backgroundColor = "#fbf6eb";
-              selectedProducts.push(productId);  // Add product ID to selected list
+              selectedProducts.push(productId); 
           } else {
               label.classList.remove("checked");
               row.style.backgroundColor = "";
-              selectedProducts = selectedProducts.filter(id => id !== productId);  // Remove from selected list
+              selectedProducts = selectedProducts.filter(id => id !== productId);  
           }
 
           console.log(selectedProducts);
@@ -784,12 +780,8 @@
               showModal(false, "No products selected.");
               return;
           }
-
-          // Call function to delete selected products
           deleteSelectedProducts();
       });
-
-      //
 
       function deleteSelectedProducts() {
 
@@ -872,25 +864,21 @@
     </script>
     <script>
         document.getElementById("addProductForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent the form from submitting the traditional way
+        event.preventDefault();
 
-        // Create a new FormData object
         var formData = new FormData();
 
-        // Add form fields to FormData
         formData.append("productName", document.getElementById("productName").value);
         formData.append("description", document.getElementById("product-description").value);
         formData.append("productPrice", document.getElementById("productPrice").value);
         formData.append("stockQuantity", document.getElementById("stockQuantity").value);
         formData.append("categoryId", document.getElementById("category").value);
 
-        // If there is a profile image, append it to FormData
         var profileImage = document.getElementById("image-input").files[0];
         if (profileImage) {
             formData.append("profileImage", profileImage);
         }
 
-        // Send the form data to the backend using AJAX
         console.log(formData);
         fetch('/shopowner/addProduct', {
             method: 'POST',
