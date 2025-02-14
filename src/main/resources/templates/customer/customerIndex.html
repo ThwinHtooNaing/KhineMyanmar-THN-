@@ -1364,6 +1364,24 @@
     });
   });
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const profileImg = document.querySelector(".profile-img");
+    const profileModal = document.getElementById("profile-modal");
+
+    profileImg.addEventListener("click", () => {
+      profileModal.classList.toggle("active");
+    });
+
+    // Close the modal if clicked outside
+    document.addEventListener("click", (event) => {
+      if (!profileImg.contains(event.target) && !profileModal.contains(event.target)) {
+        profileModal.classList.remove("active");
+      }
+    });
+  });
+</script>
+
 
 
 </html>
