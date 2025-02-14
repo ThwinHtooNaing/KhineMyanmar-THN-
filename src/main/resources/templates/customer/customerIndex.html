@@ -30,7 +30,7 @@
       }
 
       header.scrolled {
-        background-color: rgb(249, 249, 249);
+        background-color: rgb(239, 239, 239);/* Also add in other pages*/
         color: black;
         box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
       }
@@ -156,6 +156,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        box-shadow: 1px 1px 1px #5954547a;
       }
       .cart-count {
         margin-left: 5px;
@@ -171,6 +172,7 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        box-shadow: 1px 1px 1px #5954547a;
       }
 
       .bell-icon {
@@ -195,6 +197,7 @@
         object-fit: cover;
         border: 2px solid #ddd;
         cursor: pointer;
+        box-shadow: 1px 1px 1px #5954549c;
         transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
       }
 
@@ -240,7 +243,7 @@
       }
 
       #section1 {
-        margin-bottom: 100px;
+        margin-bottom: 70px;
       }
 
       #section1 .title {
@@ -326,8 +329,6 @@
 
       .footer-bottom {
         text-align: center;
-        /* padding: 5px 0; */
-        /* border-top: 1px solid #444; */
         margin-top: 20px;
       }
 
@@ -360,8 +361,7 @@
       }
 
       .box {
-        min-width: 250px;
-        height: 150px;
+        padding: 20px 30px;
         text-align: center;
         border-radius: 12px;
         background: #fff;
@@ -374,11 +374,10 @@
         justify-content: center;
         align-items: center;
       }
-
-      .box i {
-        font-size: 30px;
-        display: block;
-        margin-bottom: 25px;
+   
+      .box p {
+        font-size: 18px;
+        color: #ffffff;
       }
 
       .box:hover {
@@ -683,15 +682,18 @@
         position: fixed;
         top: 75px;
         right: 10px;
+        z-index: 9999;
       }
 
       .modal {
+        display: none; /* Hide by default */
         background-color: #fff;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         padding: 10px;
         border-radius: 5px;
         width: 170px;
-        z-index: 1000;
+        z-index: 10000;
+        position: relative;
       }
 
       .modal ul {
@@ -731,6 +733,78 @@
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
         border-bottom: 10px solid #fff;
+        z-index: 10001;
+      }
+
+      .card-container {
+          display: flex;
+          gap: 20px;
+          overflow-x: auto;
+          scroll-behavior: smooth;
+          padding: 20px;
+          white-space: nowrap;
+          cursor: grab;
+          margin-bottom: 60px;
+          /* Hide scrollbar */
+          scrollbar-width: none; /* Firefox */
+          -ms-overflow-style: none; /* IE and Edge */
+      }
+
+      .card-container::-webkit-scrollbar {
+          display: none; /* Chrome, Safari */
+      }
+
+      .card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 2px 10px 15px rgba(39, 39, 39, 0.148);
+        width: 350px;
+        height: 200px;
+        flex: 0 0 auto;
+        transition: transform 0.3s ease;
+    }
+
+      .content {
+          display: flex;
+          gap: 20px;
+          flex-direction: column;
+          margin-left: 20px;
+      }
+
+      h2 {
+          font-size: 20px;
+          color: #b00062;
+          font-weight: bold;
+      }
+
+      h2 span {
+          color: #b00062;
+      }
+
+      .buy-btn {
+          margin-top: 10px;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 20px;
+          background-color: white;
+          color: #b00062;
+          font-weight: bold;
+          cursor: pointer;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+          transition: all 0.3s ease;
+      }
+
+      .buy-btn:hover {
+          background-color: #b00062;
+          color: white;
+      }
+
+      .image img {
+          width: 170px;
+          height: auto;
       }
     </style>
   </head>
@@ -803,39 +877,30 @@
         </button>
         <div class="cat-container">
           <div class="box">
-            <i class="fa-solid fa-tv"></i>
             <p>Consumer Electronic</p>
           </div>
           <div class="box">
-            <i class="fa-solid fa-heart-pulse"></i>
             <p>Health & Beauty</p>
           </div>
           <div class="box">
-            <i class="fa-solid fa-house"></i>
             <p>Home & Garden</p>
           </div>
           <div class="box">
-            <i class="fa-solid fa-utensils"></i>
             <p>Food & Drinks</p>
           </div>
           <div class="box">
-            <i class="fa-solid fa-gem"></i>
             <p>Accessories</p>
           </div>
           <div class="box">
-            <i class="fa-solid fa-shirt"></i>
             <p>Clothing</p>
           </div>
           <div class="box">
-            <i class="fa-solid fa-car"></i>
             <p>Automotive</p>
           </div>
           <div class="box">
-            <i class="fa-solid fa-laptop"></i>
             <p>Computers</p>
           </div>
           <div class="box">
-            <i class="fa-solid fa-basketball"></i>
             <p>Sports</p>
           </div>
         </div>
@@ -963,6 +1028,50 @@
         </div>
       </div>
     </section>
+
+    <section class="section" id="section2">
+        <div class="card-container"  id="draggable-container">
+          <div class="card" style="background-color: #f7d6e0;">
+              <div class="content">
+                  <h2>Outlier <br> <span>Headphone</span></h2>
+                  <button class="buy-btn">Buy now</button>
+              </div>
+              <div class="image">
+                  <img th:src="@{/img/products/beautiful-gaming-headphone-isolated-transparent-background.png}" alt="Headphone">
+              </div>
+          </div>
+          <div class="card" style="background-color: #d6f7e0;">
+            <div class="content">
+                <h2>Wireless <br> <span>Earbuds</span></h2>
+                <button class="buy-btn">Buy now</button>
+            </div>
+            <div class="image">
+                <img th:src="@{/img/products/wireless-earbuds.png}" alt="Earbuds">
+            </div>
+          </div>
+
+          <div class="card" style="background-color: #e0d6f7;">
+              <div class="content">
+                  <h2>Smart <br> <span>Speaker</span></h2>
+                  <button class="buy-btn">Buy now</button>
+              </div>
+              <div class="image">
+                  <img th:src="@{/img/products/smart-speaker.png}" alt="Speaker">
+              </div>
+          </div>
+
+          <div class="card" style="background-color: #f7e0d6;">
+            <div class="content">
+                <h2>Gaming <br> <span>Keyboard</span></h2>
+                <button class="buy-btn">Buy now</button>
+            </div>
+            <div class="image">
+                <img th:src="@{/img/products/gaming-keyboard.png}" alt="Keyboard">
+            </div>
+          </div>
+        </div>
+    </section>
+
     <section class="section" id="shop-section">
       <p class="section-title">Available</p>
       <h1 class="title">Available Shops</h1>
@@ -1156,48 +1265,101 @@
     }
   </script>
   <script>
-    const catContainer = document.querySelector(".cat-container");
-    const leftBtn = document.querySelector(".left");
-    const rightBtn = document.querySelector(".right");
+    (() => {
+        const catContainer = document.querySelector(".cat-container");
+        const leftBtn = document.querySelector(".left");
+        const rightBtn = document.querySelector(".right");
+
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        catContainer.addEventListener("mousedown", (e) => {
+            isDown = true;
+            startX = e.pageX - catContainer.offsetLeft;
+            scrollLeft = catContainer.scrollLeft;
+        });
+
+        catContainer.addEventListener("mouseleave", () => {
+            isDown = false;
+        });
+
+        catContainer.addEventListener("mouseup", () => {
+            isDown = false;
+        });
+
+        catContainer.addEventListener("mousemove", (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - catContainer.offsetLeft;
+            const walk = (x - startX) * 2; 
+            catContainer.scrollLeft = scrollLeft - walk;
+        });
+
+        leftBtn.addEventListener("click", () => {
+            catContainer.scrollBy({ left: -550, behavior: "smooth" });
+        });
+
+        rightBtn.addEventListener("click", () => {
+            catContainer.scrollBy({ left: 550, behavior: "smooth" });
+        });
+
+        catContainer.addEventListener("scroll", () => {
+            leftBtn.style.opacity = catContainer.scrollLeft > 0 ? "1" : "0";
+        });
+    })();
+
+  </script>
+  <script>
+    const colors = [
+        "rgb(237, 176, 44)", // 1
+        "rgb(239, 140, 34)", // 2
+        "rgb(239, 103, 44)", // 3
+        "rgb(244, 60, 47)",  // 4
+        "rgb(252, 40, 24)",  // 5
+        "rgb(244, 60, 47)",  // 6
+        "rgb(239, 103, 44)", // 7
+        "rgb(239, 140, 34)", // 8
+        "rgb(237, 176, 44)"  // 9
+    ];
+
+    document.querySelectorAll(".box").forEach((el, index) => {
+        el.style.backgroundColor = colors[index % colors.length];
+    });
+
+  </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("draggable-container");
 
     let isDown = false;
     let startX;
     let scrollLeft;
 
-    catContainer.addEventListener("mousedown", (e) => {
+    container.addEventListener("mousedown", (e) => {
       isDown = true;
-      startX = e.pageX - catContainer.offsetLeft;
-      scrollLeft = catContainer.scrollLeft;
+      startX = e.pageX; 
+      scrollLeft = container.scrollLeft;
+      e.preventDefault(); 
     });
 
-    catContainer.addEventListener("mouseleave", () => {
+    container.addEventListener("mouseleave", () => {
       isDown = false;
     });
 
-    catContainer.addEventListener("mouseup", () => {
+    container.addEventListener("mouseup", () => {
       isDown = false;
     });
 
-    catContainer.addEventListener("mousemove", (e) => {
+    container.addEventListener("mousemove", (e) => {
       if (!isDown) return;
       e.preventDefault();
-      const x = e.pageX - catContainer.offsetLeft;
-      const walk = (x - startX) * 2; // Adjust speed
-      catContainer.scrollLeft = scrollLeft - walk;
+      const x = e.pageX;
+      const walk = (x - startX) * 2; // Adjust sensitivity
+      container.scrollLeft = scrollLeft - walk;
     });
+  });
+</script>
 
-    
-    leftBtn.addEventListener("click", () => {
-      catContainer.scrollBy({ left: -550, behavior: "smooth" });
-    });
 
-    rightBtn.addEventListener("click", () => {
-      catContainer.scrollBy({ left: 550, behavior: "smooth" });
-    });
-
-  
-    catContainer.addEventListener("scroll", () => {
-      leftBtn.style.opacity = catContainer.scrollLeft > 0 ? "1" : "0";
-    });
-  </script>
 </html>
