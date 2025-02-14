@@ -1173,9 +1173,15 @@
       <div id="profile-modal" class="modal">
         <div class="triangle"></div>
         <ul>
-          <li><i class="fas fa-user"></i><a href="#">Profile</a></li>
-          <li><i class="fas fa-history"></i><a href="#">History</a></li>
-          <li><i class="fas fa-sign-out-alt"></i><a href="#">Log Out</a></li>
+          <li onclick="navigateTo('/customer/profile')">
+            <i class="fas fa-user"></i> Profile
+          </li>
+          <li onclick="navigateTo('/customer/history')">
+            <i class="fas fa-history"></i> History
+          </li>
+          <li onclick="navigateTo('/ecom/index')">
+            <i class="fas fa-sign-out-alt"></i> Log Out
+          </li>
         </ul>
       </div>
     </div>
