@@ -26,8 +26,6 @@
         font-size: 18px;
         position: fixed;
         background: transparent;
-        /* background-color: #fff; */
-        /* box-shadow: 0px 5px 15px rgba(194, 192, 192, 0.3); */
         padding: 15px 0;
         z-index: 1000;
       }
@@ -82,12 +80,25 @@
         transition: color 0.3s ease-in-out;
         color: #fff;
       }
+      nav ul li:nth-child(4) {
+        position: relative;
+        cursor: pointer;
+        transition: color 0.3s ease-in-out;
+        /* color: #fff; */
+        color: #1911fc;
+      }
 
       header.scrolled nav ul li:hover {
         color: #f5a623;
       }
 
-      nav ul li.active,
+      nav ul li.active
+      {
+        /* color: #f5a623; */
+        /* font-size: 19px; */
+        /* font-weight: 900; */
+        color: #fccd11;
+      }
       nav ul li:hover {
         color: #f5a623;
       }
@@ -204,44 +215,55 @@
         box-shadow: 0 0 5px #f5a623;
       }
 
-      .section{
-        margin: 0px 40px;
-      }
+      /* #img-container img{
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+       } */
 
-      #section1 .title{
-        margin: 50px 0px;
-        font-size: 38px;
+      .overlay{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 600px;
+        background-color: #00000036;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      .overlay h1{
+        font-size: 85px;
         font-weight: 900;
+        color: #fff;
+      }
+      .overlay p{
+        font-size: 25px;
+        color: #fff;
+      }
+      .img-container {
+        height: 600px;
+      }
+      .background-img{
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        object-fit: cover;
+        /* filter: blur(10px); */
       }
 
-      .product-container{
-          margin-top: 20px;
+      #p-container{
+        /* height: 300px; */
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
-
-      .product-container-body {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 20px; 
-      }
-
-      .product-item {
-          background: #fff;
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-          text-align: center;
-      }
-
-      .product-item img {
-          width: 100%;
-          height: 250px;
-          object-fit: cover; /* Ensures consistent image sizing */
-      }
-
-      .product-item h3 {
-          text-align: left;  
-          padding: 20px;
-          font-size: 16px;
+      #p-container div{
+        width: 60%;
+        margin: 70px 0px;
+        font-size: 19px;
       }
 
       footer {
@@ -313,7 +335,7 @@
             <li onclick="navigateTo('/customer/shop')">Shops</li>
             <li class="active" onclick="navigateTo('/customer/aboutUs')">About Us</li>
         </ul>
-        <div class="search-container">
+        <div class="search-container" style="opacity: 0;">
           <input type="text" placeholder="Search..." id="search-input" />
           <i class="fas fa-search lens-icon"></i>
         </div>
@@ -334,9 +356,30 @@
       </nav>
     </header>
 
-    <section class="section" id="section2">
-
+    <section class="img-container">
+      <div class="overlay">
+        <h1>About Us</h1>
+        <p>For customers, very where.</p>
+      </div>
+      <img class="background-img" th:src="@{/img/11062b_7478ea5332a34fefaff6e19f2c22e7b8~mv2.webp}">
     </section>
+    <section class="section" id="p-container">
+      <div class="paragraph">
+        <p>
+          We believe that shopping should be for everyone. It helps us discover new trends, express ourselves, and connect with the world around us.
+        </p><br/>
+        <p>
+          Our goal is to help more people from diverse backgrounds experience the joy of seamless shopping. Because we believe this builds a more connected, more inclusive, and more exciting marketplace.
+        </p><br/>
+        <p>
+          Like you, shopping is in our DNA. At Khine Myanmar, we believe shopping opens the door to the greatest, most fulfilling experiences life can offer. And we have learned that the best shopping is about discovering unique products, about supporting local businesses, about immersing yourself in a world of choice, rather than just buying what’s convenient.
+        </p><br/>
+        <p>
+          As shoppers, you're on a journey, and at Khine Myanmar, we're on one, too. Over the last few years, ecommerce has transformed. We're thinking deeply not just about how people shop but why they shop and how to best serve customers on their journey – and we approach our future with a passion and commitment to helping everyone find what they love.
+        </p><br/>        
+      </div>
+    </section>
+    
     <footer>
         <div class="footer-container">
             <div class="footer-section">
@@ -381,41 +424,18 @@
         </div>
     </footer>
   </body>
-  
-  
-    <script>
-      document.querySelectorAll("header nav ul li").forEach((li) => {
-          li.addEventListener("click", () => {
-              // Remove the 'active' class from all list items
-              document.querySelectorAll("header nav ul li").forEach((item) => {
-                  item.classList.remove("active");
-              });
-              li.classList.add("active");
-          });
-      });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        let slides = document.querySelectorAll(".slide");
-        let currentIndex = 0;
-        const displayTime = 5000; // 5 seconds
-
-        // Initialize first slide
-        slides[currentIndex].classList.add("active");
-
-        function nextSlide() {
-            // Remove active class from current slide
-            slides[currentIndex].classList.remove("active");
-            
-            // Calculate next index
-            currentIndex = (currentIndex + 1) % slides.length;
-            
-            // Add active class to next slide
-            slides[currentIndex].classList.add("active");
-        }
-
-        setInterval(nextSlide, displayTime);
+  <script>
+    document.querySelectorAll("header nav ul li").forEach((li) => {
+        li.addEventListener("click", () => {
+            // Remove the 'active' class from all list items
+            document.querySelectorAll("header nav ul li").forEach((item) => {
+                item.classList.remove("active");
+            });
+            li.classList.add("active");
+        });
     });
+  </script>
+  <script>
     window.addEventListener("scroll", function() {
       document.querySelector("header").classList.toggle("scrolled", window.scrollY > 50);
     });
