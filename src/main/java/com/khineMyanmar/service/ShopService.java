@@ -30,6 +30,10 @@ public class ShopService {
 		return shopRep.findAll();
 	}
 
+	public List<Shop> getFirst6Shops() {
+        return shopRep.findTop6ByOrderByShopIdAsc();
+    }
+
 	@Transactional
 	public Shop createShop(Map<String,String> updates,MultipartFile shopProfileImage,Long ownerId){
 

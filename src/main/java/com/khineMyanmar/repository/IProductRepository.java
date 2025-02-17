@@ -10,8 +10,11 @@ import com.khineMyanmar.model.Product;
 
 @Repository
 public interface IProductRepository extends JpaRepository<Product,Long> {
+
     Page<Product> findByCategory_CategoryName(String categoryName, Pageable pageable);
     Page<Product> findByProductShops_Shop_ShopName(String shopName, Pageable pageable);
     void deleteByProductIdIn(List<Long> productIds);
+    List<Product> findTop8ByOrderByProductNameAsc();
+
 
 }

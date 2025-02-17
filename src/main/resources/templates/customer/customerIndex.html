@@ -268,19 +268,84 @@
         overflow: hidden;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         text-align: center;
+        transition: transform 0.3s, opacity 0.3s;
+      }
+
+      .product-item:hover{
+        transform: translateY(-10px);
+      }
+
+      .product-item:hover .product-overlay{
+        opacity: 1;
+      }
+
+      .product-item:hover .product-overlay a{
+        transform: translateY(-10px);
       }
 
       .product-item img {
         width: 100%;
-        height: 250px;
+        height: 100%;
         object-fit: cover; /* Ensures consistent image sizing */
+      }
+
+      .product-image-container {
+          height: 250px;
+          position: relative;
+          overflow: hidden; 
+      }
+
+      .product-overlay {
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.384);
+          display: flex;
+          justify-content: center;
+          align-items: center; 
+          transition: opacity 0.3s;
+      }
+
+      .product-overlay a {
+          position: absolute; 
+          bottom: 20px; 
+          right: 20px; 
+          text-decoration: none;
+          color: #fff;
+          font-size: 14px;
+          padding: 10px 20px;
+          border: 2.5px solid #fff;
+          border-radius: 50px;
+          transition: transform 0.3s;
+      }
+
+      .product-overlay a:hover {
+          background-color:#de931b;
+          border: 2.5px solid #de931b;
       }
 
       .product-item h3 {
         text-align: left;
-        padding: 20px;
-        font-size: 16px;
+        font-size: 18px;
         color: #f5a623;
+      }
+
+      .product-info {
+        padding: 15px;
+      }
+
+      .category, .description, .price {
+        text-align: left;
+        font-size: 16px;
+        margin: 8px 0;
+      }
+
+      .price {
+        font-weight: bold;
+        color: #28a745;
       }
 
       footer {
@@ -361,13 +426,15 @@
       }
 
       .box {
+        flex: 0 0 150px;
+        max-width: 150px; 
         padding: 20px 30px;
         text-align: center;
         border-radius: 12px;
         background: #fff;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         border: 1px solid #ddd;
-        transition: 0.3s;
+        transition: transform 0.3s ease, background 0.3s ease;
         cursor: pointer;
         display: flex;
         flex-direction: column;
@@ -381,8 +448,9 @@
       }
 
       .box:hover {
-        background: #f5a623;
-        color: #fff;
+          background: #f5a623;
+          color: #fff;
+          transform: translateY(-5px); /* Slight shift to the right */
       }
 
       .nav-btn {
@@ -404,8 +472,9 @@
       }
 
       .left {
+        z-index: 100000;
         left: 10px;
-        opacity: 0; /* Initially hidden */
+        opacity: 0; 
       }
 
       .right {
@@ -460,14 +529,25 @@
         position: relative;
       }
 
+      .shop:hover img {
+        transform: scale(1.03);
+      }
+
+      .shop-image-container{
+        height: 250px;
+        overflow: hidden;
+      }
+
       .shop img {
         width: 100%;
-        height: 250px;
+        height: 100%;
         object-fit: cover;
+        transition: transform 0.3s;
+        overflow: hidden;
       }
 
       .shop-content {
-        padding: 15px;
+        padding: 15px 15px 18px 15px;
         text-align: left;
         font-size: 14px;
         color: #333;
@@ -758,6 +838,10 @@
           display: none; /* Chrome, Safari */
       }
 
+      .card:hover{
+        box-shadow: 2px 10px 15px rgba(39, 39, 39, 0.313);
+      }
+
       .card {
         display: flex;
         align-items: center;
@@ -810,6 +894,28 @@
           width: 170px;
           height: auto;
       }
+
+      .loadmore-container{
+        margin-top: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .loadmore{
+        border-radius: 5px;
+        text-align: center;
+        display: inline-block;
+        padding: 20px 70px;
+        border: 1px solid #848282;
+        transition: border-color 0.3s ease,color 0.3s ease;
+      }
+
+      .loadmore:hover{
+        border-color: #e38d03;
+        color: #e38d03;
+        cursor: pointer;
+
+      }
     </style>
   </head>
   <body>
@@ -843,6 +949,7 @@
         </div>
       </nav>
     </header>
+
     <div class="slider">
       <div class="slides-container">
         <div class="slide">
@@ -874,39 +981,14 @@
         <div class="indicator"></div>
       </div>
     </div>
+
     <section class="section" id="category-section">
       <div class="slider-wrapper">
         <button class="nav-btn left">
           <i class="fa-solid fa-chevron-left"></i>
         </button>
         <div class="cat-container">
-          <div class="box">
-            <p>Consumer Electronic</p>
-          </div>
-          <div class="box">
-            <p>Health & Beauty</p>
-          </div>
-          <div class="box">
-            <p>Home & Garden</p>
-          </div>
-          <div class="box">
-            <p>Food & Drinks</p>
-          </div>
-          <div class="box">
-            <p>Accessories</p>
-          </div>
-          <div class="box">
-            <p>Clothing</p>
-          </div>
-          <div class="box">
-            <p>Automotive</p>
-          </div>
-          <div class="box">
-            <p>Computers</p>
-          </div>
-          <div class="box">
-            <p>Sports</p>
-          </div>
+          
         </div>
         <button class="nav-btn right">
           <i class="fa-solid fa-chevron-right"></i>
@@ -973,61 +1055,11 @@
       <h1 class="title">Available Products</h1>
       <div class="product-container">
         <div class="product-container-body">
-          <div class="product-item">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0535/3730/8854/files/iPhone_product_photography_cover_1024x1024.jpg?v=1655147415"
-              alt="Product"
-            />
-            <h3>MEGA SALE Best Seller</h3>
-          </div>
-          <div class="product-item">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0535/3730/8854/files/iPhone_product_photography_cover_1024x1024.jpg?v=1655147415"
-              alt="Product"
-            />
-            <h3>Noodles</h3>
-          </div>
-          <div class="product-item">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0535/3730/8854/files/iPhone_product_photography_cover_1024x1024.jpg?v=1655147415"
-              alt="Product"
-            />
-            <h3>Indian</h3>
-          </div>
-          <div class="product-item">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0535/3730/8854/files/iPhone_product_photography_cover_1024x1024.jpg?v=1655147415"
-              alt="Product"
-            />
-            <h3>Fried Chicken</h3>
-          </div>
-          <div class="product-item">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0535/3730/8854/files/iPhone_product_photography_cover_1024x1024.jpg?v=1655147415"
-              alt="Product"
-            />
-            <h3>Pizza</h3>
-          </div>
-          <div class="product-item">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0535/3730/8854/files/iPhone_product_photography_cover_1024x1024.jpg?v=1655147415"
-              alt="Product"
-            />
-            <h3>Local</h3>
-          </div>
-          <div class="product-item">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0535/3730/8854/files/iPhone_product_photography_cover_1024x1024.jpg?v=1655147415"
-              alt="Product"
-            />
-            <h3>Bubble Tea</h3>
-          </div>
-          <div class="product-item">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0535/3730/8854/files/iPhone_product_photography_cover_1024x1024.jpg?v=1655147415"
-              alt="Product"
-            />
-            <h3>Weekend Treats</h3>
+          
+        </div>
+        <div class="loadmore-container">
+          <div class="loadmore" onclick="navigateTo('/customer/product')">
+            See More Products
           </div>
         </div>
       </div>
@@ -1080,66 +1112,13 @@
       <p class="section-title">Available</p>
       <h1 class="title">Available Shops</h1>
       <div class="shop-container">
-        <div class="shop">
-          <img
-            src="https://cdn.shopify.com/s/files/1/0535/3730/8854/files/iPhone_product_photography_cover_1024x1024.jpg?v=1655147415"
-            alt="Shop"
-          />
-          <div class="shop-content">
-            <p class="shop-title">Shop Name 1</p>
-            <p class="shop-address">Address 1</p>
-            <p class="shop-phNo">Phone Number 1</p>
-          </div>
-        </div>
-
-        <div class="shop">
-          <img
-            src="https://images.pexels.com/photos/3769747/pexels-photo-3769747.jpeg"
-            alt="Shop"
-          />
-          <div class="shop-content">
-            <p class="shop-title">Shop Name 2</p>
-            <p class="shop-address">Address 2</p>
-            <p class="shop-phNo">Phone Number 2</p>
-          </div>
-        </div>
-
-        <div class="shop">
-          <img
-            src="https://images.pexels.com/photos/1488463/pexels-photo-1488463.jpeg"
-            alt="Shop"
-          />
-          <div class="shop-content">
-            <p class="shop-title">Shop Name 3</p>
-            <p class="shop-address">Address 3</p>
-            <p class="shop-phNo">Phone Number 3</p>
-          </div>
-        </div>
-
-        <div class="shop">
-          <img
-            src="https://media-cdn.tripadvisor.com/media/photo-s/06/ee/e1/49/mingalabar-myanmar-restaurant.jpg"
-            alt="Shop"
-          />
-          <div class="shop-content">
-            <p class="shop-title">Shop Name 4</p>
-            <p class="shop-address">Address 4</p>
-            <p class="shop-phNo">Phone Number 4</p>
-          </div>
-        </div>
-
-        <div class="shop">
-          <img
-            src="https://www.heddels.com/wp-content/uploads/2020/02/a-general-guide-to-vintage-clothing.jpg"
-            alt="Shop"
-          />
-          <div class="shop-content">
-            <p class="shop-title">Shop Name 5</p>
-            <p class="shop-address">Address 5</p>
-            <p class="shop-phNo">Phone Number 5</p>
-          </div>
-        </div>
+        
       </div>
+       <div class="loadmore-container">
+          <div class="loadmore" onclick="navigateTo('/customer/shop')">
+            See More Shop
+          </div>
+        </div>
     </section>
 
     <section id="available-services">
@@ -1166,9 +1145,11 @@
         </p>
       </div>
     </section>
+
     <section class="last-section">
       <h1 style="text-align: center; font-size: 45px">Our Services</h1>
     </section>
+
     <div class="modal-container">
       <div id="profile-modal" class="modal">
         <div class="triangle"></div>
@@ -1241,6 +1222,7 @@
       });
     });
   </script>
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       let slides = document.querySelectorAll(".slide");
@@ -1274,68 +1256,46 @@
       window.location.href = path;
     }
   </script>
+
   <script>
-    (() => {
-        const catContainer = document.querySelector(".cat-container");
-        const leftBtn = document.querySelector(".left");
-        const rightBtn = document.querySelector(".right");
+    function initializeScrolling() {
+    const catContainer = document.querySelector(".cat-container");
+    const leftBtn = document.querySelector(".left");
+    const rightBtn = document.querySelector(".right");
 
-        let isDown = false;
-        let startX;
-        let scrollLeft;
+    let isDown = false;
+    let startX;
+    let scrollLeft;
 
-        catContainer.addEventListener("mousedown", (e) => {
-            isDown = true;
-            startX = e.pageX - catContainer.offsetLeft;
-            scrollLeft = catContainer.scrollLeft;
-        });
-
-        catContainer.addEventListener("mouseleave", () => {
-            isDown = false;
-        });
-
-        catContainer.addEventListener("mouseup", () => {
-            isDown = false;
-        });
-
-        catContainer.addEventListener("mousemove", (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - catContainer.offsetLeft;
-            const walk = (x - startX) * 2; 
-            catContainer.scrollLeft = scrollLeft - walk;
-        });
-
-        leftBtn.addEventListener("click", () => {
-            catContainer.scrollBy({ left: -550, behavior: "smooth" });
-        });
-
-        rightBtn.addEventListener("click", () => {
-            catContainer.scrollBy({ left: 550, behavior: "smooth" });
-        });
-
-        catContainer.addEventListener("scroll", () => {
-            leftBtn.style.opacity = catContainer.scrollLeft > 0 ? "1" : "0";
-        });
-    })();
-
-  </script>
-  <script>
-    const colors = [
-        "rgb(237, 176, 44)", // 1
-        "rgb(239, 140, 34)", // 2
-        "rgb(239, 103, 44)", // 3
-        "rgb(244, 60, 47)",  // 4
-        "rgb(252, 40, 24)",  // 5
-        "rgb(244, 60, 47)",  // 6
-        "rgb(239, 103, 44)", // 7
-        "rgb(239, 140, 34)", // 8
-        "rgb(237, 176, 44)"  // 9
-    ];
-
-    document.querySelectorAll(".box").forEach((el, index) => {
-        el.style.backgroundColor = colors[index % colors.length];
+    catContainer.addEventListener("mousedown", (e) => {
+        isDown = true;
+        startX = e.pageX - catContainer.offsetLeft;
+        scrollLeft = catContainer.scrollLeft;
     });
+
+    catContainer.addEventListener("mouseleave", () => isDown = false);
+    catContainer.addEventListener("mouseup", () => isDown = false);
+
+    catContainer.addEventListener("mousemove", (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - catContainer.offsetLeft;
+        const walk = (x - startX) * 2;
+        catContainer.scrollLeft = scrollLeft - walk;
+    });
+
+    leftBtn.addEventListener("click", () => {
+        catContainer.scrollBy({ left: -550, behavior: "smooth" });
+    });
+
+    rightBtn.addEventListener("click", () => {
+        catContainer.scrollBy({ left: 550, behavior: "smooth" });
+    });
+
+    catContainer.addEventListener("scroll", () => {
+        leftBtn.style.opacity = catContainer.scrollLeft > 0 ? "1" : "0";
+    });
+}
 
   </script>
   <script>
@@ -1386,6 +1346,92 @@
       }
     });
   });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("/customer/categories")
+      .then(response => response.json())
+      .then(data => {
+        const container = document.querySelector(".cat-container");
+        container.innerHTML = "";
+
+        const colors = [
+            "rgb(237, 176, 44)", 
+            "rgb(239, 140, 34)", 
+            "rgb(239, 103, 44)", 
+            "rgb(244, 60, 47)",  
+            "rgb(252, 40, 24)",  
+            "rgb(244, 60, 47)",  
+            "rgb(239, 103, 44)", 
+            "rgb(239, 140, 34)", 
+            "rgb(237, 176, 44)"  
+        ];
+
+        data.forEach((category, index) => {
+          const box = document.createElement("div");
+          box.classList.add("box");
+          box.innerHTML = `<p>${category.categoryName}</p>`;
+          box.style.backgroundColor = colors[index % colors.length]; // Assign color here
+          container.appendChild(box);
+        }); 
+
+        initializeScrolling();
+      })
+      .catch(error => console.error("Error fetching categories:", error));
+
+      fetch("/customer/shops")
+      .then(response => response.json())
+      .then(data => {
+        const shopContainer = document.querySelector(".shop-container");
+            shopContainer.innerHTML = ""; // Clear existing content
+            data.forEach(shop => {
+                const shopElement = document.createElement("div");
+                shopElement.classList.add("shop");
+                shopElement.setAttribute("data-id", shop.shopId);
+                shopElement.innerHTML = `
+                    <div class="shop-image-container">
+                       <img src="${shop.shopImagePath}" alt="Shop">
+                    </div>
+                    <div class="shop-content">
+                        <p class="shop-title">${shop.shopName}</p>
+                        <p class="shop-address">${shop.address || "No Address"}</p>
+                        <p class="shop-phNo">${shop.contactNumber}</p>
+                    </div>
+                `;
+                shopContainer.appendChild(shopElement);
+            });
+      })
+      .catch(error => console.error("Error fetching shops:", error));
+    
+    fetch('/customer/products')
+        .then(response => response.json())
+        .then(products => {
+            const productContainer = document.querySelector('.product-container-body');
+            productContainer.innerHTML = "";
+            products.forEach(product => {
+            const productElement = document.createElement("div");
+            productElement.className = "product-item";
+            productElement.setAttribute("data-id", product.productId);
+            productElement.innerHTML = `
+                <div class="product-image-container">
+                    <img src="${product.productImagePath}" alt="${product.productName}">
+                    <div class="product-overlay"><a>Add to Cart</a></div>
+                </div>
+                <div class="product-info">
+                    <h3>${product.productName}</h3>
+                    <p class="category">${product.category?.categoryName || 'General'}</p>
+                    <p class="price">${product.productShops?.[0]?.shopPrice || 'N/A'} Ks</p>
+                </div>
+            `;
+            productContainer.appendChild(productElement);
+        });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            productContainer.innerHTML = '<p>Error loading products</p>';
+        });
+});
+
 </script>
 
 

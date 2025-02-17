@@ -147,6 +147,14 @@ public class ProductService {
         productRepository.deleteByProductIdIn(productIds);
     }
 
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
+    public List<Product> getTop8Products() {
+    return productRepository.findTop8ByOrderByProductNameAsc();
+}
+
 
 
 }
