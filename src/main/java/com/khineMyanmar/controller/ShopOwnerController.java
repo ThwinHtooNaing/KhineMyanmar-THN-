@@ -324,6 +324,7 @@ public class ShopOwnerController {
             .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
+    
     @PostMapping("/updateProduct")
     @ResponseBody
     public ResponseEntity<?> updateProduct(
