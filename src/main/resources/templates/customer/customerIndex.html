@@ -1415,12 +1415,14 @@
             productElement.innerHTML = `
                 <div class="product-image-container">
                     <img src="${product.productImagePath}" alt="${product.productName}">
-                    <div class="product-overlay"><a>Add to Cart</a></div>
+                    <div class="product-overlay"><a>Quick Add</a></div>
                 </div>
                 <div class="product-info">
                     <h3>${product.productName}</h3>
                     <p class="category">${product.category?.categoryName || 'General'}</p>
-                    <p class="price">${product.productShops?.[0]?.shopPrice || 'N/A'} Ks</p>
+                    <p class="price">
+                      ${new Intl.NumberFormat().format(product.productShops?.[0]?.shopPrice || 0)} Ks
+                    </p>
                 </div>
             `;
             productContainer.appendChild(productElement);
