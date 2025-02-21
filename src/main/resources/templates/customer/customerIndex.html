@@ -1241,6 +1241,10 @@
           border: 2px solid #e38d03;
       }
 
+      .product-overlay-quick-add{
+        z-index: 9999999;
+      }
+
     </style>
   </head>
   <body>
@@ -1875,7 +1879,7 @@
             productElement.innerHTML = `
                 <div class="product-image-container">
                     <img src="${product.productImagePath}" alt="${product.productName}">
-                    <div class="product-overlay"><a>Quick Add</a></div>
+                    <div class="product-overlay"><a class="product-overlay-quick-add">Quick Add</a></div>
                 </div>
                 <div class="product-info">
                     <h3>${product.productName}</h3>
@@ -2030,7 +2034,7 @@
       try {
           await fetch(`/customer/removeFromCart/${itemId}`, { method: "DELETE" });
           fetchCartItems(); 
-          
+
       } catch (error) {
           console.error("Error removing item:", error);
       }
