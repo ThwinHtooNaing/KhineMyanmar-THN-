@@ -1879,7 +1879,7 @@
             productElement.innerHTML = `
                 <div class="product-image-container">
                     <img src="${product.productImagePath}" alt="${product.productName}">
-                    <div class="product-overlay"><a class="product-overlay-quick-add">Quick Add</a></div>
+                    <div class="product-overlay"><a class="product-overlay-quick-add" id="quick-add">Quick Add</a></div>
                 </div>
                 <div class="product-info">
                     <h3>${product.productName}</h3>
@@ -1937,7 +1937,7 @@
 
         function updateQuantityDisplay() {
             qtyDisplay.textContent = quantity;
-            decreaseBtn.disabled = quantity === 1; // Disable when quantity is 1
+            decreaseBtn.disabled = quantity === 1; 
         }
 
         increaseBtn.addEventListener("click", () => {
