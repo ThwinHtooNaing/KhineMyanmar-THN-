@@ -1,6 +1,7 @@
 package com.khineMyanmar.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -165,6 +167,7 @@ public class UserController {
     @PostMapping("/cart")
     public ResponseEntity<?> addToCart(@RequestBody Map<String, Object> cartItem, HttpSession session) {
         // Retrieve the cart from the session or create a new one if it doesn't exist
+        @SuppressWarnings("unchecked")
         List<Map<String, Object>> cart = (List<Map<String, Object>>) session.getAttribute("cart");
         if (cart == null) {
             cart = new ArrayList<>();
@@ -193,22 +196,99 @@ public class UserController {
         return ResponseEntity.ok(cart);
     }
 
-    @GetMapping("/cart")
+    @GetMapping("/allcartitems")
     public ResponseEntity<?> getCart(HttpSession session) {
+        @SuppressWarnings("unchecked")
         List<Map<String, Object>> cart = (List<Map<String, Object>>) session.getAttribute("cart");
+
         if (cart == null) {
             cart = new ArrayList<>();
         }
-        return ResponseEntity.ok(cart);
+
+        List<Map<String, Object>> cartWithDetails = new ArrayList<>();       
+        for (Map<String, Object> cartItem : cart) {
+            Long productId = ((Number) cartItem.get("productId")).longValue();
+            Integer quantity = ((Number) cartItem.get("quantity")).intValue();
+
+            // Fetch product details from database
+            Product product = productService.getProductById(productId);
+            if (product != null) {
+                Map<String, Object> itemDetails = new HashMap<>();
+                itemDetails.put("id", product.getProductId());
+                itemDetails.put("name", product.getProductName());
+                itemDetails.put("image", product.getProductImagePath());
+                itemDetails.put("price", productService.getProductPrice(product)); 
+                itemDetails.put("quantity", quantity);
+                cartWithDetails.add(itemDetails);
+            }
+        }
+
+        return ResponseEntity.ok(cartWithDetails);
     }
+
 
     @GetMapping("/cartCount")
     public ResponseEntity<?> getCartCount(HttpSession session) {
+
+        @SuppressWarnings("unchecked")
         List<Map<String, Object>> cart = (List<Map<String, Object>>) session.getAttribute("cart");
         if (cart == null) {
             cart = new ArrayList<>();
         }
         return ResponseEntity.ok(Map.of("cartCount", cart.size()));
+    }
+
+    @DeleteMapping("/removeFromCart/{itemId}")
+    public ResponseEntity<?> removeFromCart(
+            @PathVariable Long itemId,
+            HttpSession session
+    ) {
+        try {
+            System.out.println("Cart after removing item: ");
+            // Get cart from session
+            List<Map<String, Object>> cart = getCartFromSession(session);
+
+            // Remove item from cart
+            boolean removed = removeItemFromCart(cart, itemId);
+
+            if (!removed) {
+                System.out.println("Cart after removing item: " + cart);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Item not found in cart");
+            }
+            System.out.println("Cart after removing item: " + cart);
+            // Update session with modified cart
+            session.setAttribute("cart", cart);
+
+            return ResponseEntity.ok().build();
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error removing item from cart: " + e.getMessage());
+        }
+    }
+
+    private List<Map<String, Object>> getCartFromSession(HttpSession session) {
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> cart = (List<Map<String, Object>>) session.getAttribute("cart");
+        
+        if (cart == null) {
+            cart = new ArrayList<>();
+            session.setAttribute("cart", cart);
+        }
+        return cart;
+    }
+
+    private boolean removeItemFromCart(List<Map<String, Object>> cart, Long itemId) {
+        // Find and remove the item with matching ID
+        return cart.removeIf(item -> {
+            Object idObj = item.get("productId");
+            if (idObj instanceof Number) {
+                Long cartItemId = ((Number) idObj).longValue();
+                return cartItemId.equals(itemId);
+            }
+            return false;
+        });
     }
 
 	

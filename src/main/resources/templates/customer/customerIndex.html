@@ -1977,23 +1977,95 @@
   const cartIcon = document.getElementById("cart");
   const cartModal = document.getElementById("cart-modal");
   const cartCloseBtn = document.querySelector(".cart-close-btn");
+  const cartItemsContainer = document.querySelector(".cart-items");
+  const cartCount = document.getElementById("cart-count");
+  const cartTotal = document.querySelector(".cart-total strong");
 
-  // Open the cart modal when clicking the cart icon
+  // Function to fetch cart items from the backend
+  async function fetchCartItems() {
+      try {
+          const response = await fetch("/customer/allcartitems");
+          const cart = await response.json();
+          console.log(cart);
+          renderCart(cart);
+      } catch (error) {
+          console.error("Error fetching cart items:", error);
+      }
+  }
+
+  // Function to render cart items dynamically
+  function renderCart(cart) {
+      cartItemsContainer.innerHTML = ""; // Clear previous items
+
+      let total = 0;
+      cart.forEach(item => {
+          const itemElement = document.createElement("div");
+          console.log(item);
+          itemElement.classList.add("cart-item");
+          total += item.price * item.quantity;
+
+          itemElement.innerHTML = `
+              <img src="${item.image}" alt="${item.name}">
+              <div class="cart-item-details">
+                  <p>${item.name}</p>
+                  <span>${item.price.toLocaleString()} Ks</span>
+              </div>
+              <div class="cart-item-quantity">
+                  <span class="cart-item-qty">${item.quantity}</span>
+                  <button class="remove-btn" data-id="${item.id}">Remove</button>
+              </div>
+          `;
+
+          cartItemsContainer.appendChild(itemElement);
+      });
+
+      cartCount.textContent = cart.length;
+      cartTotal.textContent = `${total.toLocaleString()} MMK`;
+
+      attachRemoveEventListeners();
+  }
+
+  // Function to remove an item
+  async function removeCartItem(itemId) {
+      try {
+          await fetch(`/customer/removeFromCart/${itemId}`, { method: "DELETE" });
+          fetchCartItems(); 
+          
+      } catch (error) {
+          console.error("Error removing item:", error);
+      }
+  }
+
+  // Attach event listeners to remove buttons
+  function attachRemoveEventListeners() {
+      document.querySelectorAll(".remove-btn").forEach(button => {
+          button.addEventListener("click", () => {
+              const itemId = button.getAttribute("data-id");
+              removeCartItem(itemId);
+          });
+      });
+  }
+
+  // Show cart and fetch items when clicked
   cartIcon.addEventListener("click", () => {
       cartModal.style.display = "flex";
+      fetchCartItems();
   });
 
-  // Close the cart modal when clicking the close button
+  // Close cart modal
   cartCloseBtn.addEventListener("click", () => {
       cartModal.style.display = "none";
+      // location.reload(); 
   });
 
-  // Close the cart when clicking outside the modal
+  // Close cart modal when clicking outside
   document.addEventListener("click", (event) => {
       if (!cartModal.contains(event.target) && !cartIcon.contains(event.target)) {
           cartModal.style.display = "none";
+          // location.reload();
       }
   });
+
 
 </script>
 

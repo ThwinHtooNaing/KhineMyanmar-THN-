@@ -151,6 +151,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public double getProductPrice(Product product) {
+        return productShopService.getProductPriceByProduct(product);
+    }
+
     public List<Product> getTop8Products() {
     return productRepository.findTop8ByOrderByProductNameAsc();
 }

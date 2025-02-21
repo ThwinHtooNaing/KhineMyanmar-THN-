@@ -19,5 +19,7 @@ public interface IProductShopRepository extends JpaRepository<ProductShop,Long>{
     Optional<ProductShop> findByProductAndShop(Product product,Shop shop);
     Optional<ProductShop> findByProduct(Product product);
     Page<ProductShop> findByShop(Shop shop, Pageable pageable);
+    Optional<ProductShop> findStockQuantityByProduct(Product product);
+    Optional<ProductShop> findProductPriceByProduct(Product product);
 
 }

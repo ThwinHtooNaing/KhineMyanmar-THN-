@@ -42,6 +42,18 @@ public class ProductShopService {
         return productShopRepository.existsByShopAndProduct_ProductName(shop, productName);
     }
 
+    public int getStockQuantityByProduct(Product product) {
+    return productShopRepository.findStockQuantityByProduct(product)
+        .map(ProductShop::getStockQuantity)
+        .orElse(0);
+    }
+    
+    public double getProductPriceByProduct(Product product) {
+    return productShopRepository.findProductPriceByProduct(product)
+        .map(ProductShop::getShopPrice)
+        .orElse(0.0);
+    }
+
     public List<ProductShop> findByShop(Shop shop){
         return productShopRepository.findByShop(shop);
     }
