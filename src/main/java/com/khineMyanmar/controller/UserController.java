@@ -1,5 +1,6 @@
 package com.khineMyanmar.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -82,6 +85,12 @@ public class UserController {
         return ResponseEntity.ok(products);
     }
 
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long productId) {
+        Product product = productService.getProductById(productId);
+        return ResponseEntity.ok(product);
+    }
+
     @GetMapping("/categories")
     public ResponseEntity<List<Category>> getCategories() {
         List<Category> categories = categoryService.getAllCategories();
@@ -151,6 +160,55 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("success", false, "message", e.getMessage()));
         }
+    }
+
+    @PostMapping("/cart")
+    public ResponseEntity<?> addToCart(@RequestBody Map<String, Object> cartItem, HttpSession session) {
+        // Retrieve the cart from the session or create a new one if it doesn't exist
+        List<Map<String, Object>> cart = (List<Map<String, Object>>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ArrayList<>();
+        }
+
+        // Check if the product already exists in the cart
+        boolean exists = false;
+        for (Map<String, Object> item : cart) {
+            if (item.get("productId").equals(cartItem.get("productId"))) {
+                // Update quantity if product already exists
+                int currentQty = (int) item.get("quantity");
+                int additionalQty = (int) cartItem.get("quantity");
+                item.put("quantity", currentQty + additionalQty);
+                exists = true;
+                break;
+            }
+        }
+
+        // If not present, add the new cart item
+        if (!exists) {
+            cart.add(cartItem);
+        }
+
+        // Update the session attribute
+        session.setAttribute("cart", cart);
+        return ResponseEntity.ok(cart);
+    }
+
+    @GetMapping("/cart")
+    public ResponseEntity<?> getCart(HttpSession session) {
+        List<Map<String, Object>> cart = (List<Map<String, Object>>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ArrayList<>();
+        }
+        return ResponseEntity.ok(cart);
+    }
+
+    @GetMapping("/cartCount")
+    public ResponseEntity<?> getCartCount(HttpSession session) {
+        List<Map<String, Object>> cart = (List<Map<String, Object>>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ArrayList<>();
+        }
+        return ResponseEntity.ok(Map.of("cartCount", cart.size()));
     }
 
 	
