@@ -1846,7 +1846,7 @@
       .then(response => response.json())
       .then(data => {
         const shopContainer = document.querySelector(".shop-container");
-            shopContainer.innerHTML = ""; // Clear existing content
+            shopContainer.innerHTML = ""; 
             data.forEach(shop => {
                 const shopElement = document.createElement("div");
                 shopElement.classList.add("shop");
