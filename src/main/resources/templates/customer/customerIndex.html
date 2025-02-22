@@ -1104,7 +1104,6 @@
           font-weight: bold;
           padding: 0 40px;
           box-sizing: border-box;
-          /* border-bottom: 1px solid #606060; */
           box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.121);
       }
 
@@ -1249,16 +1248,11 @@
           border: 2px solid #e38d03;
       }
 
-      .product-overlay-quick-add{
-        z-index: 9999999;
-      }
-
       #quick-add:hover{
         cursor: pointer;
       }
 
       .loading-spinner {
-        
           border: 4px solid transparent;
           border-top: 4px solid #eef0f1;
           border-radius: 50%;
@@ -1272,6 +1266,20 @@
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
       }
+
+      .stock-indicator-container{
+        display: none;
+      }
+
+      .out-of-stock-indicator {
+        color: red;
+      }
+
+      .stock-remaining-indicator {
+        color: rgb(255, 132, 0);
+      }
+
+      
 
     </style>
   </head>
@@ -1529,14 +1537,14 @@
         <span class="modal-close-btn">&times;</span>
         <div class="modal-content-container">
           <div class="product-modal-image-container">
-            <img src="https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/primary/ProductShowcasesampleimages/JPEG/Product+Showcase-1.jpg">
+            <img src="">
           </div>
           <div class="product-modal-detail">
             <div class="product-modal-name-container">
-                <h2>Product Name</h2>
+                <h2></h2>
             </div>
             <div class="product-modal-description-container">
-                <p class="product-modal-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo corrupti ea ratione incidunt aliquid, dolorem quasi quo neque unde, consectetur architecto nulla optio, aut veritatis mollitia eum. Cupiditate, iusto hic!</p>
+                <p class="product-modal-description"></p>
             </div>
             <div class="product-modal-category-container">
               <span> Category :</span>
@@ -1544,7 +1552,11 @@
             </div>
             <div class="product-modal-price-container">
               <span>Price :</span>
-              <span>10000 <span>Ks</span></spanp>
+              <span>10000 <span>Ks</span></span>
+            </div>
+            <div class="stock-indicator-container">
+              <p class="out-of-stock-indicator">Out of stock!</p>
+              <p class="stock-remaining-indicator">Only <span>9</span> quantity remains!</p>
             </div>
             <div class="product-modal-quantity-container">
                 <p>Quantity</p>
@@ -1866,10 +1878,19 @@
                 </div>
             `;
             productContainer.appendChild(productElement);
-            // Quick Add event listener
+            const stockQuantity = product.productShops?.[0]?.stockQuantity;
             const quickAddBtn = productElement.querySelector("#quick-add");
             quickAddBtn.addEventListener("click", (e) => {
                 e.stopPropagation();
+                if (stockQuantity < 1) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Out of Stock',
+                        text: 'This product is currently out of stock.',
+                        showConfirmButton: true
+                    });
+                    return; // Exit the function if out of stock
+                }
                 // Set the quantity to 1 for quick add
                 if (productModal.style.display === "flex") {
                     productModal.style.display = "none";
@@ -1953,6 +1974,39 @@
         document.querySelector(".product-modal-name-container h2").textContent = product.productName;
         document.querySelector(".product-modal-description").textContent = product.description || "No description available";
         document.querySelector(".product-modal-category-container span:nth-child(2)").textContent = product.category?.categoryName || "General";
+
+        const stockQuantity = product.productShops?.[0]?.stockQuantity;
+
+        document.querySelector(".stock-indicator-container").style.display = "none";
+        document.querySelector(".out-of-stock-indicator").style.display = "none";
+        document.querySelector(".stock-remaining-indicator").style.display = "none";
+
+        const addToCartBtn = document.querySelector(".add-to-cart-btn");
+        const buyNowBtn = document.querySelector(".buyNow-btn");
+        addToCartBtn.disabled = false;
+        buyNowBtn.disabled = false;
+        addToCartBtn.style.cursor = "pointer";
+        buyNowBtn.style.cursor = "pointer";
+
+        if (stockQuantity !== undefined) {
+            if (stockQuantity === 0) {
+                console.log("out  of stock");
+                document.querySelector(".stock-indicator-container").style.display = "block";
+                document.querySelector(".out-of-stock-indicator").style.display = "block";
+                document.querySelector(".add-to-cart-btn").style.cursor = "not-allowed";
+                document.querySelector(".buyNow-btn").style.cursor = "not-allowed";
+                addToCartBtn.disabled = true;
+                buyNowBtn.disabled = true;
+            } else {
+                document.querySelector(".stock-indicator-container").style.display = "block";
+                document.querySelector(".stock-remaining-indicator span").textContent = stockQuantity;
+
+                if (stockQuantity <= 10) {
+                    document.querySelector(".stock-remaining-indicator").style.display = "block";
+                }
+            }
+        }
+        
         document.querySelector(".product-modal-price-container span:nth-child(2)").innerHTML = 
             `${new Intl.NumberFormat().format(product.productShops?.[0]?.shopPrice || 0)} <span>Ks</span>`;
         console.log(product);
@@ -1962,15 +2016,25 @@
         const qtyDisplay = document.getElementById("noOfQty");
         const increaseBtn = document.getElementById("decreaseQty");
         const decreaseBtn = document.getElementById("increaseQty");
-
         function updateQuantityDisplay() {
+            increaseBtn.disabled = false;
+            if(stockQuantity === 0) {
+                increaseBtn.disabled = true;
+                decreaseBtn.disabled = quantity === 1;
+                qtyDisplay.textContent = 0;
+                return;
+            }
             qtyDisplay.textContent = quantity;
             decreaseBtn.disabled = quantity === 1; 
         }
 
         increaseBtn.addEventListener("click", () => {
-            quantity++;
-            updateQuantityDisplay();
+            if(stockQuantity > qtyDisplay.textContent) {
+                  quantity++;
+                  updateQuantityDisplay();
+              }else{
+                  increaseBtn.disabled = true;
+              }
         });
 
         decreaseBtn.addEventListener("click", () => {
@@ -1980,7 +2044,67 @@
             }
         });
         updateQuantityDisplay();
-         document.querySelector(".add-to-cart-btn").addEventListener("click", () => {
+        buyNowBtn.addEventListener("click", () => {
+          const cartItem = {
+              productId: product.productId, // product info from your modal or product object
+              quantity: quantity              // selected quantity from the modal
+          };
+
+          fetch('/customer/cart', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(cartItem)
+          })
+          .then(response => response.json())
+          .then(cart => {
+              // After adding to cart, redirect to checkout
+              return fetch('/customer/checkout', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+              });
+          })
+          .then(response => {
+              if (response.ok) {
+                  return response.text();
+              } else {
+                  throw new Error('Checkout failed');
+              }
+          })
+          .then(result => {
+              if (result === 'Order placed successfully') {
+                  productModal.style.display = "none";
+                  Swal.fire({
+                      title: "Order Placed Successfully",
+                      text: result,
+                      icon: "success",
+                      confirmButtonText: "OK"
+                  }).then(() => {
+                      console.log("Order Placed Successfully");
+                      location.reload();
+                  });
+              } else {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Checkout Error',
+                      text: result,
+                      showConfirmButton: true
+                  });
+              }
+          })
+          .catch(error => {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Failed to Complete Purchase',
+                  text: error.message,
+                  showConfirmButton: true
+              });
+          });
+      });
+        document.querySelector(".add-to-cart-btn").addEventListener("click", () => {
               const cartItem = {
                   productId: product.productId, // product info from your modal or product object
                   quantity: quantity              // selected quantity from the modal
@@ -2101,14 +2225,14 @@
   // Close cart modal
   cartCloseBtn.addEventListener("click", () => {
       cartModal.style.display = "none";
-      // location.reload(); 
+      
   });
 
   // Close cart modal when clicking outside
   document.addEventListener("click", (event) => {
       if (!cartModal.contains(event.target) && !cartIcon.contains(event.target)) {
           cartModal.style.display = "none";
-          // location.reload();
+         
       }
   });
 
@@ -2117,41 +2241,64 @@
 
   const checkoutBtn = document.querySelector("#checkout-btn");
   checkoutBtn.addEventListener("click", async () => {
-    console.log("Checkout clicked");
-    checkoutBtn.classList.add("active");
-    checkoutBtn.innerHTML = '<div class="loading-spinner"></div>';
+  console.log("Checkout clicked");
+  checkoutBtn.classList.add("active");
+  checkoutBtn.innerHTML = '<div class="loading-spinner"></div>';
 
-    try {
-        const response = await fetch('/customer/checkout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        if (response.ok) {
-            const result = await response.text();
-            // console.log(result); 
-            if(result == 'Order placed successfully'){
-                setTimeout(() => {
-                      cartModal.style.display = 'none';
-                      Swal.fire({
-                            title: "Order Placed Successful",
-                            text: result,
-                            icon: "success",
-                            confirmButtonText: "OK"
-                        }).then(() => {
-                            location.reload();
-                            
+  try {
+      const response = await fetch('/customer/checkout', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+      if (response.ok) {
+          const result = await response.text();
+          // console.log(result); 
+          if(result == 'Order placed successfully'){
+              setTimeout(() => {
+                    cartModal.style.display = 'none';
+                    Swal.fire({
+                          title: "Order Placed Successful",
+                          text: result,
+                          icon: "success",
+                          confirmButtonText: "OK"
+                      }).then(() => {
+                          location.reload();
+                          
+              });
+                }, 1000); 
+          }
+      } else {
+          const error = await response.text();
+          console.error("Checkout failed:", error); 
+          setTimeout(() => {
+              cartModal.style.display = 'none';
+              Swal.fire({
+                    title: "Oops! Something went wrong",
+                    text: error,
+                    icon: "error",
+                    showConfirmButton: true
+                }).then(() => {
+                    location.reload();
                 });
-                  }, 1000); 
-            }
-        } else {
-            const error = await response.text();
-            console.error("Checkout failed:", error); 
-        }
-    } catch (error) {
-        console.error("Error during checkout:", error); 
-    }});
+        }, 1000); 
+        console.error("Checkout failed:", error); 
+      }
+  } catch (error) {
+      console.error("Error during checkout:", error); 
+      setTimeout(() => {
+              cartModal.style.display = 'none';
+              Swal.fire({
+                    title: "Oops! Something went wrong",
+                    text: error,
+                    icon: "error",
+                    showConfirmButton: true
+                }).then(() => {
+                    location.reload();
+                });
+        }, 1000); 
+  }});
   
 </script>
 

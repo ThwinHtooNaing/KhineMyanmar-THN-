@@ -28,6 +28,7 @@ import com.khineMyanmar.model.User;
 import com.khineMyanmar.service.CategoryService;
 import com.khineMyanmar.service.OrderService;
 import com.khineMyanmar.service.ProductService;
+import com.khineMyanmar.service.ProductShopService;
 import com.khineMyanmar.service.ShopService;
 import com.khineMyanmar.service.UserService;
 
@@ -45,6 +46,10 @@ public class UserController {
 
     @Autowired
     private ProductService productService;
+
+    @SuppressWarnings("unused")
+    @Autowired
+    private ProductShopService productShopService;
 
     @Autowired
     private ShopService shopService;
