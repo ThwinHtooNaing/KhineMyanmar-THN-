@@ -528,23 +528,21 @@
                 <div class="card-container">
                     <div class="card">
                         <h3>ORDER RECEIVED</h3>
-                        <p>8514</p>
-                        <div class="stats">
-                            5.3% <i>↑</i>
-                        </div>
+                        <p id="totalOrders">0</p>
+                        <div class="stats" style="opacity:0;">5.3% <i>↑</i></div>
                         <div class="icon">🛒</div>
                     </div>
+
                     <div class="card">
-                        <h3>ORDER DELIVER</h3>
-                        <p>951</p>
-                        <div class="stats">
-                            4.2% <i>↑</i>
-                        </div>
+                        <h3>ORDER DELIVERED</h3>
+                        <p id="deliveredOrders">0</p>
+                        <div class="stats" style="opacity:0;">4.2% <i>↑</i></div>
                         <div class="icon">🚚</div>
                     </div>
+
                     <div class="card" style="background-color: #f7f2d2;">
                         <h3 style="color: #5f4a10;">TOTAL EARNINGS</h3>
-                        <p style="color: #a78528;">85,520.25<span> MMK</span></p>
+                        <p id="totalEarnings" style="color: #a78528;">0 MMK</p>
                         <div class="icon">💰</div>
                     </div>
                 </div>
@@ -695,46 +693,71 @@
     <script th:src="@{/js/adminSideBarNav.js}">
     </script> 
     <script>
-        // Sample data for the line chart
-        
-        const labels = ['Day 1', 'Day2', 'Day3', 'Day4', 'Day5', 'Day6', 'Day7'];
-        const data = {
-            labels: labels,
-            datasets: [{
-                label: 'Number of Orders',
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(209, 140, 37)',
-                data: [65, 59, 80, 81, 56, 55, 40],
-                fill: false,
-            }]
-        };
-
-        const config = {
-            type: 'line',
-            data: data,
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
-                    title: {
-                        display: false,
-                        text: 'Sales Over Time'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+        async function fetchWeeklyOrders() {
+                try {
+                    const response = await fetch('/chart/weekly-orders');
+                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                    const data = await response.json();
+                    console.log(data);
+                    updateChart(data.labels, data.orderCounts);
+                } catch (error) {
+                    console.error("Error fetching weekly orders:", error);
                 }
-            },
-        };
+            }
 
-        const lineChart = new Chart(
-            document.getElementById('lineChart'),
-            config
-        );
+
+        function updateChart(labels, orderCounts) {
+            const ctx = document.getElementById('lineChart').getContext('2d');
+
+            if (window.myLineChart) {
+                window.myLineChart.data.labels = labels;
+                window.myLineChart.data.datasets[0].data = orderCounts;
+                window.myLineChart.update();
+            } else {
+                window.myLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Number of Orders',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(209, 140, 37)',
+                            data: orderCounts,
+                            fill: false,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            title: { display: false }
+                        },
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+            }
+        }
+
+
+        // Fetch data and update chart when page loads
+        fetchWeeklyOrders();
+
+        async function fetchDashboardStats() {
+            try {
+                const response = await fetch('/shopowner/stats');
+                const data = await response.json();
+                console.log(data);
+                document.querySelector("#totalOrders").innerText = data.totalOrders;
+                document.querySelector("#deliveredOrders").innerText = data.deliveredOrders;
+                document.querySelector("#totalEarnings").innerText = data.totalEarnings.toLocaleString() + " MMK";
+            } catch (error) {
+                console.error("Error fetching dashboard stats:", error);
+            }
+        }
+
+        fetchDashboardStats();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     

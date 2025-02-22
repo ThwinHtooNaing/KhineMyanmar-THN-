@@ -15,10 +15,14 @@ import com.khineMyanmar.repository.IOrderProductRepository;
 import com.khineMyanmar.repository.IOrderRepository;
 
 import jakarta.servlet.http.HttpSession;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -34,6 +38,28 @@ public class OrderService {
 
     @Autowired
     private ProductShopService productShopService;
+
+    public Map<String, Object> getWeeklyOrderStats() {
+        LocalDate startDate = LocalDate.now().minusDays(6);
+        List<Object[]> results = orderRepository.countOrdersLastWeek(startDate);
+
+        Map<LocalDate, Integer> orderMap = results.stream()
+            .collect(Collectors.toMap(r -> (LocalDate) r[1], r -> ((Long) r[0]).intValue()));
+
+        List<String> labels = new ArrayList<>();
+        List<Integer> orderCounts = new ArrayList<>();
+
+        for (int i = 6; i >= 0; i--) {
+            LocalDate date = LocalDate.now().minusDays(i);
+            labels.add("Day " + (7 - i));
+            orderCounts.add(orderMap.getOrDefault(date, 0));
+        }
+
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("labels", labels);
+        stats.put("orderCounts", orderCounts);
+        return stats;
+    }
 
      public Map<String, Object> getDashboardStats() {
         Map<String, Object> stats = new HashMap<>();

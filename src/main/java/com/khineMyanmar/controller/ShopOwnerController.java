@@ -38,6 +38,7 @@ import com.khineMyanmar.service.ProductService;
 import com.khineMyanmar.service.ProductShopService;
 import com.khineMyanmar.service.ShopOwnerService;
 import com.khineMyanmar.service.ShopService;
+import com.khineMyanmar.service.OrderService;
 
 import jakarta.servlet.http.HttpSession;
 @Controller
@@ -61,6 +62,9 @@ public class ShopOwnerController {
 
     @Autowired
     ProductShopService productShopService;
+
+    @Autowired
+    OrderService orderService;
 
 	@GetMapping("/shopownersignup")
 	public String SignUp(Model model) {
@@ -384,6 +388,12 @@ public class ShopOwnerController {
         productService.deleteProductsByIds(productIds);
 
         return ResponseEntity.ok().body(Map.of("success", true));
+    }
+
+    @GetMapping("/stats")
+    @ResponseBody
+    public Map<String, Object> getDashboardStats() {
+        return orderService.getDashboardStats();
     }
 
 

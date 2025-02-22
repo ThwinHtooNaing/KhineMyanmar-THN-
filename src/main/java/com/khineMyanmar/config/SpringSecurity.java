@@ -26,7 +26,6 @@ public class SpringSecurity {
         http
             .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(authorize -> authorize
-            
                     .requestMatchers("/favicon.ico").permitAll()
                     .requestMatchers("/customer/**").permitAll()
                     .requestMatchers("/product/**").permitAll()
@@ -37,6 +36,7 @@ public class SpringSecurity {
                     .requestMatchers("/shopowner/**").permitAll()
                     .requestMatchers("/order/**").permitAll()
                     .requestMatchers("/signupprocess/**").permitAll()
+                    .requestMatchers("/chart/**").permitAll()
                     .requestMatchers(HttpMethod.GET,"/css/**","/webfonts/**", "/js/**","/lib/**","/img/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
                     .anyRequest().authenticated()
