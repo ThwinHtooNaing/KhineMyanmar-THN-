@@ -1995,11 +1995,25 @@
               })
               .then(response => response.json())
               .then(cart => {
-                  alert('Product added to cart!');
                   productModal.style.display = "none";
-                  location.reload();
+                  Swal.fire({
+                            title: "Product Added to Cart",
+                            text: "The product has been successfully added to your cart.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            
+                            location.reload();
+                        });
               })
-              .catch(error => console.error('Error adding product to cart:', error));
+              .catch(error => {
+                Swal.fire({
+                      icon: 'error',
+                      title: 'Failed to Add Product',
+                      text: error,
+                      showConfirmButton: true
+                  });
+              });
           });
         }
 });
@@ -2100,9 +2114,8 @@
 
 </script>
 <script>
-  const checkoutBtn = document.querySelector("#checkout-btn");
 
-  
+  const checkoutBtn = document.querySelector("#checkout-btn");
   checkoutBtn.addEventListener("click", async () => {
     console.log("Checkout clicked");
     checkoutBtn.classList.add("active");
@@ -2119,8 +2132,18 @@
             const result = await response.text();
             // console.log(result); 
             if(result == 'Order placed successfully'){
-                alert(result);
-                location.reload();
+                setTimeout(() => {
+                      cartModal.style.display = 'none';
+                      Swal.fire({
+                            title: "Order Placed Successful",
+                            text: result,
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            location.reload();
+                            
+                });
+                  }, 1000); 
             }
         } else {
             const error = await response.text();

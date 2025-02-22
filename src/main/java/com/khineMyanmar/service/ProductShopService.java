@@ -54,6 +54,7 @@ public class ProductShopService {
         .orElse(0.0);
     }
 
+    @SuppressWarnings("unused")
     public void reduceStockQuantity(Product product, int quantity) {
         int updatedRows = productShopRepository.reduceStockQuantity(product, quantity);
         if (updatedRows == 0) {
