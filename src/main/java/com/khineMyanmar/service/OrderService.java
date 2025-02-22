@@ -16,6 +16,7 @@ import com.khineMyanmar.repository.IOrderRepository;
 
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,14 @@ public class OrderService {
 
     @Autowired
     private ProductShopService productShopService;
+
+     public Map<String, Object> getDashboardStats() {
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("totalOrders", orderRepository.countTotalOrders());
+        stats.put("deliveredOrders", orderRepository.countDeliveredOrders());
+        stats.put("totalEarnings", orderRepository.totalEarnings());
+        return stats;
+    }
 
     @Transactional
     public String checkout(HttpSession session) {
