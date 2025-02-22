@@ -696,7 +696,7 @@
         async function fetchWeeklyOrders() {
                 try {
                     const response = await fetch('/chart/weekly-orders');
-                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                    // if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                     const data = await response.json();
                     console.log(data);
                     updateChart(data.labels, data.orderCounts);

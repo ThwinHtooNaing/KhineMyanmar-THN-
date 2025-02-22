@@ -17,7 +17,6 @@ import com.khineMyanmar.repository.IOrderRepository;
 import jakarta.servlet.http.HttpSession;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -88,7 +87,7 @@ public class OrderService {
         order.setUser(user); 
         order.setStatus(OrderStatus.PENDING); 
         order.setPaymentStatus(PaymentStatus.CASH_ON_DELIVERY);
-        order.setCheckoutDate(LocalDateTime.now()); 
+        order.setCheckoutDate(LocalDate.now()); 
         double totalAmount = 0.0;
         order.setAmount(0.0);
         order = orderRepository.save(order);

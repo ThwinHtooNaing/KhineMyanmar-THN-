@@ -17,6 +17,13 @@ public class ChartController {
     @Autowired
     private OrderService orderService; 
 
+    @GetMapping("/weekly-orders")
+    @ResponseBody
+    public Map<String, Object> getWeeklyOrders() {
+        System.out.println("getWeeklyOrders");
+        return orderService.getWeeklyOrderStats();
+    }
+
     @GetMapping("/sales-category")
     @ResponseBody
     public Map<String, Object> getSalesCategoryData() {
@@ -26,12 +33,7 @@ public class ChartController {
         return data;
     }
 
-    @GetMapping("/weekly-orders")
-    @ResponseBody
-    public Map<String, Object> getWeeklyOrders() {
-        System.out.println("getWeeklyOrders");
-        return orderService.getWeeklyOrderStats();
-    }
+   
 
     
 }

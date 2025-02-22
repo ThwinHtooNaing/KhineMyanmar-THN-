@@ -396,6 +396,13 @@ public class ShopOwnerController {
         return orderService.getDashboardStats();
     }
 
+    @GetMapping("/weekly-orders")
+    @ResponseBody
+    public Map<String, Object> getWeeklyOrders() {
+        System.out.println("getWeeklyOrders");
+        return orderService.getWeeklyOrderStats();
+    }
+
 
 
     

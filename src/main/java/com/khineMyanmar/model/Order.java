@@ -16,7 +16,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "`order`")
@@ -34,7 +35,7 @@ public class Order {
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
 
-	private LocalDateTime checkoutDate;
+	private LocalDate checkoutDate;
 
 	@Enumerated(EnumType.STRING) // Store enum values as strings in the database
 	@Column(nullable = true)
@@ -113,11 +114,11 @@ public class Order {
 		this.orderProducts = orderProducts;
 	}
 
-	public LocalDateTime getCheckoutDate() {
+	public LocalDate getCheckoutDate() {
     return checkoutDate;
 	}
 
-	public void setCheckoutDate(LocalDateTime checkoutDate) {
+	public void setCheckoutDate(LocalDate checkoutDate) {
 		this.checkoutDate = checkoutDate;
 	}
 
