@@ -2,6 +2,8 @@ package com.khineMyanmar.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,8 +42,10 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name = "role_id")
 	private Role role;
-		
+
+	
 	@OneToMany(mappedBy = "user")
+	@JsonIgnore
 	private List<Order> orders;
 
 	public String getProfilePic() {

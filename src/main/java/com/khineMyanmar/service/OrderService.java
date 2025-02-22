@@ -1,5 +1,7 @@
 package com.khineMyanmar.service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,6 +10,7 @@ import com.khineMyanmar.model.Product;
 import com.khineMyanmar.model.User;
 import com.khineMyanmar.model.OrderProduct;
 import com.khineMyanmar.model.OrderStatus;
+import com.khineMyanmar.model.PaymentStatus;
 import com.khineMyanmar.repository.IOrderProductRepository;
 import com.khineMyanmar.repository.IOrderRepository;
 
@@ -49,6 +52,7 @@ public class OrderService {
         Order order = new Order();
         order.setUser(user); 
         order.setStatus(OrderStatus.PENDING); 
+        order.setPaymentStatus(PaymentStatus.CASH_ON_DELIVERY);
         order.setCheckoutDate(LocalDateTime.now()); 
         double totalAmount = 0.0;
         order.setAmount(0.0);
@@ -76,5 +80,16 @@ public class OrderService {
         session.removeAttribute("cart");
 
         return "Order placed successfully";
+    }
+
+    public Page<Order> getOrders(OrderStatus status, Pageable pageable) {
+            if (status != null) {
+                return orderRepository.findByStatus(status, pageable);
+            }
+        return orderRepository.findAll(pageable);
+    }
+
+    public Page<Order> getAllOrders(Pageable pageable) {
+        return orderRepository.findAll(pageable);
     }
 }

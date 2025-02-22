@@ -20,9 +20,6 @@ public class DeliveryItem {
 	@Enumerated(EnumType.STRING) // Store enum values as strings in the database
 	private DeliveryStatus deliveryStatus;
 	
-	@Enumerated(EnumType.STRING) // Store enum values as strings in the database
-	private PaymentStatus paymentStatus;
-	
 	@OneToOne(mappedBy = "deliveryItem")
     private Order order;
 	
@@ -46,14 +43,6 @@ public class DeliveryItem {
 		this.deliveryStatus = deliveryStatus;
 	}
 
-	public PaymentStatus getPaymentStatus() {
-		return paymentStatus;
-	}
-
-	public void setPaymentStatus(PaymentStatus paymentStatus) {
-		this.paymentStatus = paymentStatus;
-	}
-
 	public Order getOrder() {
 		return order;
 	}
@@ -70,11 +59,9 @@ public class DeliveryItem {
 		this.deliveryPerson = deliveryPerson;
 	}
 
-	public DeliveryItem(DeliveryStatus deliveryStatus, PaymentStatus paymentStatus, Order order,
-			Delivery deliveryPerson) {
+	public DeliveryItem(DeliveryStatus deliveryStatus, Order order,Delivery deliveryPerson) {
 		super();
 		this.deliveryStatus = deliveryStatus;
-		this.paymentStatus = paymentStatus;
 		this.order = order;
 		this.deliveryPerson = deliveryPerson;
 	}

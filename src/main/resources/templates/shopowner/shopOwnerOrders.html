@@ -1,786 +1,856 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orders</title>
-    <link th:href="@{/css/font.css}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link th:href="@{/css/font.css}" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #f1f1f1;
-        }
-        .sidebar {
-            width: 200px;
-            background-color: #ffffff;
-            color: #000000;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 5px;
-            padding: 0px 10px;
-        }
-        .sidebar p{
-            font-size: 18px;
-            font-weight: 900;
-        }
-        .sidebar a {
-            color: #000000;
-            text-decoration: none;
-            /* flex-grow: 1; */
-        }
-        .sidebar p{
-            padding-left: 10px;
-        }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f1f1f1;
+      }
+      .sidebar {
+        width: 200px;
+        background-color: #ffffff;
+        color: #000000;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 5px;
+        padding: 0px 10px;
+      }
+      .sidebar p {
+        font-size: 18px;
+        font-weight: 900;
+      }
+      .sidebar a {
+        color: #000000;
+        text-decoration: none;
+        /* flex-grow: 1; */
+      }
+      .sidebar p {
+        padding-left: 10px;
+      }
 
-        .sidebar div {
-            width: 90%;
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-radius: 5px;
-            /*  */
-            transition: all 0.03s ease-in-out;
-            margin-bottom: 10px;
-        }
+      .sidebar div {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 5px;
+        /*  */
+        transition: all 0.03s ease-in-out;
+        margin-bottom: 10px;
+      }
 
-        .sidebar div:hover {
-            background-color: #f8dbad7b; /* Light orange hover background */
-            border-right: 3px solid transparent;
-            cursor: pointer;
-        }
+      .sidebar div:hover {
+        background-color: #f8dbad7b; /* Light orange hover background */
+        border-right: 3px solid transparent;
+        cursor: pointer;
+      }
 
-        .sidebar i {
-            margin-right: 10px;
-            color: #505050;
-        }
-        
-        .bottom-link {
-            margin-top: auto;
-            margin-bottom: 5px;
-        }
+      .sidebar i {
+        margin-right: 10px;
+        color: #505050;
+      }
 
-         /* Active Styles */
-         .asideActive {
-            border-right: 3px solid #faa722;
-            background-color: #f4b95a7b;border-right: 3px solid #faa722;
-        }
+      .bottom-link {
+        margin-top: auto;
+        margin-bottom: 5px;
+      }
 
-        .asideActive i {
-            color: #f4b247;
-        }
+      /* Active Styles */
+      .asideActive {
+        border-right: 3px solid #faa722;
+        background-color: #f4b95a7b;
+        border-right: 3px solid #faa722;
+      }
 
-        .asideActive a {
-            color: #df8b04;
-        }
+      .asideActive i {
+        color: #f4b247;
+      }
 
-        .header {
-            position: fixed;
-            top: 0;
-            left: 225px;
-            width: calc(100% - 225px);
-            height: 65px;
-            background-color: #fff;
-            z-index: 1000;
-            display: flex;
-            align-items: center; 
-            justify-content: flex-end; 
-            padding-right: 20px; 
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
-        }
+      .asideActive a {
+        color: #df8b04;
+      }
 
-        .icons {
-            display: flex; 
-            gap: 15px; 
-            align-items: center; 
-            margin-right: 20px;
-        }
+      .header {
+        position: fixed;
+        top: 0;
+        left: 225px;
+        width: calc(100% - 225px);
+        height: 65px;
+        background-color: #fff;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 20px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
 
-        .icons > .icon {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: row;
-            background-color: #c7c3c340;
-            width: 35px;
-            height: 35px;
-            border-radius: 10px;
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-        }
+      .icons {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        margin-right: 20px;
+      }
 
-        .icons > div:last-child {
-            background-color: transparent;
-            padding: 4px 3px;
-            width: auto;
-            display: flex;
-            align-items: center; 
-            gap: 8px; 
-        }
+      .icons > .icon {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        background-color: #c7c3c340;
+        width: 35px;
+        height: 35px;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+      }
 
-        .icons > div:last-child span {
-            color: #000000;
-            font-size: 15px;
-        }
+      .icons > div:last-child {
+        background-color: transparent;
+        padding: 4px 3px;
+        width: auto;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
 
-        .icons > div > i {
-            color: #8a8585;
-        }
+      .icons > div:last-child span {
+        color: #000000;
+        font-size: 15px;
+      }
 
-        .icons img {
-            width: 35px;
-            height: 35px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
+      .icons > div > i {
+        color: #8a8585;
+      }
 
-        .icons > div .notification-dot {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            width: 8px;
-            height: 8px;
-            background-color: red;
-            border-radius: 50%;
-        }
+      .icons img {
+        width: 35px;
+        height: 35px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
 
-        main{
-            margin-top: 70px;
-            margin-left: 225px;
-            background-color: #fff;
-            border-radius: 8px;
-            padding-bottom: 20px;
-            border-left: 1px solid #ddd;
-        }
+      .icons > div .notification-dot {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 8px;
+        height: 8px;
+        background-color: red;
+        border-radius: 50%;
+      }
 
-        .main-header {
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            /* background-color: #f4f4f4; */
-            /* margin-bottom: 20px; */
-            /* border: 1px solid #ddd; */
-            background-color: #fbfbfb;
-            border-bottom: 1px solid #ddd;
-            box-sizing: border-box;
-        }
+      main {
+        margin-top: 70px;
+        margin-left: 225px;
+        background-color: #fff;
+        border-radius: 8px;
+        padding-bottom: 20px;
+        border-left: 1px solid #ddd;
+      }
 
-        .main-header-title {
-            font-size: 18px;
-            color: #333;
-            margin: 0;
-        }
+      .main-header {
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        /* background-color: #f4f4f4; */
+        /* margin-bottom: 20px; */
+        /* border: 1px solid #ddd; */
+        background-color: #fbfbfb;
+        border-bottom: 1px solid #ddd;
+        box-sizing: border-box;
+      }
 
-        .main-header-select select {
-            padding: 8px 12px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            font-size: 14px;
-            color: #333;
-            background-color: #fff;
-            cursor: pointer;
-        }
+      .main-header-title {
+        font-size: 18px;
+        color: #333;
+        margin: 0;
+      }
 
-        .main-card-container {
-            /* background-color: #f1f2f3; */
-            /* border: 1px solid red; */
-            padding: 15px 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 20px;
-            align-content: start; 
-            overflow-y: auto; 
-        }
+      .main-header-select select {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        font-size: 14px;
+        color: #333;
+        background-color: #fff;
+        cursor: pointer;
+      }
 
-        .card-title-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            /* margin-bottom: 15px; */
-        }
+      .main-card-container {
+        /* background-color: #f1f2f3; */
+        /* border: 1px solid red; */
+        padding: 15px 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 20px;
+        align-content: start;
+        overflow-y: auto;
+      }
 
-        .card {
-            justify-content: flex-start;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.345);
-            padding: 10px 20px;
-            text-align: center;
-            position:relative;
-            /* height: 110px; */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
+      .card-title-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        /* margin-bottom: 15px; */
+      }
 
-        .card-title-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+      .card {
+        justify-content: flex-start;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.345);
+        padding: 10px 20px;
+        text-align: center;
+        position: relative;
+        /* height: 110px; */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
 
-        .card-title {
-            font-size: 17px;
-            color: #333;
-            margin: 0;
-        }
+      .card-title-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
 
-        .card-icon-container {
-            background-color: #ebeff4;
-            padding: 10px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center ;
-        }
+      .card-title {
+        font-size: 17px;
+        color: #333;
+        margin: 0;
+      }
 
-        .card-icon {
-            font-size: 16px;
-            color: #f3a63b;
-        }
+      .card-icon-container {
+        background-color: #ebeff4;
+        padding: 10px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-        .card-order-count {
-            font-size: 28px;
-            font-weight: bold;
-            margin: 10px 0;
-        }
+      .card-icon {
+        font-size: 16px;
+        color: #f3a63b;
+      }
 
-        .card-percent {
-            color: #27ae60;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+      .card-order-count {
+        font-size: 28px;
+        font-weight: bold;
+        margin: 10px 0;
+      }
 
-        .card-percent span {
-            font-size: 18px;
-            margin-left: 3px;
-        }
+      .card-percent {
+        color: #27ae60;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-        .card-percent.negative {
-            color: #e74c3c;
-        }
+      .card-percent span {
+        font-size: 18px;
+        margin-left: 3px;
+      }
 
-        .card-content{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      .card-percent.negative {
+        color: #e74c3c;
+      }
 
-        .main-tab-container {
-            padding: 10px 20px 0px 20px;
-            display: flex;
-            position: relative;
-            /* background-color: #f1f2f3;   */
-            /* margin-bottom: 20px; */
-            /* border-bottom: 2px solid #ccc; */
-        }
+      .card-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .tab {
-            padding: 10px 20px;
-            cursor: pointer;
-            color: #555;
-            font-size: 16px;
-            position: relative;
-        }
+      .main-tab-container {
+        padding: 10px 20px 0px 20px;
+        display: flex;
+        position: relative;
+        /* background-color: #f1f2f3;   */
+        /* margin-bottom: 20px; */
+        /* border-bottom: 2px solid #ccc; */
+      }
 
-        .tab.active {
-            color: #f1ab5b;
-            font-weight: bold;
-        }
+      .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        color: #555;
+        font-size: 16px;
+        position: relative;
+      }
 
-        .indicator {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 2px;
-            width: 0;
-            background-color: #f1ab5b;
-            transition: all 0.3s ease;
-        }
+      .tab.active {
+        color: #f1ab5b;
+        font-weight: bold;
+      }
 
-        .main-table-container{
-            padding: 20px;
-            overflow-x: auto;   
-            height: 700px;
-            border-bottom: 1px solid #ddd;
-        }
+      .indicator {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 0;
+        background-color: #f1ab5b;
+        transition: all 0.3s ease;
+      }
 
-        .main-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
+      .main-table-container {
+        padding: 20px;
+        overflow-x: auto;
+        height: 700px;
+        border-bottom: 1px solid #ddd;
+      }
 
-        .main-table th, .main-table td {
-            /* border: 1px solid #ddd; */
-            padding: 10px;
-            text-align: left;
-        }
+      .main-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
 
-        .main-table th {
-            background-color: #e4e1e1;
-            color: #333;
-            border: 3px solid #fff;
-            border-radius: 10px;
-        }
+      .main-table th,
+      .main-table td {
+        /* border: 1px solid #ddd; */
+        padding: 10px;
+        text-align: left;
+      }
 
-        .main-table tr:first-child th {
-            /* border-bottom: 1px solid #bbb9b9; */
-            font-size: 16px;
-        }
+      .main-table th {
+        background-color: #e4e1e1;
+        color: #333;
+        border: 3px solid #fff;
+        border-radius: 10px;
+      }
 
-        .main-table tr {
-            border-bottom: 1px solid #bbb9b9;
-        }
-        
-        .main-table tr:last-child {
-            border-bottom: none;
-        }
+      .main-table tr:first-child th {
+        /* border-bottom: 1px solid #bbb9b9; */
+        font-size: 16px;
+      }
 
+      .main-table tr {
+        border-bottom: 1px solid #bbb9b9;
+      }
 
-        .main-table td img {
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-        }
+      .main-table tr:last-child {
+        border-bottom: none;
+      }
 
-        .dropdown {
-            position: absolute;
-            display: none;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border: 1px solid #ddd;
-            padding: 10px;
-            z-index: 10;
-            border-radius: 5px;
-        }
+      .main-table td img {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+      }
 
-        .dropdown:hover {
-            cursor: pointer;
-        }
+      .dropdown {
+        position: absolute;
+        display: none;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
+        padding: 10px;
+        z-index: 10;
+        border-radius: 5px;
+      }
 
-        .dropdown-item {
-            padding: 5px 10px;
-            text-align: left;
-        }
+      .dropdown:hover {
+        cursor: pointer;
+      }
 
-        .dropdown-item:hover {
-            background-color: #f5f5f5;
-        }
+      .dropdown-item {
+        padding: 5px 10px;
+        text-align: left;
+      }
 
-        .fa-ellipsis-vertical {
-            cursor: pointer;
-            color: #555;
-        }
+      .dropdown-item:hover {
+        background-color: #f5f5f5;
+      }
 
-        .fa-ellipsis-vertical:hover {
-            color: #000;
-        }
+      .fa-ellipsis-vertical {
+        cursor: pointer;
+        color: #555;
+      }
 
-        /* Status styles */
-        .status {
-            font-size: 15px;
-            font-weight: bold;
-            text-transform: capitalize;
-            padding: 5px 10px;
-            border-radius: 4px;
-            display: inline-block;
-        }
+      .fa-ellipsis-vertical:hover {
+        color: #000;
+      }
 
-        .status.pending {
-            background-color: #fff3cd;
-            color: #856404; /* Orange */
-        }
+      /* Status styles */
+      .status {
+        font-size: 15px;
+        font-weight: bold;
+        text-transform: capitalize;
+        padding: 5px 10px;
+        border-radius: 4px;
+        display: inline-block;
+      }
 
-        .status.in-progress {
-            background-color: #cce5ff;
-            color: #004085; /* Light Blue */
-        }
+      .status.pending {
+        background-color: #fff3cd;
+        color: #856404; /* Orange */
+      }
 
-        .status.canceled {
-            background-color: #f8d7da;
-            color: #721c24; /* Red */
-        }
+      .status.in-progress {
+        background-color: #cce5ff;
+        color: #004085; /* Light Blue */
+      }
 
-        .status.completed {
-            background-color: #d4edda;
-            color: #155724; /* Green */
-        }
-        /* Pagination styles */
-        .main-tab-container-pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
+      .status.canceled {
+        background-color: #f8d7da;
+        color: #721c24; /* Red */
+      }
 
-        .main-tab-container-pagination-pages {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+      .status.completed {
+        background-color: #d4edda;
+        color: #155724; /* Green */
+      }
+      /* Pagination styles */
+      .main-tab-container-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+      }
 
-        .main-tab-container-pagination-page-lt,
-        .main-tab-container-pagination-page-gt {
-            cursor: pointer;
-            padding: 5px 10px;
-            background-color: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-weight: bold;
-        }
+      .main-tab-container-pagination-pages {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
 
-        .main-tab-container-pagination-page-lt:hover,
-        .main-tab-container-pagination-page-gt:hover {
-            background-color: #ddd;
-        }
+      .main-tab-container-pagination-page-lt,
+      .main-tab-container-pagination-page-gt {
+        cursor: pointer;
+        padding: 5px 10px;
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-weight: bold;
+      }
 
-        .main-tab-container-pagination span {
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+      .main-tab-container-pagination-page-lt:hover,
+      .main-tab-container-pagination-page-gt:hover {
+        background-color: #ddd;
+      }
 
-        .main-tab-container-pagination span:hover {
-            background-color: #feb03b;
-            color: #fff;
-        }
+      .main-tab-container-pagination span {
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
 
-        .main-tab-container-pagination span.active {
-            background-color: #007bff;
-            color: #fff;
-        }   
+      .main-tab-container-pagination span:hover {
+        background-color: #feb03b;
+        color: #fff;
+      }
 
-        .go-to-top-btn {
-            position: fixed;
-            bottom: 50px;
-            right: 50px;
-            display: none;
-            background-color: #f5a623;
-            border: none;
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            padding: 10px;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-        }
+      .main-tab-container-pagination span.active {
+        background-color: #feb03b;
+        color: #fff;
+      }
 
-        .go-to-top-btn:hover {
-            background-color: #d4891f;
-        }
+      .go-to-top-btn {
+        position: fixed;
+        bottom: 50px;
+        right: 50px;
+        display: none;
+        background-color: #f5a623;
+        border: none;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        padding: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+      }
 
-        .main-table tbody tr:hover {
-            background-color: #fbf6eb;
-        }
+      .go-to-top-btn:hover {
+        background-color: #d4891f;
+      }
+
+      .main-table tbody tr:hover {
+        background-color: #fbf6eb;
+      }
     </style>
-</head>
-<body>
-    <!-- <h1>Hello this is shopowner page</h1>
-    -->
+  </head>
+  <body>
     <header class="header">
-        <div class="icons">
-            <div class="notification icon">
-                <i class="fa-solid fa-bell "></i>
-                <span class="notification-dot">
-                </span>
-            </div>
-            <div class="profile-image icon">
-                <img th:src="${shopowner.profilePic}" class="">
-                <span th:text="${shopowner.firstName + ' '+shopowner.lastName}">Admin</span>
-                <i class="fas fa-angle-down"></i>
-            </div>
+      <div class="icons">
+        <div class="notification icon">
+          <i class="fa-solid fa-bell"></i>
+          <span class="notification-dot"> </span>
         </div>
+        <div class="profile-image icon">
+          <img th:src="${shopowner.profilePic}" class="" />
+          <span th:text="${shopowner.firstName + ' '+shopowner.lastName}"
+            >Admin</span
+          >
+          <i class="fas fa-angle-down"></i>
+        </div>
+      </div>
     </header>
     <aside class="sidebar">
-        <p>Khine Myanmar</p>
-        <div data-path="/shopowner/dashboard">
-            <i class="fas fa-tachometer-alt"></i>
-            <a href="#">Dashboard</a>
-        </div>
-        <div class="asideActive" data-path="/shopowner/orders">
-            <i class="fas fa-shopping-cart"></i>
-            <a href="#">Orders</a>
-        </div>
-        <div data-path="/shopowner/deliveries">
-            <i class="fas fa-users"></i>
-            <a href="#">Deliveries</a>
-        </div>
-        <div data-path="/shopowner/products">
-            <i class="fas fa-box"></i>
-            <a href="#">Products</a>
-        </div>
-        <div data-path="/shopowner/setting">
-            <i class="fas fa-cog"></i>
-            <a href="#">Settings</a>
-        </div>
-        <div class="bottom-link" data-path="/ecom/index">
-            <i class="fas fa-sign-out-alt"></i>
-            <a href="#">Log Out</a>
-        </div>
-    </aside>   
+      <p>Khine Myanmar</p>
+      <div data-path="/shopowner/dashboard">
+        <i class="fas fa-tachometer-alt"></i>
+        <a href="#">Dashboard</a>
+      </div>
+      <div class="asideActive" data-path="/shopowner/orders">
+        <i class="fas fa-shopping-cart"></i>
+        <a href="#">Orders</a>
+      </div>
+      <div data-path="/shopowner/deliveries">
+        <i class="fas fa-users"></i>
+        <a href="#">Deliveries</a>
+      </div>
+      <div data-path="/shopowner/products">
+        <i class="fas fa-box"></i>
+        <a href="#">Products</a>
+      </div>
+      <div data-path="/shopowner/setting">
+        <i class="fas fa-cog"></i>
+        <a href="#">Settings</a>
+      </div>
+      <div class="bottom-link" data-path="/ecom/index">
+        <i class="fas fa-sign-out-alt"></i>
+        <a href="#">Log Out</a>
+      </div>
+    </aside>
     <main>
-        <div class="main-header">
-            <h2 class="main-header-title">Manage Orders</h2>
-            <div class="main-header-select">
-                <select>
-                    <option value="thisweek">All Data</option>
-                </select>
-            </div>
+      <div class="main-header">
+        <h2 class="main-header-title">Manage Orders</h2>
+        <div class="main-header-select">
+          <select>
+            <option value="ALL">All Data</option>
+          </select>
         </div>
-        <div class="main-card-container">
-            <div class="card">
-                <div class="card-title-container">
-                    <h3 class="card-title" style="color:#492dba;">Total Orders</h3>
-                    <div class="card-icon-container">
-                        <i class="card-icon fas fa-shopping-cart" style="color:#492dba;"></i>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <p class="card-order-count">756</p>
-                    <span class="card-percent">4.07<span>%</span></span>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title-container">
-                    <h3 class="card-title" style="color: rgb(49, 143, 231);">In Progress</h3>
-                    <div class="card-icon-container">
-                        <i class="card-icon fas fa-spinner" style="color: rgb(49, 143, 231);"></i>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <p class="card-order-count">476</p>
-                    <span class="card-percent">4.07<span>%</span></span>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title-container">
-                    <h3 class="card-title" style="color: #f3a63b;">Pending</h3>
-                    <div class="card-icon-container">
-                        <i class="card-icon fas fa-clock"></i>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <p class="card-order-count">376</p>
-                    <span class="card-percent">16.4<span>%</span></span>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title-container">
-                    <h3 class="card-title" style="color: rgb(19, 159, 19);">Completed</h3>
-                    <div class="card-icon-container">
-                        <i class="card-icon fas fa-check-circle" style="color:rgb(19, 159, 19) ;"></i>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <p class="card-order-count">210</p>
-                    <span class="card-percent">4.07<span>%</span></span>
-                </div>
-                
-            </div>
-            <div class="card">
-                <div class="card-title-container">
-                    <h3 class="card-title" style="color: rgb(223, 45, 45);">Canceled</h3>
-                    <div class="card-icon-container">
-                        <!-- <i class="card-icon fas fa-shopping-cart"></i> -->
-                        <i class="card-icon fas fa-ban" style="color: rgb(223, 45, 45);"></i>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <p class="card-order-count">756</p>
-                    <span class="card-percent">4.07<span>%</span></span>
-                </div>
-            </div>
+      </div>
+      <div class="main-card-container">
+        <div class="card">
+          <div class="card-title-container">
+            <h3 class="card-title" style="color: #492dba">Total Orders</h3>
+          </div>
+          <div class="card-content">
+            <p class="card-order-count total-orders">0</p>
+            <span class="card-percent total-orders" style="opacity: 0;">0%</span>
+          </div>
         </div>
-        <div class="main-tab-container">
-            <div class="indicator"></div>
-            <div class="tab active" onclick="moveIndicator(this)">All Orders</div>
-            <div class="tab" onclick="moveIndicator(this)">In Progress</div>
-            <div class="tab" onclick="moveIndicator(this)">Pending</div>
-            <div class="tab" onclick="moveIndicator(this)">Canceled</div>
-            <div class="tab" onclick="moveIndicator(this)">Completed</div>
-        </div>      
-        <div class="main-table-section">
-            <div class="main-table-container">
-                <table class="main-table">
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Image</th>
-                            <th>Customer Name</th>
-                            <th>Order Date</th>
-                            <th>Order Total</th>
-                            <th>Order Status</th>
-                            <th>Payment Method</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>#0001</td>
-                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaFyDnmmtpqDBqM8EyBuxBsZHA0-s5QlGTqQ&s" alt=""></td>
-                            <td>John Doe</td>
-                            <td>2022-03-01</td>
-                            <td>100,000 Ks</td>
-                            <td><span class="status completed">Completed</span></td>
-                            <td>Cash on Delivery</td>
-                            <td>
-                                <i class="fa-solid fa-ellipsis-vertical" onclick="showDropdown(event)"></i>
-                                <div class="dropdown">
-                                    <div class="dropdown-item">Assign</div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#0002</td>
-                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaFyDnmmtpqDBqM8EyBuxBsZHA0-s5QlGTqQ&s" alt=""></td>
-                            <td>Jane Smith</td>
-                            <td>2022-03-02</td>
-                            <td>50,000 Ks</td>
-                            <td><span class="status pending">Pending</span></td>
-                            <td>Cash on Delivery</td>
-                            <td>
-                                <i class="fa-solid fa-ellipsis-vertical" onclick="showDropdown(event)"></i>
-                                <div class="dropdown">
-                                    <div class="dropdown-item">Assign</div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#0003</td>
-                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaFyDnmmtpqDBqM8EyBuxBsZHA0-s5QlGTqQ&s" alt=""></td>
-                            <td>Bob Johnson</td>
-                            <td>2022-03-03</td>
-                            <td>75,000 Ks</td>
-                            <td><span class="status in-progress">In Progress</span></td>
-                            <td>Cash on Delivery</td>
-                            <td>
-                                <i class="fa-solid fa-ellipsis-vertical" onclick="showDropdown(event)"></i>
-                                <div class="dropdown">
-                                    <div class="dropdown-item">Assign</div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#0004</td>
-                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaFyDnmmtpqDBqM8EyBuxBsZHA0-s5QlGTqQ&s" alt=""></td>
-                            <td>Alice Brown</td>
-                            <td>2022-03-04</td>
-                            <td>120,000 Ks</td>
-                            <td><span class="status canceled">Canceled</span></td>
-                            <td>Cash on Delivery</td>
-                            <td>
-                                <i class="fa-solid fa-ellipsis-vertical" onclick="showDropdown(event)"></i>
-                                <div class="dropdown">
-                                    <div class="dropdown-item">Assign</div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="main-tab-container-pagination">
-                <div class="main-tab-container-pagination-pages">
-                    <span class="main-tab-container-pagination-page-lt">&lt;</span>
-                    <div>
-                        <span>1</span>
-                        <span>2</span>
-                        <span>3</span>
-                        <span>4</span>
-                        <span>...</span>
-                        <span>11</span>
-                        <span>12</span>
-                    </div>
-                    <span class="main-tab-container-pagination-page-gt">&gt;</span>
-                </div>
-            </div>
+        <div class="card">
+          <div class="card-title-container">
+            <h3 class="card-title" style="color: rgb(49, 143, 231)">
+              Completed
+            </h3>
+          </div>
+          <div class="card-content">
+            <p class="card-order-count completed">0</p>
+            <span class="card-percent completed">0%</span>
+          </div>
         </div>
+        <div class="card">
+          <div class="card-title-container">
+            <h3 class="card-title" style="color: #f3a63b">Pending</h3>
+          </div>
+          <div class="card-content">
+            <p class="card-order-count pending">0</p>
+            <span class="card-percent pending">0%</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title-container">
+            <h3 class="card-title" style="color: rgb(19, 159, 19)">
+              In Progress
+            </h3>
+          </div>
+          <div class="card-content">
+            <p class="card-order-count in-progress">0</p>
+            <span class="card-percent in-progress">0%</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title-container">
+            <h3 class="card-title" style="color: rgb(223, 45, 45)">Canceled</h3>
+          </div>
+          <div class="card-content">
+            <p class="card-order-count canceled">0</p>
+            <span class="card-percent canceled">0%</span>
+          </div>
+        </div>
+      </div>
+      <div class="main-tab-container">
+        <div class="indicator"></div>
+        <div class="tab active" onclick="moveIndicator(this)">All Orders</div>
+        <div class="tab" onclick="moveIndicator(this)">In Progress</div>
+        <div class="tab" onclick="moveIndicator(this)">Pending</div>
+        <div class="tab" onclick="moveIndicator(this)">Canceled</div>
+        <div class="tab" onclick="moveIndicator(this)">Completed</div>
+    </div>
+      <div class="main-table-section">
+        <div class="main-table-container">
+          <table class="main-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Image</th>
+                <th>Customer Name</th>
+                <th>Order Date</th>
+                <th>Order Total</th>
+                <th>Order Status</th>
+                <th>Payment Method</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Order rows will be populated here -->
+            </tbody>
+          </table>
+        </div>
+        <div class="main-tab-container-pagination">
+          <div class="main-tab-container-pagination-pages">
+            <span class="main-tab-container-pagination-page-lt">&lt;</span>
+            <div>
+              <!-- Pagination numbers will be populated here -->
+            </div>
+            <span class="main-tab-container-pagination-page-gt">&gt;</span>
+          </div>
+        </div>
+      </div>
     </main>
     <section>
-        <button id="goToTopBtn" class="go-to-top-btn" onclick="scrollToTop()"><i class="fa-solid fa-angle-up"></i></button>
+      <button id="goToTopBtn" class="go-to-top-btn" onclick="scrollToTop()">
+        <i class="fa-solid fa-angle-up"></i>
+      </button>
     </section>
-    
-    <script th:src="@{/js/adminSideBarNav.js}">
-    </script> 
+
+    <script th:src="@{/js/adminSideBarNav.js}"></script>
     <script>
-        const indicator = document.querySelector('.indicator');
-        const tabs = document.querySelectorAll('.tab');
-    
-        function moveIndicator(tab) {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-    
-            const tabRect = tab.getBoundingClientRect();
-            const containerRect = tab.parentElement.getBoundingClientRect();
-    
-            indicator.style.width = `${tabRect.width}px`;
-            indicator.style.left = `${tabRect.left - containerRect.left}px`;
+      const indicator = document.querySelector(".indicator");
+      const tabs = document.querySelectorAll(".tab");
+
+      const statusMap = {
+        "All Orders": "ALL",
+        "In Progress": "IN_PROGRESS",
+        "Pending": "PENDING",
+        "Canceled": "CANCELED",
+        "Completed": "COMPLETED",
+      };
+
+      function moveIndicator(tab) {
+        tabs.forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
+
+        const tabRect = tab.getBoundingClientRect();
+        const containerRect = tab.parentElement.getBoundingClientRect();
+
+        indicator.style.width = `${tabRect.width}px`;
+        indicator.style.left = `${tabRect.left - containerRect.left}px`;
+
+        currentStatus = statusMap[tab.innerText.trim()] || "ALL";
+        currentPage = 0;
+        console.log(currentStatus);
+        fetchOrders(currentStatus);
+      }
+
+      // Initialize indicator position
+      const firstTab = document.querySelector(".tab.active");
+      const firstTabRect = firstTab.getBoundingClientRect();
+      const containerRect = firstTab.parentElement.getBoundingClientRect();
+
+      indicator.style.width = `${firstTabRect.width}px`;
+      indicator.style.left = `${firstTabRect.left - containerRect.left}px`;
+
+      document.addEventListener("DOMContentLoaded", () => {
+      const activeTab = document.querySelector(".tab.active");
+      if (activeTab) {
+            moveIndicator(activeTab);
         }
-    
-        // Initialize indicator position
-        const firstTab = document.querySelector('.tab.active');
-        const firstTabRect = firstTab.getBoundingClientRect();
-        const containerRect = firstTab.parentElement.getBoundingClientRect();
-    
-        indicator.style.width = `${firstTabRect.width}px`;
-        indicator.style.left = `${firstTabRect.left - containerRect.left}px`;
+      });
     </script>
     <script>
-        function showDropdown(event) {
-            closeDropdowns(); // Close other dropdowns
-            const dropdown = event.target.nextElementSibling;
-            dropdown.style.display = "block";
-            dropdown.style.top = event.pageY + "px";
-            dropdown.style.left = event.pageX + "px";
+      function showDropdown(event) {
+        closeDropdowns(); // Close other dropdowns
+        const dropdown = event.target.nextElementSibling;
+        dropdown.style.display = "block";
+        dropdown.style.top = event.pageY + "px";
+        dropdown.style.left = event.pageX + "px";
 
-            // Stop propagation to prevent closing the dropdown immediately
-            event.stopPropagation();
-        }
+        // Stop propagation to prevent closing the dropdown immediately
+        event.stopPropagation();
+      }
 
-        function closeDropdowns() {
-            document.querySelectorAll('.dropdown').forEach(dropdown => {
-                dropdown.style.display = "none";
-            });
-        }
-
-        // Close dropdown on click outside
-        document.addEventListener('click', closeDropdowns);
-    </script>
-    <script>
-        // Get the button
-        const goToTopBtn = document.getElementById("goToTopBtn");
-
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function () {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            goToTopBtn.style.display = "block";
-        } else {
-            goToTopBtn.style.display = "none";
-        }
-        };
-
-        // When the user clicks on the button, scroll to the top of the document with smooth animation
-        function scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+      function closeDropdowns() {
+        document.querySelectorAll(".dropdown").forEach((dropdown) => {
+          dropdown.style.display = "none";
         });
+      }
+
+      // Close dropdown on click outside
+      document.addEventListener("click", closeDropdowns);
+    </script>
+    <script>
+      // Get the button
+      const goToTopBtn = document.getElementById("goToTopBtn");
+
+      // When the user scrolls down 20px from the top of the document, show the button
+      window.onscroll = function () {
+        if (
+          document.body.scrollTop > 20 ||
+          document.documentElement.scrollTop > 20
+        ) {
+          goToTopBtn.style.display = "block";
+        } else {
+          goToTopBtn.style.display = "none";
+        }
+      };
+
+      // When the user clicks on the button, scroll to the top of the document with smooth animation
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+    </script>
+    <script>
+      let currentPage = 0;
+      const pageSize = 10;
+      let currentStatus = "ALL"; // Default status
+
+      function fetchOrders(status) {
+            fetch(`/order/getOrders?page=${currentPage}&size=${pageSize}&status=${status}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.text(); // Read response as text
+                })
+                .then(text => {
+                    if (!text) {
+                        console.warn("Empty response received");
+                        return { content: [], totalPages: 0 }; // Return default object
+                    }
+                    return JSON.parse(text);
+                })
+                .then(data => {
+                    console.log("Orders fetched:", data);
+                    updateOrderTable(data.content || []);
+                    updatePagination(data.totalPages || 0);
+                    updateCardValues(data.content || []);
+                })
+                .catch(error => console.error("Error fetching orders:", error));
         }
 
-    </script>
-</body>
 
+      function updateOrderTable(orders) {
+        const tbody = document.querySelector(".main-table tbody");
+        tbody.innerHTML = "";
+        orders.forEach((order) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                <td>#${order.orderId}</td>
+                <td><img src="${order.user.profilePic}" alt=""></td>
+                <td>${order.user.firstName} ${order.user.lastName}</td>
+                <td>${new Date(order.checkoutDate).toLocaleDateString()}</td>
+                <td>${order.amount.toLocaleString()} Ks</td>
+                <td><span class="status ${order.status.toLowerCase()}">${
+            order.status
+          }</span></td>
+                <td>${order.paymentStatus}</td>
+                <td>
+                    <i class="fa-solid fa-ellipsis-vertical" onclick="showDropdown(event)"></i>
+                    <div class="dropdown">
+                        <div class="dropdown-item">Assign</div>
+                    </div>
+                </td>
+            `;
+          tbody.appendChild(row);
+        });
+      }
+
+      function updatePagination(totalPages) {
+            const paginationContainer = document.querySelector(".main-tab-container-pagination-pages");
+            paginationContainer.innerHTML = "";
+            
+            for (let i = 0; i < totalPages; i++) {
+                const pageSpan = document.createElement("span");
+                pageSpan.textContent = i + 1;
+                pageSpan.classList.toggle("active", i === currentPage); // Highlight active page
+                pageSpan.onclick = () => {
+                    currentPage = i;
+                    fetchOrders(currentStatus);
+                };
+                paginationContainer.appendChild(pageSpan);
+            }
+        }
+
+
+      function updateCardValues(orders) {
+        const totalOrders = orders.length;
+        const completedOrders = orders.filter(
+          (order) => order.status === "COMPLETED"
+        ).length;
+        const pendingOrders = orders.filter(
+          (order) => order.status === "PENDING"
+        ).length;
+        const inProgressOrders = orders.filter(
+          (order) => order.status === "IN_PROGRESS"
+        ).length;
+        const canceledOrders = orders.filter(
+          (order) => order.status === "CANCELED"
+        ).length;
+
+        document.querySelector(".card-order-count.total-orders").textContent =
+          totalOrders;
+        document.querySelector(".card-order-count.completed").textContent =
+          completedOrders;
+        document.querySelector(".card-order-count.pending").textContent =
+          pendingOrders;
+        document.querySelector(".card-order-count.in-progress").textContent =
+          inProgressOrders;
+        document.querySelector(".card-order-count.canceled").textContent =
+          canceledOrders;
+
+        const totalCount = totalOrders || 1;
+        document.querySelector(".card-percent.completed").innerHTML = `${(
+          (completedOrders / totalCount) *
+          100
+        ).toFixed(2)}%`;
+        document.querySelector(".card-percent.pending").innerHTML = `${(
+          (pendingOrders / totalCount) *
+          100
+        ).toFixed(2)}%`;
+        document.querySelector(".card-percent.in-progress").innerHTML = `${(
+          (inProgressOrders / totalCount) *
+          100
+        ).toFixed(2)}%`;
+        document.querySelector(".card-percent.canceled").innerHTML = `${(
+          (canceledOrders / totalCount) *
+          100
+        ).toFixed(2)}%`;
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+            fetchOrders(currentStatus);
+        });
+
+    </script>
+  </body>
 </html>

@@ -3,9 +3,8 @@ package com.khineMyanmar.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -29,13 +28,17 @@ public class Order {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	@JsonIgnore
+	
 	private User user;
 	
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
 
 	private LocalDateTime checkoutDate;
+
+	@Enumerated(EnumType.STRING) // Store enum values as strings in the database
+	@Column(nullable = true)
+	private PaymentStatus paymentStatus;
 	
 	private Double amount;
 	
@@ -45,6 +48,14 @@ public class Order {
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = true)
     @JoinColumn(name = "delivery_item_id", nullable = true)
     private DeliveryItem deliveryItem;
+
+	public PaymentStatus getPaymentStatus() {
+		return paymentStatus;
+	}
+	
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
 
 	public Long getOrderId() {
 		return orderId;
