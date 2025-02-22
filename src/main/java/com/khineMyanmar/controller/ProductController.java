@@ -1,6 +1,7 @@
 package com.khineMyanmar.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.khineMyanmar.model.Product;
 import com.khineMyanmar.model.ProductShop;
 import com.khineMyanmar.DTO.ProductDTO;
+import com.khineMyanmar.DTO.TopSaleProductDTO;
+import com.khineMyanmar.repository.IOrderProductRepository;
 import com.khineMyanmar.repository.IProductRepository;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
+
+    @Autowired
+    private IOrderProductRepository orderProductRepository;
 
     @Autowired
     private IProductRepository productRepository;
@@ -75,6 +81,12 @@ public class ProductController {
         response.put("description", product.getDescription());
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/top-sales")
+    @ResponseBody
+    public List<TopSaleProductDTO> getTopSellingProducts() {
+        return orderProductRepository.findTopFourSellingProducts();
     }
 }
 

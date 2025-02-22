@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.khineMyanmar.DTO.TopCustomerDTO;
 import com.khineMyanmar.model.Order;
 import com.khineMyanmar.model.Product;
 import com.khineMyanmar.model.User;
@@ -38,6 +39,28 @@ public class OrderService {
     @Autowired
     private ProductShopService productShopService;
 
+    public Map<String, Object> getWeeklyOrderStats(Long shopId) {
+        LocalDate startDate = LocalDate.now().minusDays(6);
+        List<Object[]> results = orderRepository.countOrdersLastWeek(shopId,startDate);
+
+        Map<LocalDate, Integer> orderMap = results.stream()
+            .collect(Collectors.toMap(r -> (LocalDate) r[1], r -> ((Long) r[0]).intValue()));
+
+        List<String> labels = new ArrayList<>();
+        List<Integer> orderCounts = new ArrayList<>();
+
+        for (int i = 6; i >= 0; i--) {
+            LocalDate date = LocalDate.now().minusDays(i);
+            labels.add("Day " + (7 - i));
+            orderCounts.add(orderMap.getOrDefault(date, 0));
+        }
+
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("labels", labels);
+        stats.put("orderCounts", orderCounts);
+        return stats;
+    }
+
     public Map<String, Object> getWeeklyOrderStats() {
         LocalDate startDate = LocalDate.now().minusDays(6);
         List<Object[]> results = orderRepository.countOrdersLastWeek(startDate);
@@ -60,11 +83,11 @@ public class OrderService {
         return stats;
     }
 
-     public Map<String, Object> getDashboardStats() {
+     public Map<String, Object> getDashboardStats(Long shopId) {
         Map<String, Object> stats = new HashMap<>();
-        stats.put("totalOrders", orderRepository.countTotalOrders());
-        stats.put("deliveredOrders", orderRepository.countDeliveredOrders());
-        stats.put("totalEarnings", orderRepository.totalEarnings());
+        stats.put("totalOrders", orderRepository.countTotalOrdersByShop(shopId));
+        stats.put("deliveredOrders", orderRepository.countDeliveredOrdersByShop(shopId));
+        stats.put("totalEarnings", orderRepository.totalEarningsByShop(shopId));
         return stats;
     }
 
@@ -123,7 +146,52 @@ public class OrderService {
         return orderRepository.findAll(pageable);
     }
 
+    public Page<Order> getOrdersByStatusAndShop(OrderStatus status, Long shopId, Pageable pageable) {
+        if (status != null && shopId != null) {
+            return orderRepository.findByStatusAndShop(status, shopId, pageable);
+        }
+        return orderRepository.findOrdersByShop(shopId, pageable);
+    }
+
     public Page<Order> getAllOrders(Pageable pageable) {
         return orderRepository.findAll(pageable);
+    }
+
+    public Page<Order> getOrdersByShop(Long shopId, Pageable pageable) {
+        return orderRepository.findOrdersByShop(shopId, pageable);
+    }
+
+    public List<Order> getRecentOrders() {
+        return orderRepository.findTop5ByOrderByOrderIdDesc();
+    }
+
+    public List<TopCustomerDTO> getTopCustomers() {
+        return orderRepository.findTopCustomers().stream()
+            .limit(5) // Limit to top 5
+            .map(obj -> new TopCustomerDTO(
+                (Long) obj[0],  // userId
+                (String) obj[1], // firstName
+                (String) obj[2], // lastName
+                (String) obj[3], // profilePic
+                (Double) obj[4]  // totalAmount
+            ))
+            .collect(Collectors.toList());
+    }
+
+    public List<Order> getRecentOrdersByShop(Long shopId) {
+        return orderRepository.findTop5ByShopIdOrderByOrderIdDesc(shopId);
+    }
+
+    public List<TopCustomerDTO> getTopCustomersByShop(Long shopId) {
+        return orderRepository.findTopCustomersByShop(shopId).stream()
+            .limit(5) // Limit to top 5
+            .map(obj -> new TopCustomerDTO(
+                (Long) obj[0],  // userId
+                (String) obj[1], // firstName
+                (String) obj[2], // lastName
+                (String) obj[3], // profilePic
+                (Double) obj[4]  // totalAmount
+            ))
+            .collect(Collectors.toList());
     }
 }

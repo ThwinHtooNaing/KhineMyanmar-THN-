@@ -553,43 +553,10 @@
             </div>
             <div class="topSaleProduct">
                 <h3>Top Sale Product</h3>
-                <table>
-                    <tr>
-                        <td class="product-img">
-                            <img src="https://img.freepik.com/free-photo/organic-cosmetic-product-with-dreamy-aesthetic-fresh-background_23-2151382816.jpg" alt="Product">
-                        </td>
-                        <td class="product-details">
-                            <strong>Product 1</strong>
-                            <div class="price">$1000</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="product-img">
-                            <img src="https://img.freepik.com/free-photo/organic-cosmetic-product-with-dreamy-aesthetic-fresh-background_23-2151382816.jpg" alt="Product">
-                        </td>
-                        <td class="product-details">
-                            <strong>Product 2</strong>
-                            <div class="price">$1000</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="product-img">
-                            <img src="https://img.freepik.com/free-photo/organic-cosmetic-product-with-dreamy-aesthetic-fresh-background_23-2151382816.jpg" alt="Product">
-                        </td>
-                        <td class="product-details">
-                            <strong>Product 3</strong>
-                            <div class="price">$1000</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="product-img">
-                            <img src="https://img.freepik.com/free-photo/organic-cosmetic-product-with-dreamy-aesthetic-fresh-background_23-2151382816.jpg" alt="Product">
-                        </td>
-                        <td class="product-details">
-                            <strong>Product 4</strong>
-                            <div class="price">$1000</div>
-                        </td>
-                    </tr>
+                <table id="top-sale-table">
+                    <tbody>
+
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -598,94 +565,39 @@
                 <div class="recentOrder-header">
                     <h3>Recent Orders</h3>
                     <div class="recentOrder-header-view-all">
-                        <a th:href="@{/shopowner/orders}">View All</a>
+                        <a href="/shopowner/orders">View All</a>
                         <span>&gt;</span>
                     </div>
                 </div>
                 <table>
-                    <tr>
-                        <th>No</th>
-                        <th>Image</th>
-                        <th>Customer Name</th>
-                        <th>Order ID</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
-                        <td>Aung Aung</td>
-                        <td>#0001</td>
-                        <td>100000<span> MMK</span></td>
-                        <td><span class="status status-completed">Completed</span></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
-                        <td>Maung Maung</td>
-                        <td>#0002</td>
-                        <td>100000<span> MMK</span></td>
-                        <td><span class="status status-pending">Pending</span></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
-                        <td>Mya Mya</td>
-                        <td>#0003</td>
-                        <td>100000<span> MMK</span></td>
-                        <td><span class="status status-progress">In Progress</span></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
-                        <td>Myo Myo</td>
-                        <td>#0004</td>
-                        <td>100000<span> MMK</span></td>
-                        <td><span class="status status-cancelled">Cancelled</span></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
-                        <td>Myat Myat</td>
-                        <td>#0005</td>
-                        <td>100000<span> MMK</span></td>
-                        <td><span class="status status-completed">Completed</span></td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Image</th>
+                            <th>Customer Name</th>
+                            <th>Order ID</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentOrdersTable">
+                        <!-- Dynamic rows will be inserted here -->
+                    </tbody>
                 </table>
             </div>
             <div class="topCustomer">
                 <h3 class="topCustomer-header">Top Customers</h3>
                 <table>
-                    <tr>
-                        <th>Img</th>
-                        <th>Customer Name</th>
-                        <th>Total Order Amount</th>
-                    </tr>
-                    <tr>
-                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
-                        <td>Customer 1</td>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
-                        <td>Customer 2</td>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
-                        <td>Customer 3</td>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
-                        <td>Customer 4</td>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt=""></td>
-                        <td>Customer 5</td>
-                        <td>100</td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Img</th>
+                            <th>Customer Name</th>
+                            <th>Total Order Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="topCustomersTable">
+                        <!-- Dynamic rows will be inserted here -->
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -693,9 +605,92 @@
     <script th:src="@{/js/adminSideBarNav.js}">
     </script> 
     <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch("/shopowner/top-customers")
+            .then(response => response.json())
+            .then(customers => {
+                const tableBody = document.getElementById("topCustomersTable");
+                tableBody.innerHTML = ""; // Clear existing content
+
+                customers.forEach(customer => {
+                    const row = document.createElement("tr");
+                    const formattedAmount = customer.totalAmount.toLocaleString("en-US");
+
+                    row.innerHTML = `
+                        <td>
+                            <img src="${customer.profilePic ? customer.profilePic : 'https://via.placeholder.com/50'}" alt="Customer Image" width="50">
+                        </td>
+                        <td>${customer.firstName} ${customer.lastName}</td>
+                        <td>${formattedAmount} MMK</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error("Error fetching top customers:", error));
+    });
+    </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch("/shopowner/recent")
+            .then(response => response.json())
+            .then(orders => {
+                const tableBody = document.getElementById("recentOrdersTable");
+                tableBody.innerHTML = ""; // Clear existing content
+
+                orders.forEach((order, index) => {
+                    const row = document.createElement("tr");
+                    const formattedAmount = order.amount.toLocaleString("en-US");
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>
+                            <img src="${order.user.profilePic ? order.user.profilePic : 'https://via.placeholder.com/50'}" alt="Customer Image" width="50">
+                        </td>
+                        <td>${order.user.firstName} ${order.user.lastName}</td>
+                        <td>#${order.orderId}</td>
+                        <td>${formattedAmount} MMK</td>
+                        <td>
+                            <span class="status status-${order.status.toLowerCase()}">${order.status}</span>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error("Error fetching recent orders:", error));
+    });
+    </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("/shopowner/top-sales")
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector("#top-sale-table tbody");
+                tableBody.innerHTML = ""; // Clear existing content
+
+                data.forEach(product => {
+                    console.log(product);
+                     const formattedAmount = product.productPrice.toLocaleString("en-US");
+                    const row = `
+                        <tr>
+                            <td class="product-img">
+                                <img src="${product.productImagePath}" alt="${product.productName}">
+                            </td>
+                            <td class="product-details">
+                                <strong>${product.productName}</strong>
+                                <div class="price">${formattedAmount} MMK</div>
+                                <div class="sold">Sold: ${product.quantitySold}</div>
+                            </td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            })
+            .catch(error => console.error("Error fetching top-selling products:", error));
+    });
+    </script>
+    <script>
         async function fetchWeeklyOrders() {
                 try {
-                    const response = await fetch('/chart/weekly-orders');
+                    const response = await fetch('/shopowner/weekly-orders');
                     // if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                     const data = await response.json();
                     console.log(data);

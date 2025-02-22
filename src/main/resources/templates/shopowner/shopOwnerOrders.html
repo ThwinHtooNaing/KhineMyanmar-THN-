@@ -735,7 +735,7 @@
       let currentStatus = "ALL"; // Default status
 
       function fetchOrders(status) {
-            fetch(`/order/getOrders?page=${currentPage}&size=${pageSize}&status=${status}`)
+            fetch(`/shopowner/getOrders?page=${currentPage}&size=${pageSize}&status=${status}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);

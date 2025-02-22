@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,13 +26,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.khineMyanmar.DTO.TopCustomerDTO;
+import com.khineMyanmar.DTO.TopSaleProductDTO;
 import com.khineMyanmar.model.Category;
 import com.khineMyanmar.model.Delivery;
+import com.khineMyanmar.model.Order;
+import com.khineMyanmar.model.OrderStatus;
 import com.khineMyanmar.model.Product;
 import com.khineMyanmar.model.ProductShop;
 import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.model.User;
+import com.khineMyanmar.repository.IOrderProductRepository;
 import com.khineMyanmar.service.CategoryService;
 import com.khineMyanmar.service.DeliveryService;
 import com.khineMyanmar.service.ProductService;
@@ -65,6 +71,9 @@ public class ShopOwnerController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    private IOrderProductRepository orderProductRepository;
 
 	@GetMapping("/shopownersignup")
 	public String SignUp(Model model) {
@@ -390,18 +399,80 @@ public class ShopOwnerController {
         return ResponseEntity.ok().body(Map.of("success", true));
     }
 
+    @ResponseBody
+    @GetMapping("/getOrders")
+    public Page<Order> getOrders(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String status,HttpSession session) { 
+         // Accept String as status
+        Pageable pageable = PageRequest.of(page, size);
+        ShopOwner shopowner = (ShopOwner) session.getAttribute("shopSession");
+        Shop shop = shopowner.getShop();
+        Long shopId = shop.getShopId();
+        System.out.println(shop.getShopId());
+        System.out.println(status);
+        if (status == null || "ALL".equalsIgnoreCase(status)) {
+            System.out.println("Fetching all orders");
+            return orderService.getOrdersByShop(shopId,pageable);  // Fetch all orders
+        }
+        
+        try {
+            OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
+            System.out.println(orderStatus.toString());
+            return orderService.getOrdersByStatusAndShop(orderStatus,shopId, pageable);
+        } catch (IllegalArgumentException e) {
+            return orderService.getOrdersByShop(shopId,pageable); // If status is invalid, fetch all orders
+        }
+    }
+
     @GetMapping("/stats")
     @ResponseBody
-    public Map<String, Object> getDashboardStats() {
-        return orderService.getDashboardStats();
+    public Map<String, Object> getDashboardStats(HttpSession session) {
+        ShopOwner shopowner = (ShopOwner) session.getAttribute("shopSession");
+        Shop shop = shopowner.getShop();
+        Long shopId = shop.getShopId();
+        return orderService.getDashboardStats(shopId);
     }
 
     @GetMapping("/weekly-orders")
     @ResponseBody
-    public Map<String, Object> getWeeklyOrders() {
+    public Map<String, Object> getWeeklyOrders(HttpSession session) {
+        ShopOwner shopowner = (ShopOwner) session.getAttribute("shopSession");
+        Shop shop = shopowner.getShop();
+        Long shopId = shop.getShopId();
         System.out.println("getWeeklyOrders");
-        return orderService.getWeeklyOrderStats();
+        return orderService.getWeeklyOrderStats(shopId);
     }
+
+    @GetMapping("/recent")
+    @ResponseBody
+    public List<Order> getRecentOrders(HttpSession session) {
+        ShopOwner shopowner = (ShopOwner) session.getAttribute("shopSession");
+        Shop shop = shopowner.getShop();
+        Long shopId = shop.getShopId();
+        return orderService.getRecentOrdersByShop(shopId);
+    }
+
+    @GetMapping("/top-customers")
+    @ResponseBody
+    public List<TopCustomerDTO> getTopCustomers(HttpSession session) {
+        ShopOwner shopowner = (ShopOwner) session.getAttribute("shopSession");
+        Shop shop = shopowner.getShop();
+        Long shopId = shop.getShopId();
+        return orderService.getTopCustomersByShop(shopId);
+    }
+
+    @GetMapping("/top-sales")
+    @ResponseBody
+    public List<TopSaleProductDTO> getTopSellingProducts(HttpSession session) {
+        ShopOwner shopowner = (ShopOwner) session.getAttribute("shopSession");
+        Shop shop = shopowner.getShop();
+        Long shopId = shop.getShopId();
+        return orderProductRepository.findTopFourSellingProductsByShop(shopId);
+    }
+
+    
 
 
 
