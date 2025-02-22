@@ -54,6 +54,22 @@ public class ProductShopService {
         .orElse(0.0);
     }
 
+    public void reduceStockQuantity(Product product, int quantity) {
+        int updatedRows = productShopRepository.reduceStockQuantity(product, quantity);
+        if (updatedRows == 0) {
+            
+            ProductShop productShop = productShopRepository.findByProduct(product)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+            throw new IllegalArgumentException("Insufficient stock quantity");
+        }
+    }
+
+    public double getProductPriceByProductId(Long productId) {
+    return productShopRepository.findProductPriceByProductId(productId)
+        .map(ProductShop::getShopPrice)
+        .orElse(0.0);
+    }
+
     public List<ProductShop> findByShop(Shop shop){
         return productShopRepository.findByShop(shop);
     }

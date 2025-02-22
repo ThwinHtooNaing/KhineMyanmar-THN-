@@ -1223,6 +1223,7 @@
       }
 
       .checkout {
+          text-align: center;
           width: 40%;
           background: none;
           font-size: 17px;
@@ -1234,6 +1235,13 @@
           margin-top: 10px;
           margin-right: 20px;
           transition: all 0.3s ease;
+      }
+      .checkout.active{ 
+         background-color: #e38d03;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         border: 2px solid #e38d03;
       }
       .checkout:hover {
           background: #e38d03;
@@ -1250,6 +1258,7 @@
       }
 
       .loading-spinner {
+        
           border: 4px solid transparent;
           border-top: 4px solid #eef0f1;
           border-radius: 50%;
@@ -1573,7 +1582,7 @@
             </div>
             <div class="cart-buttons">
                 <button class="view-cart">View cart</button>
-                <button class="checkout">Checkout</button>
+                <button class="checkout" id="checkout-btn">Check Out</button>
             </div>
           </div>
           
@@ -2088,16 +2097,40 @@
           // location.reload();
       }
   });
-  
-  const quickAddBtn = document.querySelector("#quick-add");
-  quickAddBtn.addEventListener("click", () => {
-    console.log("Quick Add clicked");
-  });
-
-
 
 </script>
+<script>
+  const checkoutBtn = document.querySelector("#checkout-btn");
 
+  
+  checkoutBtn.addEventListener("click", async () => {
+    console.log("Checkout clicked");
+    checkoutBtn.classList.add("active");
+    checkoutBtn.innerHTML = '<div class="loading-spinner"></div>';
+
+    try {
+        const response = await fetch('/customer/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.ok) {
+            const result = await response.text();
+            // console.log(result); 
+            if(result == 'Order placed successfully'){
+                alert(result);
+                location.reload();
+            }
+        } else {
+            const error = await response.text();
+            console.error("Checkout failed:", error); 
+        }
+    } catch (error) {
+        console.error("Error during checkout:", error); 
+    }});
+  
+</script>
 
 
 </html>

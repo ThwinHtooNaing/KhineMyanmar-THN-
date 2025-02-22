@@ -155,9 +155,15 @@ public class ProductService {
         return productShopService.getProductPriceByProduct(product);
     }
 
+    public double getProductPrice(Long productId) {
+        return productShopService.getProductPriceByProductId(productId);
+    }
+
+
     public List<Product> getTop8Products() {
-    return productRepository.findTop8ByOrderByProductNameAsc();
-}
+        return productRepository.findTop8ByOrderByProductNameAsc();
+    }
+
 
 
 

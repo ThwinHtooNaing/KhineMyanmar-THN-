@@ -1,5 +1,7 @@
 package com.khineMyanmar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,14 +15,16 @@ public class OrderProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long productShopId;
+    private Long orderProductId;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", insertable = false, updatable = false, referencedColumnName = "orderId")
+    @JoinColumn(name = "order_id", nullable = false)
+    @JsonIgnore
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", insertable = false, updatable = false, referencedColumnName = "productId")
+    @JsonIgnore
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @Column(nullable = false)
@@ -34,11 +38,12 @@ public class OrderProduct {
 
     // Getters and setters
     public Long getId() {
-        return productShopId;
+        return orderProductId;
+
     }
 
     public void setId(Long id) {
-        this.productShopId = id;
+        this.orderProductId = id;
     }
 
     public Order getOrder() {
@@ -85,7 +90,7 @@ public class OrderProduct {
     public OrderProduct() {}
 
     public OrderProduct(Long id, Order order, Product product, int quantity, double soldPrice, double subTotal) {
-        this.productShopId = id;
+        this.orderProductId = id;
         this.order = order;
         this.product = product;
         this.quantity = quantity;

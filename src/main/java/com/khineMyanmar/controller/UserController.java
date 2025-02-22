@@ -26,6 +26,7 @@ import com.khineMyanmar.model.Product;
 import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.model.User;
 import com.khineMyanmar.service.CategoryService;
+import com.khineMyanmar.service.OrderService;
 import com.khineMyanmar.service.ProductService;
 import com.khineMyanmar.service.ShopService;
 import com.khineMyanmar.service.UserService;
@@ -47,6 +48,9 @@ public class UserController {
 
     @Autowired
     private ShopService shopService;
+
+    @Autowired
+    private OrderService orderService;
 	
 	@GetMapping("/customersignup")
 	public String signUp(Model model) {
@@ -289,6 +293,18 @@ public class UserController {
             }
             return false;
         });
+    }
+
+    @PostMapping("/checkout")
+    public ResponseEntity<?> checkout(HttpSession session) {
+        String result = orderService.checkout(session);
+        
+        if (result.equals("User  not logged in")) {
+            return ResponseEntity.status(401).body(result);
+        } else if (result.equals("Cart is empty")) {
+            return ResponseEntity.badRequest().body(result);
+        }
+        return ResponseEntity.ok(result);
     }
 
 	

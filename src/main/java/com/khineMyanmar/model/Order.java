@@ -3,6 +3,8 @@ package com.khineMyanmar.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,6 +17,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "`order`")
@@ -26,18 +29,21 @@ public class Order {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
+	@JsonIgnore
 	private User user;
 	
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
+
+	private LocalDateTime checkoutDate;
 	
 	private Double amount;
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<OrderProduct> orderProducts = new HashSet<>();
 	
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
-    @JoinColumn(name = "delivery_item_id", nullable = false) // Mandatory relationship
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = true)
+    @JoinColumn(name = "delivery_item_id", nullable = true)
     private DeliveryItem deliveryItem;
 
 	public Long getOrderId() {
@@ -94,6 +100,14 @@ public class Order {
 
 	public void setOrderProducts(Set<OrderProduct> orderProducts) {
 		this.orderProducts = orderProducts;
+	}
+
+	public LocalDateTime getCheckoutDate() {
+    return checkoutDate;
+	}
+
+	public void setCheckoutDate(LocalDateTime checkoutDate) {
+		this.checkoutDate = checkoutDate;
 	}
 
 	public Order() {
