@@ -707,7 +707,6 @@
 
         function updateChart(labels, orderCounts) {
             const ctx = document.getElementById('lineChart').getContext('2d');
-
             if (window.myLineChart) {
                 window.myLineChart.data.labels = labels;
                 window.myLineChart.data.datasets[0].data = orderCounts;
