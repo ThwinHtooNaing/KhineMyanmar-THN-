@@ -326,7 +326,6 @@ public class UserController {
         
         List<Product> products;
         
-        // If a category is provided, fetch filtered products; otherwise, fetch all products.
         if (category != null && !category.trim().isEmpty()) {
             products = productService.getProductsByCategory(offset, limit, category);
         } else {
