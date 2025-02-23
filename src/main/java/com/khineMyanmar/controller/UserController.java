@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.khineMyanmar.model.Category;
+import com.khineMyanmar.model.Order;
 import com.khineMyanmar.model.Product;
 import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.model.User;
@@ -146,6 +147,8 @@ public class UserController {
 	@RequestMapping("/history")
     public String historyPage(HttpSession session, Model model) {
         User user = (User) session.getAttribute("customerSession");
+        List<Order> orders = orderService.findAllOrdersByCustomerId(user.getUserId());
+        model.addAttribute("orders", orders);
         model.addAttribute("customer", user);
         return "customer/customerHistory";
     }

@@ -110,6 +110,10 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public List<Order> findAllOrdersByCustomerId(Long customerId) {
+        return orderRepository.findAllByUserUserId(customerId);
+    }
+
     @Transactional
     public String checkout(HttpSession session) {
         // Retrieve user ID from session

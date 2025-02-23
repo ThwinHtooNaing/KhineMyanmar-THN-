@@ -151,9 +151,118 @@
         }
 
         main{
+            height: 88vh;
             margin-top: 70px;
             margin-left: 225px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-header p:first-child{
+            font-weight: 700;
+        }
+        .table-header p:nth-child(2),.table-header p:nth-child(2) i{
+            color: #f5a623;
+        }
+
+        .table {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        table::-webkit-scrollbar-thumb {
+            background-color: #ddd;
+            border-radius: 4px;
+        }
+
+        table::-webkit-scrollbar-thumb:hover {
+            background-color: #bbb;
+        }
+
+        .table-header {
+            display: flex;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eaeaea;
+            font-weight: bold;
+        }
+
+        .table-header p {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .table-header i {
+            font-size: 17px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            overflow-y: auto;
+        }
+
+        .table-container {
+            max-height: 80vh; /* Adjust the height as needed */
+            padding-bottom: 10px;
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        thead th {
+            position: sticky;
+            top: 0;
+            background-color: #f9ead1; /* Header background */
+            z-index: 2;
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
+            padding: 12px 15px;
+        }
+
+        tbody td, th {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eaeaea;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Hover effect for grouped tbody */
+        tbody.order-group:hover {
+            background-color: #f1f1f1;
+        }
+        
+        td {
+            vertical-align: middle;
+        }
+
+        table .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .status.completed {
+            background-color: #e8f5e9;
+            color: #43a047;
+        }
+
+        .status.pending {
+            background-color: #fff8e1;
+            color: #fb8c00;
+        }
+
+        .status.cancelled {
+            background-color: #ffebee;
+            color: #e53935;
         }
 
     </style>
@@ -188,8 +297,41 @@
         </div>
     </aside>    
     <main>
-        
-    </main>
+        <div class="table">
+            <div class="table-header">
+                <p>Order History</p>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Product Name</th>
+                            <th>Qty</th>
+                            <th>Amount</th>
+                            <th>Total Amount</th>
+                            <th>Date</th>
+                            <th>Order Status</th>
+                        </tr>
+                    </thead>
+                    <tbody th:each="order : ${orders}" class="order-group">
+                        <tr th:each="orderProduct, iterStat : ${order.orderProducts}">
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" th:text="'#'+${order.orderId}"></td>
+                            <td th:text="${orderProduct.product != null ? orderProduct.product.productName : 'Unknown Product'}"></td>
+                            <td th:text="${orderProduct.quantity}"></td>
+                            <td th:text="${#numbers.formatDecimal(orderProduct.soldPrice, 1, 'COMMA', 0, 'POINT')} + ' Ks'"></td>
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" 
+                                th:text="${#numbers.formatDecimal(order.amount, 1, 'COMMA', 0, 'POINT')} + ' Ks'"></td>
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" th:text="${#temporals.format(order.checkoutDate, 'MM/dd/yyyy')}"></td>
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}">
+                                <span th:class="'status ' + ${order.status.name().toLowerCase()}" th:text="${order.status}"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>    
     <script>
         const sidebarDivs = document.querySelectorAll('.sidebar div');
     

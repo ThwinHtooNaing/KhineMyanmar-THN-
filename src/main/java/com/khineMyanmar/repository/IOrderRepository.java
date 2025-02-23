@@ -92,5 +92,7 @@ public interface IOrderRepository extends JpaRepository<Order,Long>{
            "ORDER BY month ASC")
     List<Object[]> getMonthlySalesData();
 
+    List<Order> findAllByUserUserId(Long userId);
+
     
 }
