@@ -88,13 +88,6 @@ public class AdminController {
         model.addAttribute("categories", categories);
         return "admin/adminProducts";
     }
-    
-    // @RequestMapping("/orders")
-    // public String order(HttpSession session, Model model) {
-    //     User admin = (User) session.getAttribute("adminSession");
-    //     model.addAttribute("admin", admin);
-    //     return "admin/adminOrders";
-    // }
 
      @RequestMapping("/orders")
     public String order(HttpSession session, Model model) {
