@@ -312,7 +312,30 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
-	
+    @GetMapping("/loadmore")
+    public ResponseEntity<List<Product>> loadMoreProducts(
+            @RequestParam(defaultValue = "0") int offset) {
+        List<Product> products = productService.getProducts(offset, 12);
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/loadmores")
+    public ResponseEntity<List<Product>> loadMoreProducts(
+            @RequestParam(defaultValue = "0") int offset,
+            @RequestParam(defaultValue = "12") int limit,
+            @RequestParam(required = false) String category) {
+        
+        List<Product> products;
+        
+        // If a category is provided, fetch filtered products; otherwise, fetch all products.
+        if (category != null && !category.trim().isEmpty()) {
+            products = productService.getProductsByCategory(offset, limit, category);
+        } else {
+            products = productService.getProducts(offset, limit);
+        }
+        
+        return ResponseEntity.ok(products);
+    }
 	
 	
 }

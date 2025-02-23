@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -162,6 +164,18 @@ public class ProductService {
 
     public List<Product> getTop8Products() {
         return productRepository.findTop8ByOrderByProductNameAsc();
+    }
+
+    public List<Product> getProducts(int offset, int limit) {
+        int page = offset / limit;
+        Pageable pageable = PageRequest.of(page, limit);
+        return productRepository.findAll(pageable).getContent();
+    }
+
+    public List<Product> getProductsByCategory(int offset, int limit, String category) {
+        int page = offset / limit;
+        Pageable pageable = PageRequest.of(page, limit);
+        return productRepository.findByCategory_CategoryName(category, pageable).getContent();
     }
 
 

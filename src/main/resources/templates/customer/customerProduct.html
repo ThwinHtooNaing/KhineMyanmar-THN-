@@ -711,6 +711,153 @@
         color: rgb(255, 132, 0);
       }
 
+      .product-modal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index:100000;
+      }
+
+      .modal-content {
+        background: white;
+        width: 900px;
+        height: 500px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+      }
+
+      .modal-content-container{
+        display: flex;
+        flex-direction: row;
+      }
+
+      .product-modal-image-container {
+        width: 450px;
+        height: 400px;
+        padding: 20px;
+        /* border: 3px solid black; */
+      }
+
+      .product-modal-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+
+      .product-modal-detail {
+        width: 450px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+        /* border: 3px solid red; */
+      }
+
+      .product-modal-name-container h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .product-modal-description-container p {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.5;
+      }
+
+      .product-modal-price-container > span:nth-of-type(1) {
+        font-size: 18px;
+        color: #e19511;
+        font-weight: bold;
+      }
+
+      .product-modal-category-container > span:nth-of-type(1) {
+        font-size: 18px;
+        color: #e19511;
+        font-weight: bold;
+      }
+
+
+      .product-modal-price-container p {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+       .product-modal-quantity-container p{
+        color: #e19511;
+        font-weight: bold;
+       }
+
+      .product-modal-quantity-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .product-modal-quantity-container div {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+      }
+
+      .modal-close-btn{
+        /* float: right; */
+        position: relative;
+        left: 880px;
+        font-size: 20px;
+      }
+      .modal-close-btn:hover {
+        color: #e38d03;
+        cursor: pointer;
+      }
+
+      .product-modal-quantity-container button {
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        padding: 5px 10px;
+      }
+
+      .product-modal-btn-container {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .buyNow-btn,
+      .add-to-cart-btn {
+        flex: 1;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .buyNow-btn {
+        background: #b48a47;
+        color: white;
+      }
+
+      .add-to-cart-btn {
+        background: white;
+        border: 1px solid #b48a47;
+        color: #b48a47;
+      }
+
     </style>
   </head>
   <body>
@@ -764,55 +911,8 @@
     <div class="container">
       <p class="section-title">Featured</p>
         <h2>Featured Products</h2>
-        <div class="product-grid">
-            <div class="product-card">
-                <img src="https://plus.unsplash.com/premium_photo-1683141392308-aaa39d916686?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Product 1">
-                <div class="category">Gadgets</div>
-                <div class="product-name">4K Smart Monitor</div>
-                <div class="price">$1,150</div>
-            </div>
-            <div class="product-card">
-                <img src="https://plus.unsplash.com/premium_photo-1670537994863-5ad53a3214e0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D" alt="Product 2">
-                <div class="category">Gadgets</div>
-                <div class="product-name">SX-3257 Wireless Earbuds</div>
-                <div class="price">$630</div>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D" alt="Product 3">
-                <div class="category">Gadgets</div>
-                <div class="product-name">EX-3257 Headphones</div>
-                <div class="price">$700</div>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D" alt="Product 4">
-                <div class="category">Gadgets</div>
-                <div class="product-name">Fold Wing Drone</div>
-                <div class="price">$1,100</div>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1491637639811-60e2756cc1c7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D" alt="Product 5">
-                <div class="category">Gadgets</div>
-                <div class="product-name">BusinessJet Printer</div>
-                <div class="price">$750</div>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D" alt="Product 6">
-                <div class="category">Gadgets</div>
-                <div class="product-name">Lot 4K Smart TV</div>
-                <div class="price">$990</div>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjR8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D" alt="Product 7">
-                <div class="category">Gadgets</div>
-                <div class="product-name">Electric Scooter</div>
-                <div class="price">$450</div>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzR8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D" alt="Product 8">
-                <div class="category">Gadgets</div>
-                <div class="product-name">Optical Gaming Mouse</div>
-                <div class="price">$120</div>
-            </div>
+        <div class="product-grid" id="product-twe">
+            
         </div>
     </div>
     <div class="loadmore-container">
@@ -825,69 +925,21 @@
     <section class="section" id="section5">
     <div class="container">
       <p class="section-title">By Category</p>
-      <div class="container-header">
-        <h2>All Products</h2>
-        <div class="container-header-select">
-            <select>
-              <option disabled selected>Choose Category</option>
-              <option>Category A</option>
-              <option>Category B</option>
-            </select>
-        </div>
-      </div>        
-        <div class="product-grid">
-            <div class="product-card">
-                <img src="https://plus.unsplash.com/premium_photo-1683141392308-aaa39d916686?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Product 1">
-                <div class="category">Gadgets</div>
-                <div class="product-name">4K Smart Monitor</div>
-                <div class="price">$1,150</div>
-            </div>
-            <div class="product-card">
-                <img src="https://plus.unsplash.com/premium_photo-1670537994863-5ad53a3214e0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D" alt="Product 2">
-                <div class="category">Gadgets</div>
-                <div class="product-name">SX-3257 Wireless Earbuds</div>
-                <div class="price">$630</div>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D" alt="Product 3">
-                <div class="category">Gadgets</div>
-                <div class="product-name">EX-3257 Headphones</div>
-                <div class="price">$700</div>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D" alt="Product 4">
-                <div class="category">Gadgets</div>
-                <div class="product-name">Fold Wing Drone</div>
-                <div class="price">$1,100</div>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1491637639811-60e2756cc1c7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D" alt="Product 5">
-                <div class="category">Gadgets</div>
-                <div class="product-name">BusinessJet Printer</div>
-                <div class="price">$750</div>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D" alt="Product 6">
-                <div class="category">Gadgets</div>
-                <div class="product-name">Lot 4K Smart TV</div>
-                <div class="price">$990</div>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjR8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D" alt="Product 7">
-                <div class="category">Gadgets</div>
-                <div class="product-name">Electric Scooter</div>
-                <div class="price">$450</div>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzR8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D" alt="Product 8">
-                <div class="category">Gadgets</div>
-                <div class="product-name">Optical Gaming Mouse</div>
-                <div class="price">$120</div>
-            </div>
+        <div class="container-header">
+          <h2>All Products</h2>
+          <div class="container-header-select" >
+              <select id="category-select">
+                <option disabled selected>Choose Category</option>
+                
+              </select>
+          </div>
+        </div>        
+        <div class="product-grid" id="product-cat">
+            
         </div>
     </div>
     <div class="loadmore-container">
-      <div class="loadmore">
+      <div class="loadmore" id="loadmore1">
         Load More Products
       </div>
     </div>
@@ -976,6 +1028,50 @@
             <i class="fas fa-sign-out-alt"></i> Log Out
           </li>
         </ul>
+      </div>
+    </div>
+
+    <div class="product-modal" id="product-modal" style="display: none;">
+      <div class="modal-content">
+        <span class="modal-close-btn">&times;</span>
+        <div class="modal-content-container">
+          <div class="product-modal-image-container">
+            <img src="">
+          </div>
+          <div class="product-modal-detail">
+            <div class="product-modal-name-container">
+                <h2></h2>
+            </div>
+            <div class="product-modal-description-container">
+                <p class="product-modal-description"></p>
+            </div>
+            <div class="product-modal-category-container">
+              <span> Category :</span>
+              <span>Shoe </spanp>
+            </div>
+            <div class="product-modal-price-container">
+              <span>Price :</span>
+              <span>10000 <span>Ks</span></span>
+            </div>
+            <div class="stock-indicator-container">
+              <p class="out-of-stock-indicator">Out of stock!</p>
+              <p class="stock-remaining-indicator">Only <span>9</span> quantity remains!</p>
+            </div>
+            <div class="product-modal-quantity-container">
+                <p>Quantity</p>
+                <div>
+                  <button id="increaseQty">-</button>
+                  <span id="noOfQty">1</span>
+                  <button id="decreaseQty">+</button>
+                </div>
+            </div>
+            <div class="product-modal-btn-container">
+                <button class="buyNow-btn">Buy Now</button>
+                <button class="add-to-cart-btn">Add to Cart</button>                
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
   </body>
@@ -1194,4 +1290,567 @@
   }});
   
 </script>
+<script>
+  let offset = 0;
+  const limit = 12;
+  const loadMoreButton = document.querySelector(".loadmore");
+
+  function showSpinner() {
+    loadMoreButton.innerHTML = '<div class="loading-spinner"></div>';
+  }
+
+  function hideSpinner() {
+    loadMoreButton.innerHTML = 'Load More Products';
+  }
+
+  function loadMoreProducts() {
+    showSpinner();
+
+    fetch(`/customer/loadmore?offset=${offset}`)
+      .then(response => response.json())
+      .then(data => {
+        const productGrid = document.getElementById("product-twe");
+
+        // Append new products to the grid
+        data.forEach(product => {
+          // console.log(product);
+          const productCard = document.createElement("div");
+          productCard.setAttribute("data-id", product.productId);
+          productCard.classList.add("product-card");
+          productCard.innerHTML = `
+            <img src="${product.productImagePath}" alt="${product.productName}">
+            <div class="category">${product.category.categoryName}</div>
+            <div class="product-name">${product.productName}</div>
+            <div class="price">${new Intl.NumberFormat().format(product.productShops?.[0]?.shopPrice || 0)} Ks</div>
+          `;
+          productGrid.appendChild(productCard);
+          const stockQuantity = product.productShops?.[0]?.stockQuantity;
+          console.log(stockQuantity);
+          const modalCloseBtn = document.querySelector(".modal-close-btn");
+          const productModal = document.getElementById("product-modal");
+            modalCloseBtn.addEventListener("click", () => {
+              productModal.style.display = "none";
+            });
+            document.addEventListener("click", (event) => {
+              if (event.target === productModal) { 
+                  productModal.style.display = "none";
+                }
+            });
+            productCard.addEventListener("click", () => {
+                    const productId = productCard.getAttribute("data-id");
+
+                    fetch(`/customer/product/${productId}`)
+                        .then(response => response.json())
+                        .then(productData => {
+                            updateModal(productData); 
+                            productModal.style.display = "flex"; 
+                        })
+                        .catch(error => {
+                            console.error("Error fetching product details:", error);
+                        });
+                });
+        });
+
+        function updateModal(product) {
+        const productModal = document.getElementById("product-modal");
+        document.querySelector(".product-modal-image-container img").src = product.productImagePath;
+        document.querySelector(".product-modal-name-container h2").textContent = product.productName;
+        document.querySelector(".product-modal-description").textContent = product.description || "No description available";
+        document.querySelector(".product-modal-category-container span:nth-child(2)").textContent = product.category?.categoryName || "General";
+
+        const stockQuantity = product.productShops?.[0]?.stockQuantity;
+
+        document.querySelector(".stock-indicator-container").style.display = "none";
+        document.querySelector(".out-of-stock-indicator").style.display = "none";
+        document.querySelector(".stock-remaining-indicator").style.display = "none";
+
+        const addToCartBtn = document.querySelector(".add-to-cart-btn");
+        const buyNowBtn = document.querySelector(".buyNow-btn");
+        addToCartBtn.disabled = false;
+        buyNowBtn.disabled = false;
+        addToCartBtn.style.cursor = "pointer";
+        buyNowBtn.style.cursor = "pointer";
+
+        if (stockQuantity !== undefined) {
+            if (stockQuantity === 0) {
+                console.log("out  of stock");
+                document.querySelector(".stock-indicator-container").style.display = "block";
+                document.querySelector(".out-of-stock-indicator").style.display = "block";
+                document.querySelector(".add-to-cart-btn").style.cursor = "not-allowed";
+                document.querySelector(".buyNow-btn").style.cursor = "not-allowed";
+                addToCartBtn.disabled = true;
+                buyNowBtn.disabled = true;
+            } else {
+                document.querySelector(".stock-indicator-container").style.display = "block";
+                document.querySelector(".stock-remaining-indicator span").textContent = stockQuantity;
+
+                if (stockQuantity <= 10) {
+                    document.querySelector(".stock-remaining-indicator").style.display = "block";
+                }
+            }
+        }
+        
+        document.querySelector(".product-modal-price-container span:nth-child(2)").innerHTML = 
+            `${new Intl.NumberFormat().format(product.productShops?.[0]?.shopPrice || 0)} <span>Ks</span>`;
+        console.log(product);
+
+        let quantity = 1; 
+
+        const qtyDisplay = document.getElementById("noOfQty");
+        const increaseBtn = document.getElementById("decreaseQty");
+        const decreaseBtn = document.getElementById("increaseQty");
+        function updateQuantityDisplay() {
+            increaseBtn.disabled = false;
+            if(stockQuantity === 0) {
+                increaseBtn.disabled = true;
+                decreaseBtn.disabled = quantity === 1;
+                qtyDisplay.textContent = 0;
+                return;
+            }
+            qtyDisplay.textContent = quantity;
+            decreaseBtn.disabled = quantity === 1; 
+        }
+
+        increaseBtn.addEventListener("click", () => {
+            if(stockQuantity > qtyDisplay.textContent) {
+                  quantity++;
+                  updateQuantityDisplay();
+              }else{
+                  increaseBtn.disabled = true;
+              }
+        });
+
+        decreaseBtn.addEventListener("click", () => {
+            if (quantity > 1) {
+                quantity--;
+                updateQuantityDisplay();
+            }
+        });
+        updateQuantityDisplay();
+        buyNowBtn.addEventListener("click", () => {
+          const cartItem = {
+              productId: product.productId, // product info from your modal or product object
+              quantity: quantity              // selected quantity from the modal
+          };
+
+          fetch('/customer/cart', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(cartItem)
+          })
+          .then(response => response.json())
+          .then(cart => {
+              // After adding to cart, redirect to checkout
+              return fetch('/customer/checkout', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+              });
+          })
+          .then(response => {
+              if (response.ok) {
+                  return response.text();
+              } else {
+                  throw new Error('Checkout failed');
+              }
+          })
+          .then(result => {
+              if (result === 'Order placed successfully') {
+                  productModal.style.display = "none";
+                  Swal.fire({
+                      title: "Order Placed Successfully",
+                      text: result,
+                      icon: "success",
+                      confirmButtonText: "OK"
+                  }).then(() => {
+                      console.log("Order Placed Successfully");
+                      location.reload();
+                  });
+              } else {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Checkout Error',
+                      text: result,
+                      showConfirmButton: true
+                  });
+              }
+          })
+          .catch(error => {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Failed to Complete Purchase',
+                  text: error.message,
+                  showConfirmButton: true
+              });
+          });
+      });
+        document.querySelector(".add-to-cart-btn").addEventListener("click", () => {
+              const cartItem = {
+                  productId: product.productId, // product info from your modal or product object
+                  quantity: quantity              // selected quantity from the modal
+              };
+
+              fetch('/customer/cart', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(cartItem)
+              })
+              .then(response => response.json())
+              .then(cart => {
+                  productModal.style.display = "none";
+                  Swal.fire({
+                            title: "Product Added to Cart",
+                            text: "The product has been successfully added to your cart.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            
+                            location.reload();
+                        });
+              })
+              .catch(error => {
+                Swal.fire({
+                      icon: 'error',
+                      title: 'Failed to Add Product',
+                      text: error,
+                      showConfirmButton: true
+                  });
+              });
+          });
+        }
+        
+
+        offset += limit;
+
+        if (data.length < limit) {
+          loadMoreButton.remove();
+        } else {
+          hideSpinner();
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching products:", error);
+        hideSpinner();
+      });
+  }
+
+  // Load the initial 12 products
+  loadMoreProducts();
+
+  // Attach event listener to the load more button
+  loadMoreButton.addEventListener("click", loadMoreProducts);
+
+</script>
+<script>
+  
+  let currentCategory = "";  // Holds the current category filter (empty for no filter)
+  let loadMoreButton1 = document.querySelector("#loadmore1");
+  const categorySelect = document.querySelector(".container-header-select select");
+
+  function loadCategories() {
+    fetch('/customer/categories')
+      .then(response => response.json())
+      .then(categories => {
+        // Clear existing options and add default option
+        categorySelect.innerHTML = '<option disabled selected>Choose Category</option>';
+        categories.forEach(cat => {
+          const option = document.createElement("option");
+          option.value = cat.categoryName;
+          option.textContent = cat.categoryName;
+          categorySelect.appendChild(option);
+        });
+      })
+      .catch(err => console.error("Error loading categories:", err));
+  }
+
+  function showSpinner() {
+    loadMoreButton1.innerHTML = '<div class="loading-spinner"></div>';
+  }
+
+  function hideSpinner() {
+    loadMoreButton1.innerHTML = 'Load More Products';
+  }
+
+  function loadMoreProducts() {
+    showSpinner();
+
+    // Build the URL, including category filter if set
+    let url = `/customer/loadmores?offset=${offset}&limit=${limit}`;
+    if (currentCategory && currentCategory !== "Choose Category") {
+      url += `&category=${encodeURIComponent(currentCategory)}`;
+    }
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        const productGrid = document.getElementById("product-cat");
+
+        // Append each product as a new card
+        data.forEach(product => {
+          const productCard = document.createElement("div");
+          productCard.setAttribute("data-id", product.productId);
+          productCard.classList.add("product-card");
+          productCard.innerHTML = `
+            <img src="${product.productImagePath}" alt="${product.productName}">
+            <div class="category">${product.category.categoryName}</div>
+            <div class="product-name">${product.productName}</div>
+            <div class="price">${new Intl.NumberFormat().format(product.productShops?.[0]?.shopPrice || 0)} Ks</div>
+          `;
+          productGrid.appendChild(productCard);
+          const stockQuantity = product.productShops?.[0]?.stockQuantity;
+          console.log(stockQuantity);
+          const modalCloseBtn = document.querySelector(".modal-close-btn");
+          const productModal = document.getElementById("product-modal");
+            modalCloseBtn.addEventListener("click", () => {
+              productModal.style.display = "none";
+            });
+            document.addEventListener("click", (event) => {
+              if (event.target === productModal) { 
+                  productModal.style.display = "none";
+                }
+            });
+            productCard.addEventListener("click", () => {
+                    const productId = productCard.getAttribute("data-id");
+
+                    fetch(`/customer/product/${productId}`)
+                        .then(response => response.json())
+                        .then(productData => {
+                            updateModal(productData); 
+                            productModal.style.display = "flex"; 
+                        })
+                        .catch(error => {
+                            console.error("Error fetching product details:", error);
+                        });
+                });
+        });
+        function updateModal(product) {
+        const productModal = document.getElementById("product-modal");
+        document.querySelector(".product-modal-image-container img").src = product.productImagePath;
+        document.querySelector(".product-modal-name-container h2").textContent = product.productName;
+        document.querySelector(".product-modal-description").textContent = product.description || "No description available";
+        document.querySelector(".product-modal-category-container span:nth-child(2)").textContent = product.category?.categoryName || "General";
+
+        const stockQuantity = product.productShops?.[0]?.stockQuantity;
+
+        document.querySelector(".stock-indicator-container").style.display = "none";
+        document.querySelector(".out-of-stock-indicator").style.display = "none";
+        document.querySelector(".stock-remaining-indicator").style.display = "none";
+
+        const addToCartBtn = document.querySelector(".add-to-cart-btn");
+        const buyNowBtn = document.querySelector(".buyNow-btn");
+        addToCartBtn.disabled = false;
+        buyNowBtn.disabled = false;
+        addToCartBtn.style.cursor = "pointer";
+        buyNowBtn.style.cursor = "pointer";
+
+        if (stockQuantity !== undefined) {
+            if (stockQuantity === 0) {
+                console.log("out  of stock");
+                document.querySelector(".stock-indicator-container").style.display = "block";
+                document.querySelector(".out-of-stock-indicator").style.display = "block";
+                document.querySelector(".add-to-cart-btn").style.cursor = "not-allowed";
+                document.querySelector(".buyNow-btn").style.cursor = "not-allowed";
+                addToCartBtn.disabled = true;
+                buyNowBtn.disabled = true;
+            } else {
+                document.querySelector(".stock-indicator-container").style.display = "block";
+                document.querySelector(".stock-remaining-indicator span").textContent = stockQuantity;
+
+                if (stockQuantity <= 10) {
+                    document.querySelector(".stock-remaining-indicator").style.display = "block";
+                }
+            }
+        }
+        
+        document.querySelector(".product-modal-price-container span:nth-child(2)").innerHTML = 
+            `${new Intl.NumberFormat().format(product.productShops?.[0]?.shopPrice || 0)} <span>Ks</span>`;
+        console.log(product);
+
+        let quantity = 1; 
+
+        const qtyDisplay = document.getElementById("noOfQty");
+        const increaseBtn = document.getElementById("decreaseQty");
+        const decreaseBtn = document.getElementById("increaseQty");
+        function updateQuantityDisplay() {
+            increaseBtn.disabled = false;
+            if(stockQuantity === 0) {
+                increaseBtn.disabled = true;
+                decreaseBtn.disabled = quantity === 1;
+                qtyDisplay.textContent = 0;
+                return;
+            }
+            qtyDisplay.textContent = quantity;
+            decreaseBtn.disabled = quantity === 1; 
+        }
+
+        increaseBtn.addEventListener("click", () => {
+            if(stockQuantity > qtyDisplay.textContent) {
+                  quantity++;
+                  updateQuantityDisplay();
+              }else{
+                  increaseBtn.disabled = true;
+              }
+        });
+
+        decreaseBtn.addEventListener("click", () => {
+            if (quantity > 1) {
+                quantity--;
+                updateQuantityDisplay();
+            }
+        });
+        updateQuantityDisplay();
+        buyNowBtn.addEventListener("click", () => {
+          const cartItem = {
+              productId: product.productId, // product info from your modal or product object
+              quantity: quantity              // selected quantity from the modal
+          };
+
+          fetch('/customer/cart', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(cartItem)
+          })
+          .then(response => response.json())
+          .then(cart => {
+              // After adding to cart, redirect to checkout
+              return fetch('/customer/checkout', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+              });
+          })
+          .then(response => {
+              if (response.ok) {
+                  return response.text();
+              } else {
+                  throw new Error('Checkout failed');
+              }
+          })
+          .then(result => {
+              if (result === 'Order placed successfully') {
+                  productModal.style.display = "none";
+                  Swal.fire({
+                      title: "Order Placed Successfully",
+                      text: result,
+                      icon: "success",
+                      confirmButtonText: "OK"
+                  }).then(() => {
+                      console.log("Order Placed Successfully");
+                      location.reload();
+                  });
+              } else {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Checkout Error',
+                      text: result,
+                      showConfirmButton: true
+                  });
+              }
+          })
+          .catch(error => {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Failed to Complete Purchase',
+                  text: error.message,
+                  showConfirmButton: true
+              });
+          });
+      });
+        document.querySelector(".add-to-cart-btn").addEventListener("click", () => {
+              const cartItem = {
+                  productId: product.productId, // product info from your modal or product object
+                  quantity: quantity              // selected quantity from the modal
+              };
+
+              fetch('/customer/cart', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(cartItem)
+              })
+              .then(response => response.json())
+              .then(cart => {
+                  productModal.style.display = "none";
+                  Swal.fire({
+                            title: "Product Added to Cart",
+                            text: "The product has been successfully added to your cart.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            
+                            location.reload();
+                        });
+              })
+              .catch(error => {
+                Swal.fire({
+                      icon: 'error',
+                      title: 'Failed to Add Product',
+                      text: error,
+                      showConfirmButton: true
+                  });
+              });
+          });
+        }
+
+        // Update offset for next load
+        offset += limit;
+
+        // Remove load more button if fewer than 'limit' products were returned
+        if (data.length < limit) {
+          loadMoreButton1.remove();
+        } else {
+          hideSpinner();
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching products:", error);
+        hideSpinner();
+      });
+  }
+
+  // Reset the product grid and offset when a new category is selected
+  function resetProducts() {
+    offset = 0;
+    const productGrid = document.getElementById("product-cat");
+    productGrid.innerHTML = "";
+
+    // If the load more button was removed earlier, add it back
+    if (!document.getElementById("loadmore1")) {
+      const loadmoreContainer = document.querySelector(".loadmore-container");
+      loadMoreButton1 = document.createElement("div");
+      loadMoreButton1.classList.add("loadmore");
+      loadMoreButton1.id = "loadmore1";
+      loadMoreButton1.innerText = "Load More Products";
+      loadmoreContainer.appendChild(loadMoreButton1);
+      loadMoreButton1.addEventListener("click", loadMoreProducts);
+    }
+
+    loadMoreProducts();
+  }
+
+  // Load the initial 12 products on page load
+  loadCategories();
+  loadMoreProducts();
+  
+
+  // Listen for changes on the category select dropdown
+  categorySelect.addEventListener("change", function() {
+    currentCategory = this.value;
+    console.log("Selected category:", currentCategory);
+    resetProducts();
+  });
+
+  // Attach the load more click event
+  loadMoreButton1.addEventListener("click", loadMoreProducts);
+</script>
+
 </html>
