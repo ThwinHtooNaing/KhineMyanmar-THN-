@@ -24,7 +24,6 @@ public class LogInController {
 
             User user = userSer.checkLogin(email, password);
             
-            // session.setAttribute("usersession", user);
             if (user != null && user.getRole().getRoleName().equalsIgnoreCase("USER")) 
             {   
                 session.setAttribute("customerSession", user); 
@@ -54,7 +53,6 @@ public class LogInController {
                     return "redirect:/ecom/index?error=true"; 
                 }
             }
-            
     }
 	
 }

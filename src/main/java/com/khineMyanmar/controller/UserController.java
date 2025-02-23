@@ -175,7 +175,7 @@ public class UserController {
 
     @PostMapping("/cart")
     public ResponseEntity<?> addToCart(@RequestBody Map<String, Object> cartItem, HttpSession session) {
-        // Retrieve the cart from the session or create a new one if it doesn't exist
+        
         @SuppressWarnings("unchecked")
         List<Map<String, Object>> cart = (List<Map<String, Object>>) session.getAttribute("cart");
         if (cart == null) {

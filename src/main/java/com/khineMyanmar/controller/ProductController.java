@@ -45,7 +45,6 @@ public class ProductController {
     ) {
         Sort.Direction direction = sortOrder.equalsIgnoreCase("descend") ? Sort.Direction.DESC : Sort.Direction.ASC;
 
-        // Apply grouping logic
         if ("shopname".equalsIgnoreCase(groupBy)) {
             sortBy = "productShops.shop.shopName";
         } else if ("category".equalsIgnoreCase(groupBy)) {
@@ -75,7 +74,6 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
 
-        // Create a simple response with only the required fields
         Map<String, String> response = new HashMap<>();
         response.put("imagePath", product.getProductImagePath());
         response.put("description", product.getDescription());

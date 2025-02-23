@@ -94,7 +94,7 @@ public class AdminController {
         User admin = (User) session.getAttribute("adminSession");
 
         if (admin == null) {
-            return "redirect:/admin/login"; // Redirect if not logged in
+            return "redirect:/admin/login"; 
         }
 
         List<Order> orders = orderService.findAllOrders();

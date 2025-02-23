@@ -405,7 +405,7 @@ public class ShopOwnerController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String status,HttpSession session) { 
-         // Accept String as status
+        
         Pageable pageable = PageRequest.of(page, size);
         ShopOwner shopowner = (ShopOwner) session.getAttribute("shopSession");
         Shop shop = shopowner.getShop();
@@ -414,7 +414,7 @@ public class ShopOwnerController {
         System.out.println(status);
         if (status == null || "ALL".equalsIgnoreCase(status)) {
             System.out.println("Fetching all orders");
-            return orderService.getOrdersByShop(shopId,pageable);  // Fetch all orders
+            return orderService.getOrdersByShop(shopId,pageable); 
         }
         
         try {
@@ -422,7 +422,7 @@ public class ShopOwnerController {
             System.out.println(orderStatus.toString());
             return orderService.getOrdersByStatusAndShop(orderStatus,shopId, pageable);
         } catch (IllegalArgumentException e) {
-            return orderService.getOrdersByShop(shopId,pageable); // If status is invalid, fetch all orders
+            return orderService.getOrdersByShop(shopId,pageable); 
         }
     }
 
