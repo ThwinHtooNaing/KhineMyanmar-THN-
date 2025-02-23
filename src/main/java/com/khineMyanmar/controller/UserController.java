@@ -194,12 +194,10 @@ public class UserController {
             }
         }
 
-        // If not present, add the new cart item
         if (!exists) {
             cart.add(cartItem);
         }
 
-        // Update the session attribute
         session.setAttribute("cart", cart);
         return ResponseEntity.ok(cart);
     }
