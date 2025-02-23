@@ -131,7 +131,7 @@ public class AdminController {
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap("error", e.getMessage()));
         } catch (Exception e) {
-            e.printStackTrace(); // Print any unexpected errors in the server logs
+            e.printStackTrace(); 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Collections.singletonMap("error", "An unexpected error occurred"));
         }
