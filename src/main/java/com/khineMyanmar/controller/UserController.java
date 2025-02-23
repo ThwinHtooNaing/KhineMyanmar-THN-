@@ -182,7 +182,6 @@ public class UserController {
             cart = new ArrayList<>();
         }
 
-        // Check if the product already exists in the cart
         boolean exists = false;
         for (Map<String, Object> item : cart) {
             if (item.get("productId").equals(cartItem.get("productId"))) {
