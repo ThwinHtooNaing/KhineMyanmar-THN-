@@ -21,6 +21,9 @@ public interface IOrderRepository extends JpaRepository<Order,Long>{
     @Query("SELECT COUNT(o) FROM Order o WHERE o.status = 'DELIVERED'")
     long countDeliveredOrders();
 
+    @Query("SELECT COUNT(DISTINCT o.user) FROM Order o")
+    Long countTotalCustomers();
+
     @Query("SELECT COALESCE(SUM(o.amount), 0) FROM Order o")
     double totalEarnings();
 
@@ -51,6 +54,8 @@ public interface IOrderRepository extends JpaRepository<Order,Long>{
      // Fetch the latest 5 orders based on orderId (higher orderId means latest)
     List<Order> findTop5ByOrderByOrderIdDesc();
 
+    List<Order> findTop6ByOrderByOrderIdDesc();
+
      @Query(value = "SELECT o.* FROM `order` o " +
                    "JOIN order_product op ON o.order_id = op.order_id " +
                    "JOIN product p ON op.product_id = p.product_id " +
@@ -80,6 +85,12 @@ public interface IOrderRepository extends JpaRepository<Order,Long>{
 
     @Query("SELECT o FROM Order o JOIN o.orderProducts op JOIN op.product p JOIN ProductShop ps ON ps.product.productId = p.productId WHERE ps.shop.shopId = :shopId")
     Page<Order> findOrdersByShop(@Param("shopId") Long shopId, Pageable pageable);
+
+    @Query("SELECT MONTH(o.checkoutDate) AS month, SUM(o.amount) AS totalSales " +
+           "FROM Order o " +
+           "GROUP BY MONTH(o.checkoutDate) " +
+           "ORDER BY month ASC")
+    List<Object[]> getMonthlySalesData();
 
     
 }

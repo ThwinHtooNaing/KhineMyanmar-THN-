@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.khineMyanmar.DTO.TopCustomerDTO;
+import com.khineMyanmar.DTO.TopSaleProductDTO;
 import com.khineMyanmar.model.Order;
 import com.khineMyanmar.model.Product;
 import com.khineMyanmar.model.User;
@@ -20,6 +21,7 @@ import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -89,6 +91,19 @@ public class OrderService {
         stats.put("deliveredOrders", orderRepository.countDeliveredOrdersByShop(shopId));
         stats.put("totalEarnings", orderRepository.totalEarningsByShop(shopId));
         return stats;
+    }
+
+    public Map<String, Object> getDashboardStats() {
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("totalOrders", orderRepository.countTotalOrders());
+        stats.put("totalEarnings", orderRepository.totalEarnings());
+        stats.put("totalCustomers",orderRepository.countTotalCustomers());
+        return stats;
+    }
+    public Double getAverageRevenuePerCustomer() {
+    Double totalEarnings = orderRepository.totalEarnings();
+    Long totalCustomers = orderRepository.countTotalCustomers();
+        return (totalCustomers != null && totalCustomers > 0) ? totalEarnings / totalCustomers : 0.0;
     }
 
     @Transactional
@@ -165,6 +180,10 @@ public class OrderService {
         return orderRepository.findTop5ByOrderByOrderIdDesc();
     }
 
+    public List<Order> getRecent6Orders() {
+        return orderRepository.findTop6ByOrderByOrderIdDesc();
+    }
+
     public List<TopCustomerDTO> getTopCustomers() {
         return orderRepository.findTopCustomers().stream()
             .limit(5) // Limit to top 5
@@ -193,5 +212,38 @@ public class OrderService {
                 (Double) obj[4]  // totalAmount
             ))
             .collect(Collectors.toList());
+    }
+
+    public Map<String, Long> getSalesByCategory() {
+        List<Object[]> results = orderProductRepository.getSalesByCategory();
+        Map<String, Long> salesData = new HashMap<>();
+        for (Object[] result : results) {
+            salesData.put((String) result[0], ((Number) result[1]).longValue());
+        }
+        return salesData;
+    }
+
+    public List<TopSaleProductDTO> findTopSevenSellingProducts() {
+        return orderProductRepository.findTopSevenSellingProducts();
+    }
+
+    public Map<String, Double> getMonthlySales() {
+        List<Object[]> results = orderRepository.getMonthlySalesData();
+        Map<String, Double> salesData = new LinkedHashMap<>();
+
+        // Initialize all months with 0 sales
+        List<String> months = List.of("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        for (String month : months) {
+            salesData.put(month, 0.0);
+        }
+
+        // Populate data from query results
+        for (Object[] row : results) {
+            int monthIndex = ((Integer) row[0]) - 1; // Convert SQL month (1-based) to 0-based index
+            Double totalSales = (Double) row[1];
+            salesData.put(months.get(monthIndex), totalSales);
+        }
+
+        return salesData;
     }
 }

@@ -34,4 +34,11 @@ public interface IOrderProductRepository extends JpaRepository<OrderProduct,Long
     default List<TopSaleProductDTO> findTopFourSellingProducts() {
         return findTopSellingProducts().stream().limit(4).toList();
     }
+
+    default List<TopSaleProductDTO> findTopSevenSellingProducts() {
+        return findTopSellingProducts().stream().limit(7).toList();
+    }
+
+    @Query("SELECT p.category.categoryName, SUM(op.quantity) FROM OrderProduct op JOIN op.product p GROUP BY p.category.categoryName")
+    List<Object[]> getSalesByCategory();
 }

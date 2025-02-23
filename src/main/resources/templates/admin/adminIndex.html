@@ -538,15 +538,11 @@
                     <div class="card-content">
                         <span class="card-title">
                             Total Sales
-                        </span><br/>
+                        </span><br/><br/>
                         <span class="card-amount" id="sal">
                             $110,019
                         </span>
                         <br/>
-                        <span class="card-percent">
-                            <span class="triangle-up"></span>
-                            <span class="card-percent-amount">54</span>% last month
-                        </span>
                     </div>
                     <div class="card-icon">
                         <div class="sal"><i class="fas fa-dollar-sign"></i></div>
@@ -556,14 +552,9 @@
                     <div class="card-content">
                         <span class="card-title">
                             Total Orders
-                        </span><br/>
+                        </span><br/><br/>
                         <span class="card-amount" id="ord">
                             500
-                        </span>
-                        <br/>
-                        <span class="card-percent">
-                            <span class="triangle-up"></span>
-                            <span class="card-percent-amount">54</span>% last month
                         </span>
                     </div>
                     <div class="card-icon">
@@ -573,13 +564,13 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title">
-                            Total Profits
-                        </span><br/>
+                            ARPC
+                        </span><br/><br/>
                         <span class="card-amount" id="prof">
                             $110,019
                         </span>
                         <br/>
-                        <span class="card-percent">
+                        <span class="card-percent" style="opacity: 0;">
                             <span class="triangle-up"></span>
                             <span class="card-percent-amount">54</span>% last month
                         </span>
@@ -592,15 +583,11 @@
                     <div class="card-content">
                         <span class="card-title">
                             Total Customers
-                        </span><br/>
+                        </span><br/><br/>
                         <span class="card-amount" id="cust">
                             100
                         </span>
                         <br/>
-                        <span class="card-percent">
-                            <span class="triangle-up"></span>
-                            <span class="card-percent-amount">54</span>% last month
-                        </span>
                     </div>
                     <div class="card-icon">
                         <div class="cust"><i class="fas fa-users"></i></div>
@@ -626,77 +613,21 @@
                         <p>Recent Transactions</p>
                         <p><a th:href="@{/admin/orders}">View All <i class="fas fa-angle-right"></i></a></p>
                     </div>
-                    <table>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Customer Name</th>
-                            <th>Product Name</th>
-                            <th>Price</th>
-                            <th>Qty</th>
-                            <th>Amount</th>
-                            <th>Date</th>
-                            <th>Order Status</th>
-                        </tr>
-                        <tr>
-                            <td>0001</td>
-                            <td>John Doe</td>
-                            <td>Product A</td>
-                            <td>$100</td>
-                            <td>2</td>
-                            <td>$200</td>
-                            <td>12/12/2021</td>
-                            <td><span class="status completed">Completed</span></td>
-                        </tr>
-                        <tr>
-                            <td>0002</td>
-                            <td>Jane Smith</td>
-                            <td>Product B</td>
-                            <td>$150</td>
-                            <td>1</td>
-                            <td>$150</td>
-                            <td>12/13/2021</td>
-                            <td><span class="status pending">Pending</span></td>
-                        </tr>
-                        <tr>
-                            <td>0003</td>
-                            <td>Mark Lee</td>
-                            <td>Product C</td>
-                            <td>$120</td>
-                            <td>3</td>
-                            <td>$360</td>
-                            <td>12/14/2021</td>
-                            <td><span class="status cancelled">Cancelled</span></td>
-                        </tr>
-                        <tr>
-                            <td>0004</td>
-                            <td>Emily Davis</td>
-                            <td>Product D</td>
-                            <td>$90</td>
-                            <td>2</td>
-                            <td>$180</td>
-                            <td>12/15/2021</td>
-                            <td><span class="status completed">Completed</span></td>
-                        </tr>
-                        <tr>
-                            <td>0005</td>
-                            <td>Michael Brown</td>
-                            <td>Product E</td>
-                            <td>$200</td>
-                            <td>1</td>
-                            <td>$200</td>
-                            <td>12/16/2021</td>
-                            <td><span class="status pending">Pending</span></td>
-                        </tr>
-                        <tr>
-                            <td>0006</td>
-                            <td>Michael Brown</td>
-                            <td>Product E</td>
-                            <td>$200</td>
-                            <td>1</td>
-                            <td>$200</td>
-                            <td>12/16/2021</td>
-                            <td><span class="status pending">Pending</span></td>
-                        </tr>
+                    <table id="orderTable">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer Name</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Order Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Rows will be populated here via JavaScript -->
+                        </tbody>
                     </table>
                 </div>
                 
@@ -712,94 +643,140 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
+        async function fetchDashboardStats() {
+            const response = await fetch('/admin/stats');
+            const stats = await response.json();
+            console.log(stats);
+            document.getElementById('sal').textContent = stats.totalEarnings.toLocaleString()+' Ks';
+            document.getElementById('ord').textContent = stats.totalOrders;
+            document.getElementById('prof').textContent = stats.ARPC.toLocaleString() + ' Ks';
+            document.getElementById('cust').textContent = stats.totalCustomers;
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchDashboardStats);
+    </script>
+    <script>
+        function fetchRecentOrders() {
+        fetch('/admin/recent-orders')  // Send GET request to fetch the recent orders
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector("#orderTable tbody");
+                tableBody.innerHTML = '';  // Clear existing rows
+
+                data.forEach(order => {
+                    console.log(order);
+                    const row = document.createElement("tr");
+
+                    row.innerHTML = `
+                        <td>${order.orderId}</td>
+                        <td>${order.user.firstName}${' '}${order.user.lastName}</td>
+                       
+                        <td>${order.orderProducts[0]?.soldPrice}</td>
+                        <td>${order.orderProducts[0]?.quantity}</td>
+                        <td>${order.amount}</td>
+                        <td>${order.checkoutDate}</td>
+                        <td><span class="status ${order.status.toLowerCase()}">${order.status}</span></td>
+                    `;
+
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error("Error fetching orders:", error));
+    }
+    window.onload = fetchRecentOrders;
+    </script>
+    <script>
         // Render Line Chart
-        var lineChartOptions = {
-            chart: {
-                type: 'line',
-                height: '400px'
-            },
-            series: [{
-                name: 'Sales',
-                data: [10, 15, 22, 30, 40, 50, 65] // Dummy data
-            }],
-            xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']
-            }
-        };
-        var lineChart = new ApexCharts(document.querySelector('.linechart'), lineChartOptions);
-        lineChart.render();
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('/admin/monthly-sales')
+                .then(response => response.json())
+                .then(data => {
+                    let months = Object.keys(data);  // Extract month names (Jan, Feb, ...)
+                    let sales = Object.values(data); // Extract sales values
+
+                    var lineChartOptions = {
+                        chart: {
+                            type: 'line',
+                            height: '400px'
+                        },
+                        series: [{
+                            name: 'Sales',
+                            data: sales
+                        }],
+                        xaxis: {
+                            categories: months
+                        }
+                    };
+
+                    var lineChart = new ApexCharts(document.querySelector('.linechart'), lineChartOptions);
+                    lineChart.render();
+                })
+                .catch(error => console.error("Error fetching monthly sales data:", error));
+        });
+
     
         // Render Horizontal Bar Chart
-        var barChartOptions = {
-            chart: {
-                type: 'bar',
-                height: '400px'
-            },
-            series: [{
-                name: 'Revenue',
-                data: [120, 200, 300, 400, 500, 600, 700] // Dummy data
-            }],
-            xaxis: {
-                categories: ['Product A', 'Product B', 'Product C', 'Product D', 'Product E', 'Product F', 'Product G']
-            },
-            plotOptions: {
-                bar: {
-                    horizontal: true
-                }
-            }
-        };
-        var barChart = new ApexCharts(document.querySelector('.barchart'), barChartOptions);
-        barChart.render();
-    </script>
-    <!-- <script>
-        document.addEventListener("DOMContentLoaded", async function () {
-            try {
-                const response = await fetch('/api/chart/sales-category');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                console.log("Fetched Data:", data); // Debug log
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('/admin/top-selling-products')
+                .then(response => response.json())
+                .then(data => {
+                    let productNames = data.map(product => product.productName);
+                    let quantities = data.map(product => product.quantitySold);
 
-                var options = {
-                    chart: {
-                        type: 'donut',
-                        height: 350,
-                    },
-                    series: data.series,
-                    labels: data.labels,
-                    colors: ['#1E88E5', '#64B5F6', '#90CAF9', '#BBDEFB', '#42A5F5'],
-                    legend: {
-                        position: 'bottom'
-                    }
-                };
+                    var barChartOptions = {
+                        chart: {
+                            type: 'bar',
+                            height: '400px'
+                        },
+                        series: [{
+                            name: 'Quantity Sold',
+                            data: quantities
+                        }],
+                        xaxis: {
+                            categories: productNames
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: true
+                            }
+                        }
+                    };
 
-                var chart = new ApexCharts(document.querySelector("#sales-category-chart"), options);
-                chart.render();
-            } catch (error) {
-                console.error("Error fetching chart data:", error);
-            }
+                    var barChart = new ApexCharts(document.querySelector('.barchart'), barChartOptions);
+                    barChart.render();
+                })
+                .catch(error => console.error("Error fetching top-selling products:", error));
         });
 
-    </script> -->
+    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            var options = {
-                chart: {
-                    type: 'donut',
-                    height: 350,
-                },
-                series: [50, 30, 15, 5], // Static sales data
-                labels: ["Electronics", "Fashion", "Home & Kitchen", "Others"], // Static categories
-                colors: ['#1E88E5', '#64B5F6', '#90CAF9', '#BBDEFB', '#42A5F5'], // Chart colors
-                legend: {
-                    position: 'bottom'
-                }
-            };
+            fetch('/admin/sales-by-category')
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data);
+                    let categories = Object.keys(data);
+                    let sales = Object.values(data);
 
-            var chart = new ApexCharts(document.querySelector("#sales-category-chart"), options);
-            chart.render();
+                    var options = {
+                        chart: {
+                            type: 'donut',
+                            height: 350,
+                        },
+                        series: sales,
+                        labels: categories,
+                        colors: ['#1E88E5', '#64B5F6', '#90CAF9', '#BBDEFB', '#42A5F5'],
+                        legend: {
+                            position: 'bottom'
+                        }
+                    };
+
+                    var chart = new ApexCharts(document.querySelector("#sales-category-chart"), options);
+                    chart.render();
+                })
+                .catch(error => console.error("Error fetching sales data:", error));
         });
+
     </script>
     
 </body>

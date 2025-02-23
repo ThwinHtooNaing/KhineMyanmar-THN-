@@ -1,8 +1,11 @@
 package com.khineMyanmar.controller;
+import com.khineMyanmar.DTO.TopSaleProductDTO;
 import com.khineMyanmar.model.Category;
+import com.khineMyanmar.model.Order;
 import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.model.User;
 import com.khineMyanmar.service.CategoryService;
+import com.khineMyanmar.service.OrderService;
 import com.khineMyanmar.service.RoleService;
 import com.khineMyanmar.service.ShopService;
 import com.khineMyanmar.service.UserService;
@@ -46,6 +49,9 @@ public class AdminController {
 
     @Autowired
     private ShopService shopService;
+
+    @Autowired
+    private OrderService orderService;
 
     @RequestMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
@@ -221,9 +227,36 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/stats")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getDashboardStats() {
+        Map<String, Object> stats = orderService.getDashboardStats();
+        stats.put("ARPC", orderService.getAverageRevenuePerCustomer());
+        return ResponseEntity.ok(stats);
+    }
 
+    @GetMapping("/sales-by-category")
+    @ResponseBody
+    public ResponseEntity<Map<String, Long>> getSalesByCategory() {
+        return ResponseEntity.ok(orderService.getSalesByCategory());
+    }
 
+    @GetMapping("/top-selling-products")
+    public ResponseEntity<List<TopSaleProductDTO>> getTopSellingProducts() {
+        return ResponseEntity.ok(orderService.findTopSevenSellingProducts());
+    }
 
+    @GetMapping("/monthly-sales")
+    @ResponseBody
+    public ResponseEntity<Map<String, Double>> getMonthlySales() {
+        return ResponseEntity.ok(orderService.getMonthlySales());
+    }
+
+    @GetMapping("/recent-orders")
+    @ResponseBody
+    public List<Order> getRecentOrders() {
+        return orderService.getRecent6Orders();
+    }
     
 
 }
