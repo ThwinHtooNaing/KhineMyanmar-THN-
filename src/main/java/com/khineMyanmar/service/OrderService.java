@@ -106,6 +106,10 @@ public class OrderService {
         return (totalCustomers != null && totalCustomers > 0) ? totalEarnings / totalCustomers : 0.0;
     }
 
+    public List<Order> findAllOrders() {
+        return orderRepository.findAll();
+    }
+
     @Transactional
     public String checkout(HttpSession session) {
         // Retrieve user ID from session

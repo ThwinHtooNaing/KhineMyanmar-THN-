@@ -89,10 +89,25 @@ public class AdminController {
         return "admin/adminProducts";
     }
     
-    @RequestMapping("/orders")
+    // @RequestMapping("/orders")
+    // public String order(HttpSession session, Model model) {
+    //     User admin = (User) session.getAttribute("adminSession");
+    //     model.addAttribute("admin", admin);
+    //     return "admin/adminOrders";
+    // }
+
+     @RequestMapping("/orders")
     public String order(HttpSession session, Model model) {
         User admin = (User) session.getAttribute("adminSession");
+
+        if (admin == null) {
+            return "redirect:/admin/login"; // Redirect if not logged in
+        }
+
+        List<Order> orders = orderService.findAllOrders();
         model.addAttribute("admin", admin);
+        model.addAttribute("orders", orders);
+
         return "admin/adminOrders";
     }
     

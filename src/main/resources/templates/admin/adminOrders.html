@@ -179,7 +179,7 @@
         main{
             margin-top: 10px;
             margin-left: 225px;
-            height: 88vh;
+            /* height: 88vh; */
             background-color: #fff;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
@@ -195,8 +195,6 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            
-
         }
 
         table::-webkit-scrollbar {
@@ -238,14 +236,15 @@
         }
 
         .table-container {
-            max-height: 75vh; /* Adjust the height as needed */
+            max-height: 80vh; /* Adjust the height as needed */
+            padding-bottom: 10px;
             overflow-y: auto; /* Enable vertical scrolling */
         }
 
         thead th {
             position: sticky;
             top: 0;
-            background-color: #f8dbad7b; /* Header background */
+            background-color: #f9ead1; /* Header background */
             z-index: 2;
             font-weight: bold;
             border-bottom: 2px solid #ddd;
@@ -368,60 +367,38 @@
                             <th>Order Status</th>
                         </tr>
                     </thead>
-                    <tbody class="order-group">
-                        <tr>
-                            <td rowspan="2">0001</td>
-                            <td rowspan="2">John Doe</td>
-                            <td>Product A</td>
-                            <td>2</td>
-                            <td>$200</td>
-                            <td rowspan="2">$350</td>
-                            <td rowspan="2">12/12/2021</td>
-                            <td rowspan="2"><span class="status completed">Completed</span></td>
-                        </tr>
-                        <tr>
-                            <td>Product B</td>
-                            <td>1</td>
-                            <td>$150</td>
+                    <tbody th:each="order : ${orders}" class="order-group">
+                        <tr th:each="orderProduct, iterStat : ${order.orderProducts}">
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" th:text="${order.orderId}"></td>
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" th:text="${order.user != null ? order.user.getFullName() : 'Unknown User'}"></td>
+                            <td th:text="${orderProduct.product != null ? orderProduct.product.productName : 'Unknown Product'}"></td>
+                            <td th:text="${orderProduct.quantity}"></td>
+                            <td th:text="'$' + ${orderProduct.soldPrice}"></td>
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" th:text="'$' + ${order.amount}"></td>
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" th:text="${#temporals.format(order.checkoutDate, 'MM/dd/yyyy')}"></td>
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}">
+                                <span th:class="'status ' + ${order.status.name().toLowerCase()}" th:text="${order.status}"></span>
+                            </td>
                         </tr>
                     </tbody>
-                    <tbody class="order-group">
-                        <tr>
-                            <td rowspan="2">0002</td>
-                            <td rowspan="2">Jane Smith</td>
-                            <td>Product C</td>
-                            <td>3</td>
-                            <td>$360</td>
-                            <td rowspan="2">$540</td>
-                            <td rowspan="2">12/13/2021</td>
-                            <td rowspan="2"><span class="status pending">Pending</span></td>
+                    <!-- <tbody th:each="order : ${orders}" class="order-group">
+                        <tr th:each="orderProduct, iterStat : ${order.orderProducts}">
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" th:text="${order.orderId}"></td>
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" th:text="${order.user.fullName}"></td>
+                            <td th:text="${orderProduct.product.productName}"></td>
+                            <td th:text="${orderProduct.quantity}"></td>
+                            <td th:text="'$' + ${orderProduct.soldPrice}"></td>
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" th:text="'$' + ${order.amount}"></td>
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" th:text="${#temporals.format(order.checkoutDate, 'MM/dd/yyyy')}"></td>
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}">
+                                <span th:class="'status ' + ${order.status.name().toLowerCase()}" th:text="${order.status}"></span>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>Product D</td>
-                            <td>2</td>
-                            <td>$180</td>
-                        </tr>
-                    </tbody>
-                    <tbody class="order-group">
-                        <tr>
-                            <td>0003</td>
-                            <td>Mark Lee</td>
-                            <td>Product E</td>
-                            <td>1</td>
-                            <td>$200</td>
-                            <td>$200</td>
-                            <td>12/14/2021</td>
-                            <td><span class="status cancelled">Cancelled</span></td>
-                        </tr>
-                    </tbody>
+                    </tbody> -->
                 </table>
             </div>
         </div>
-    </main>
-    
-    
-    
-    
+    </main>    
     <script th:src="@{/js/adminSideBarNav.js}">
     </script>
 </body>

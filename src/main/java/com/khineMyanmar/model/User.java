@@ -145,6 +145,9 @@ public class User {
 		this.orders = orders;
 	}
 
+	public String getFullName() {
+		return firstName + " " + lastName;
+	}
 	public User() {
 		super();
 	}
