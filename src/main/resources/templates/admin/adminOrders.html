@@ -367,8 +367,9 @@
                             <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" th:text="${order.user != null ? order.user.getFullName() : 'Unknown User'}"></td>
                             <td th:text="${orderProduct.product != null ? orderProduct.product.productName : 'Unknown Product'}"></td>
                             <td th:text="${orderProduct.quantity}"></td>
-                            <td th:text="'$' + ${orderProduct.soldPrice}"></td>
-                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" th:text="'$' + ${order.amount}"></td>
+                            <td th:text="${#numbers.formatDecimal(orderProduct.soldPrice, 1, 'COMMA', 0, 'POINT')} + ' Ks'"></td>
+                            <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" 
+                                th:text="${#numbers.formatDecimal(order.amount, 1, 'COMMA', 0, 'POINT')} + ' Ks'"></td>
                             <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}" th:text="${#temporals.format(order.checkoutDate, 'MM/dd/yyyy')}"></td>
                             <td th:if="${iterStat.index == 0}" th:rowspan="${#lists.size(order.orderProducts)}">
                                 <span th:class="'status ' + ${order.status.name().toLowerCase()}" th:text="${order.status}"></span>

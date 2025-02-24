@@ -82,8 +82,14 @@ public class ShopService {
 		return shopRep.save(existShop);
 	}
 
-	public List<Shop> getAllShops() {
+	public List<Shop> getAllShops() 
+	{
 		return shopRep.findAll();
+	}
+
+	public Shop getShopById(Long shopId)
+	{
+		return shopRep.findById(shopId).orElseThrow(() -> new RuntimeException("Shop not found"));
 	}
 
 }

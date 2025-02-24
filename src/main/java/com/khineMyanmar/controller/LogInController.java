@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.khineMyanmar.model.Delivery;
 import com.khineMyanmar.model.ShopOwner;
 import com.khineMyanmar.model.User;
 import com.khineMyanmar.service.UserService;
@@ -42,6 +43,14 @@ public class LogInController {
                     model.addAttribute("shopowner", shopowner); 
                 }                
                 return "shopowner/shopOwnerIndex";
+            } else if(user != null && user.getRole().getRoleName().equalsIgnoreCase("DELIVERY"))
+            {
+                if (user instanceof Delivery) {
+                    Delivery delivery = (Delivery) user; 
+                    session.setAttribute("deliverySession", delivery);
+                    model.addAttribute("delivery", delivery); 
+                }                
+                return "delivery/deliveryIndex";
             } 
             else 
             {

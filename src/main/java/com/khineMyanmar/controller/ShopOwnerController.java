@@ -82,7 +82,7 @@ public class ShopOwnerController {
 	}
 
 	@PostMapping("/shopownersignupprocess")
-	public String process(@ModelAttribute("user")ShopOwner shopOwner,Model model){
+	public String process(@ModelAttribute("shopowner")ShopOwner shopOwner,Model model){
 		if(shopOwner == null) {
 			return "redirect:/shopowner/shopownersignup";
 		}

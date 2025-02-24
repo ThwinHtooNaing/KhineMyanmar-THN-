@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting</title>
+    <link th:href="@{/css/font.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0efeb;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #ffffff;
+            color: #000000;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 5px;
+            padding: 0px 10px;
+        }
+        .sidebar p{
+            font-size: 18px;
+            font-weight: 900;
+        }
+        .sidebar a {
+            color: #000000;
+            text-decoration: none;
+            /* flex-grow: 1; */
+        }
+        .sidebar p{
+            padding-left: 10px;
+        }
+
+        .sidebar div {
+            width: 90%;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 5px;
+            /*  */
+            transition: all 0.03s ease-in-out;
+            margin-bottom: 10px;
+        }
+
+        .sidebar div:hover {
+            background-color: #f8dbad7b; /* Light orange hover background */
+            border-right: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .sidebar i {
+            margin-right: 10px;
+            color: #505050;
+        }
+        
+        .bottom-link {
+            margin-top: auto;
+            margin-bottom: 5px;
+        }
+
+         .asideActive {
+            border-right: 3px solid #faa722;
+            background-color: #f4b95a7b;border-right: 3px solid #faa722;
+        }
+
+        .asideActive i {
+            color: #f4b247;
+        }
+
+        .asideActive a {
+            color: #df8b04;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 225px;
+            width: calc(100% - 225px);
+            height: 65px;
+            background-color: #fff;
+            z-index: 1000;
+            display: flex;
+            align-items: center; 
+            justify-content: flex-end; 
+            padding-right: 20px; 
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
+        }
+
+        .icons {
+            display: flex; 
+            gap: 15px; 
+            align-items: center; 
+            margin-right: 20px;
+        }
+
+        .icons > .icon {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            background-color: #c7c3c340;
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .icons > div:last-child {
+            background-color: transparent;
+            padding: 4px 3px;
+            width: auto;
+            display: flex;
+            align-items: center; 
+            gap: 8px; 
+        }
+
+        .icons > div:last-child span {
+            color: #000000;
+            font-size: 15px;
+        }
+
+        .icons > div > i {
+            color: #8a8585;
+        }
+
+        .icons img {
+            width: 35px;
+            height: 35px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .icons > div .notification-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 8px;
+            height: 8px;
+            background-color: red;
+            border-radius: 50%;
+        }
+
+        main{
+            margin-top: 70px;
+            margin-left: 225px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-container {
+            background: #fefefe;
+            padding: 25px;
+            border-radius: 10px 10px 0px 0px;
+            padding-bottom: 10px;
+        }
+
+        .profile-header {
+            margin-bottom: 20px;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-size: 100%;
+            object-fit: cover;
+            border: 2px solid #ddd;
+        }
+
+        .field-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 35px;
+            box-sizing: border-box;
+        }
+
+        .field-group {
+            flex: 1;
+        }
+        .field-row:nth-child(3){
+            width: 48%;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .edit-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .save-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #f4b247;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .save-button{
+            margin-bottom: 35px;
+        }
+
+        .save-button.hidden {
+            display: none;
+        }
+
+        .save-button:hover {
+            background-color: #df8b04;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="icons">
+            <div class="notification icon">
+                <i class="fa-solid fa-bell "></i>
+                <span class="notification-dot">
+                </span>
+            </div>
+            <div class="header-profile-image icon">
+                <img th:src="${delivery.profilePic}" class="">
+                <span th:text="${delivery.firstName + ' '+delivery.lastName}">Admin</span>
+                <i class="fas fa-angle-down"></i>
+            </div>
+        </div>
+    </header>
+    <aside class="sidebar">
+        <p>Khine Myanmar</p>
+        <div data-path="/delivery/dashboard">
+            <i class="fas fa-tachometer-alt"></i>
+            <a href="#">Dashboard</a>
+        </div>
+        <div class="asideActive" data-path="/delivery/setting">
+            <i class="fas fa-cog"></i>
+            <a href="#">Settings</a>
+        </div>
+        <div class="bottom-link" data-path="/ecom/index">
+            <i class="fas fa-sign-out-alt"></i>
+            <a href="#">Log Out</a>
+        </div>
+    </aside>   
+    <main>
+        <div class="profile-container">
+            <div class="profile-header">
+                <label for="profile-image-input">
+                    <img th:src="${delivery.profilePic}" alt="Profile" class="profile-image" id="profile-image">
+                </label>
+                <input type="file" id="profile-image-input" accept="image/*" style="display: none;">
+            </div>
+            <form id="profile-form">
+                <div class="field-row">
+                    <div class="field-group">
+                        <label for="firstName">First Name</label>
+                        <div class="input-container">
+                            <input type="text" id="first-name" name="firstName" th:value="${delivery.firstName}">
+                            <span class="edit-icon">&#9998;</span>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <label for="lastName">Last Name</label>
+                        <div class="input-container">
+                            <input type="text" id="last-name" name="lastName" th:value="${delivery.lastName}">
+                            <span class="edit-icon">&#9998;</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="field-row">
+                    <div class="field-group">
+                        <label for="email">Email</label>
+                        <div class="input-container">
+                            <input type="email" id="email" name="email" th:value="${delivery.email}">
+                            <span class="edit-icon">&#9998;</span>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <label for="phNo">Phone Number</label>
+                        <div class="input-container">
+                            <input type="tel" id="phone" name="phNo" th:value="${delivery.phNo}">
+                            <span class="edit-icon">&#9998;</span>
+                        </div>
+                    </div>
+                </div>    
+                <button type="button" id="save-button" class="save-button hidden">Save Changes</button>
+            </form>
+        </div>
+    </main>
+    <script th:src="@{/js/adminSideBarNav.js}">
+    </script> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+        const form = document.getElementById("profile-form");
+        const saveButton = document.getElementById("save-button");
+
+        let initialValues = {};
+        let changedValues = {};
+
+        form.querySelectorAll("input").forEach(input => {
+            initialValues[input.name] = input.value;
+        });
+
+        form.addEventListener("input", () => {
+            const { name, value } = event.target;
+
+            if (initialValues[name] !== value) {
+                changedValues[name] = value;
+            } else {
+                delete changedValues[name];
+            }
+
+            saveButton.classList.toggle("hidden", Object.keys(changedValues).length === 0);
+        });
+
+        const profileImageInput = document.getElementById("profile-image-input");
+        const profileImage = document.getElementById("profile-image");
+
+        profileImageInput.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    profileImage.src = reader.result;
+                    changedValues["profileImage"] = file; 
+                    saveButton.classList.remove("hidden");
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        saveButton.addEventListener("click", () => {
+            if (Object.keys(changedValues).length === 0) return;
+
+            const formData = new FormData();
+            for (const key in changedValues) {
+                formData.append(key, changedValues[key]);
+            }
+
+            fetch("/delivery/updateProfile", {
+                method: "POST",
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data);
+                console.log(data.success);
+                if (data.success) {
+                    Object.assign(initialValues, changedValues); 
+                    changedValues = {}; 
+                    saveButton.classList.add("hidden");
+
+                    Swal.fire({
+                        title: "Profile Updated!",
+                        text: "Your profile information has been updated successfully.",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                    })
+                }else {
+                    Swal.fire({
+                        title: "Update Failed!",
+                        text: data.message || "Something went wrong. Please try again.",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                }
+            }).catch(error => {
+                console.error("Update failed:", error);
+                Swal.fire({
+                    title: "Error!",
+                    text: "A network error occurred. Please check your connection and try again.",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+            });
+        });
+
+    </script>
+
+</body>
+</html>

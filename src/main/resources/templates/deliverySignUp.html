@@ -424,34 +424,34 @@
             </div>
             <div class="signup-right">
                 <h2>Sign Up</h2>
-                <form>
+                <form th:action="@{/delivery/deliverysignupprocess}" method="POST" th:object="${delivery}">
                     <div class="input-container">
                         <i class="fa-solid fa-user input-icon"></i>
-                        <input type="text" placeholder="First Name" required>
+                        <input type="text" placeholder="First Name" th:field="*{firstName}" required>
                     </div>
                     <div class="input-container">
                         <i class="fa-solid fa-user input-icon"></i>
-                        <input type="text" placeholder="Last Name" required>
+                        <input type="text" placeholder="Last Name" th:field="*{lastName}" required>
                     </div>
                     <div class="input-container">
                         <i class="fa-solid fa-phone input-icon"></i>
-                        <input type="text" placeholder="Phone Number" required>
+                        <input type="text" placeholder="Phone Number" th:field="*{phNo}" required>
                     </div>
                     <div class="input-container">
                         <i class="fa-solid fa-shop input-icon"></i>
-                        <select required>
+                        <select name="shopId" required>
                             <option value="" disabled selected>Select Shop</option>
                             <option th:each="shop : ${shops}" th:value="${shop.shopId}" th:text="${shop.shopName}"></option>
                         </select>
                     </div>
                     <div class="input-container">
                         <i class="fa-solid fa-envelope input-icon"></i>
-                        <input type="email" placeholder="Email" required>
+                        <input type="email" placeholder="Email" th:field="*{email}"required>
                     </div>
                     <div class="input-container">
                         <i class="fa-solid fa-lock input-icon"></i>
-                        <input type="password" placeholder="Password" id="password" required>
-                        <i class="fa-solid fa-eye field-icon" id="toggle-password"></i>
+                        <input type="password" placeholder="Password" id="password" th:field="*{passWord}" required>
+                        <i class="fa-solid fa-eye field-icon" id="toggle-password" ></i>
                     </div>
                     <div class="input-container">
                         <i class="fa-solid fa-lock input-icon"></i>
