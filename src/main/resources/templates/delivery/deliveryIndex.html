@@ -155,6 +155,158 @@
             margin-left: 225px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
+         .main {
+            margin-top: 70px;
+            margin-left: 225px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
+        }
+
+        .card-container {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .card {
+            flex: 1;
+            background-color: #f8fcfa;
+            border-radius: 8px;
+            /* padding: 20px; */
+            padding: 0 20px 15px 20px;
+            position: relative;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.253);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.251);
+        }
+
+        .card h3 {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+            color: #212529;
+        }
+
+        .card .stats {
+            margin-top: 4px;
+            display: flex;
+            /* align-items: center; */
+            font-size: 14px;
+            color: #28a745;
+        }
+
+        .card .stats i {
+            margin-left: 5px;
+            margin-top: -3px;
+        }
+
+        .card .icon {
+            position: absolute;
+            top: 3px;
+            right: 5px;
+            opacity: 0.2;
+            font-size: 80px;
+        }
+
+        .recentOrder {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 0px 0px 20px 0px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.199);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+
+        .recentOrder h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .recentOrder table{
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+
+        .recentOrder-header{
+            display:flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 20px;
+            /* border: 1px solid #ddd; */
+        }
+     
+        .recentOrder td {
+            text-align: left;
+            padding: 5px 10px;
+            font-size: 13px;
+        }
+        .recentOrder th{
+            text-align: left;
+            padding: 10px 10px;
+            font-size: 14px;
+        }
+
+        .recentOrder th {
+            background-color: #e4e1e1;
+            color: #333;
+        }
+
+        .recentOrder tr {
+            border-bottom: 1px solid #bbb9b9;
+        }
+        
+        .recentOrder tr:last-child {
+            border-bottom: none;
+        }
+
+        .recentOrder img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .recentOrder .status {
+            font-weight: bold;
+            text-transform: capitalize;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .recentOrder .status.status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .recentOrder .status.status-on_delivery {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .recentOrder .status.status-delivered {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
         
     </style>
 </head>
@@ -188,10 +340,56 @@
             <a href="#">Log Out</a>
         </div>
     </aside>   
-    
-    <script th:src="@{/js/adminSideBarNav.js}">
-    </script> 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <main class="main">
+        <div class="card-container">
+            <div class="card">
+                <h3>TOTAL AMOUNT OF DELIVERY</h3>
+                <p id="totaldeliveries">0</p>
+                <div class="stats" style="opacity:0;">5.3% <i>↑</i></div>
+                <div class="icon">📦</div>
+            </div>
 
+            <div class="card">
+                <h3>TOTAL DELIVERED</h3>
+                <p id="totaldelivered">0</p>
+                <div class="stats" style="opacity:0;">4.2% <i>↑</i></div>
+                <div class="icon">✅</div>
+            </div>
+
+            <div class="card" style="background-color: #f7f2d2;">
+                <h3 style="color: #5f4a10;">TOTAL PENDING</h3>
+                <p id="totalpendings" style="color: #a78528;">0 </p>
+                <div class="icon">⏳</div>
+            </div>
+
+            <div class="card" style="background-color: #f7f2d2;">
+                <h3 style="color: #5f4a10;">TOTAL ON DELIVERY</h3>
+                <p id="totalondeliveries" style="color: #a78528;">0 </p>
+                <div class="icon">🚚</div>
+            </div>
+        </div>
+        <div class="recentOrder">
+            <div class="recentOrder-header">
+                <h3>Delivery Items</h3>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Delivery ID</th>
+                        <th>Order ID</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="recentOrdersTable">
+                    
+                </tbody>
+            </table>
+        </div>  
+    </main> 
 </body>
+<script th:src="@{/js/adminSideBarNav.js}">
+</script> 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </html>

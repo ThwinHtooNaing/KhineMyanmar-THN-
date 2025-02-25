@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.khineMyanmar.model.DeliveryItem;
 
-public interface IDeliveryItem extends JpaRepository<DeliveryItem,Long> {
+public interface IDeliveryItemRepository extends JpaRepository<DeliveryItem,Long> {
     
 }

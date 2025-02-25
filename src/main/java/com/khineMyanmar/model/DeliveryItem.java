@@ -1,5 +1,7 @@
 package com.khineMyanmar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,10 +23,12 @@ public class DeliveryItem {
 	private DeliveryStatus deliveryStatus;
 	
 	@OneToOne(mappedBy = "deliveryItem")
+	@JsonIgnore
     private Order order;
 	
 	@ManyToOne
     @JoinColumn(name = "delivery_person_id", nullable = true) // Can be NULL for automated deliveries
+	@JsonIgnore
     private Delivery deliveryPerson;
 
 	public Long getDeliveryItemId() {

@@ -472,6 +472,26 @@ public class ShopOwnerController {
         return orderProductRepository.findTopFourSellingProductsByShop(shopId);
     }
 
+    @GetMapping("/getActiveDelivery")
+    public ResponseEntity<List<Delivery>> getActiveDeliveriesByShop(HttpSession session) {
+        ShopOwner shopowner = (ShopOwner) session.getAttribute("shopSession");
+        Shop shop = shopowner.getShop();
+        Long shopId = shop.getShopId();
+        List<Delivery> deliveries = deliveryService.findActiveDeliveriesByShop(shopId);
+        return ResponseEntity.ok(deliveries);
+    }
+
+    @PostMapping("/realassign")
+    public ResponseEntity<?> assignDelivery(
+            @RequestParam Long orderId,
+            @RequestParam Long deliveryId) {
+        try {
+            String result = deliveryService.assignDelivery(orderId, deliveryId);
+            return ResponseEntity.ok(result);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
     
 
 

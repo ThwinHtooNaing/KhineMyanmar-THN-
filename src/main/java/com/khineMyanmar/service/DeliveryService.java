@@ -1,5 +1,6 @@
 package com.khineMyanmar.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -10,9 +11,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.khineMyanmar.model.Delivery;
+import com.khineMyanmar.model.DeliveryItem;
+import com.khineMyanmar.model.DeliveryStatus;
+import com.khineMyanmar.model.Order;
+import com.khineMyanmar.model.OrderStatus;
 import com.khineMyanmar.model.Role;
 import com.khineMyanmar.model.Shop;
+import com.khineMyanmar.model.WorkingStatus;
+import com.khineMyanmar.repository.IDeliveryItemRepository;
 import com.khineMyanmar.repository.IDeliveryRepository;
+import com.khineMyanmar.repository.IOrderRepository;
 import com.khineMyanmar.repository.IUserRoleRepository;
 
 import jakarta.transaction.Transactional;
@@ -34,6 +42,12 @@ public class DeliveryService {
 
     @Autowired
     private StorageService storageService;
+
+    @Autowired
+    private IOrderRepository orderRepository;
+
+    @Autowired
+    private IDeliveryItemRepository deliveryItemRepository;
 
     public String save(Delivery delivery){
         boolean deliveryexist= deliveryRepository.findByUserId(delivery.getUserId()).isPresent();
@@ -107,6 +121,47 @@ public class DeliveryService {
         }
 
         return deliveryRepository.save(user); 
+    }
+
+    public List<Delivery> findActiveDeliveriesByShop(Long shopId) {
+        // Only include AVAILABLE and WORKING statuses
+        List<WorkingStatus> activeStatuses = Arrays.asList(WorkingStatus.AVAILABLE, WorkingStatus.WORKING);
+        return deliveryRepository.findByShop_ShopIdAndWorkingStatusIn(shopId, activeStatuses);
+    }
+
+    @Transactional
+    public String assignDelivery(Long orderId, Long deliveryId) {
+        // 1. Retrieve the Order
+        Order order = orderRepository.findById(orderId)
+            .orElseThrow(() -> new RuntimeException("Order not found"));
+        
+        // 2. Retrieve the Delivery person
+        Delivery delivery = deliveryRepository.findById(deliveryId)
+            .orElseThrow(() -> new RuntimeException("Delivery person not found"));
+        
+        // 3. Create a new DeliveryItem with status PENDING
+        DeliveryItem deliveryItem = new DeliveryItem();
+        deliveryItem.setDeliveryStatus(DeliveryStatus.PENDING);
+        deliveryItem.setOrder(order);
+        deliveryItem.setDeliveryPerson(delivery);
+        deliveryItem = deliveryItemRepository.save(deliveryItem);
+        
+        // 4. Associate the DeliveryItem with the Order and update order status to IN_PROGRESS
+        order.setDeliveryItem(deliveryItem);
+        order.setStatus(OrderStatus.IN_PROGRESS);
+        orderRepository.save(order);
+        
+        // 5. Update the Delivery person's count and working status
+        int newCount = delivery.getDeliveryCount() + 1;
+        delivery.setDeliveryCount(newCount);
+        if (newCount >= 10) {
+            delivery.setWorkingStatus(WorkingStatus.FULL);
+        } else {
+            delivery.setWorkingStatus(WorkingStatus.WORKING);
+        }
+        deliveryRepository.save(delivery);
+        
+        return "Assignment successful";
     }
 
 
