@@ -1,15 +1,19 @@
 package com.khineMyanmar.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.khineMyanmar.DTO.DeliveryItemDTO;
 import com.khineMyanmar.model.Delivery;
 import com.khineMyanmar.model.DeliveryItem;
 import com.khineMyanmar.model.DeliveryStatus;
@@ -48,6 +52,20 @@ public class DeliveryService {
 
     @Autowired
     private IDeliveryItemRepository deliveryItemRepository;
+
+
+    public List<DeliveryItem> getDeliveryItemsForPerson(Long deliveryPersonId) {
+        return deliveryItemRepository.findByDeliveryPersonUserId(deliveryPersonId);
+    }
+
+    public List<DeliveryItemDTO> getDeliveryItemDTOsForPerson(Long deliveryPersonId) {
+        List<DeliveryItem> items = deliveryItemRepository.findByDeliveryPersonUserId(deliveryPersonId);
+        List<DeliveryItemDTO> dtos = new ArrayList<>();
+        for (DeliveryItem item : items) {
+            dtos.add(new DeliveryItemDTO(item));
+        }
+        return dtos;
+    }
 
     public String save(Delivery delivery){
         boolean deliveryexist= deliveryRepository.findByUserId(delivery.getUserId()).isPresent();
@@ -164,6 +182,46 @@ public class DeliveryService {
         return "Assignment successful";
     }
 
+    public ResponseEntity<?> updateDeliveryStatus(Long id, Map<String, String> request) {
+        Optional<DeliveryItem> deliveryItemOpt = deliveryItemRepository.findById(id);
 
+        if (deliveryItemOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Delivery item not found");
+        }
+
+        DeliveryItem deliveryItem = deliveryItemOpt.get();
+        DeliveryStatus newStatus;
+
+        try {
+            newStatus = DeliveryStatus.valueOf(request.get("status"));
+        } catch (IllegalArgumentException | NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid status value");
+        }
+
+        // Restrict invalid transitions
+        if ((deliveryItem.getDeliveryStatus() == DeliveryStatus.PENDING && newStatus == DeliveryStatus.DELIVERED) ||
+            (deliveryItem.getDeliveryStatus() == DeliveryStatus.ON_DELIVERY && newStatus == DeliveryStatus.PENDING) ||
+            (deliveryItem.getDeliveryStatus() == DeliveryStatus.DELIVERED)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid status transition");
+        }
+
+        // Update delivery status
+        deliveryItem.setDeliveryStatus(newStatus);
+        deliveryItemRepository.save(deliveryItem);
+
+        // If the delivery status is DELIVERED, update the corresponding order's status to COMPLETED
+        System.out.println(newStatus.toString());
+        System.out.println(deliveryItem.getOrder().toString());
+        if (newStatus == DeliveryStatus.DELIVERED && deliveryItem.getOrder() != null) {
+            Order order = deliveryItem.getOrder();
+            OrderStatus orderStatus = OrderStatus.COMPLETED;
+            order.setStatus(orderStatus);
+            System.out.println(order.toString());
+            orderRepository.save(order);
+            System.out.println("Order updated");
+        }
+
+        return ResponseEntity.ok(deliveryItem);
+    }
     
 }

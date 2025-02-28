@@ -251,7 +251,6 @@
             justify-content: space-between;
             align-items: center;
             padding: 0px 20px;
-            /* border: 1px solid #ddd; */
         }
      
         .recentOrder td {
@@ -272,6 +271,7 @@
 
         .recentOrder tr {
             border-bottom: 1px solid #bbb9b9;
+            padding: 10px 10px;
         }
         
         .recentOrder tr:last-child {
@@ -307,7 +307,51 @@
             background-color: #f8d7da;
             color: #721c24;
         }
-        
+
+        .recentOrder tbody tr {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .recentOrder tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        .recentOrder tbody tr:hover {
+            background-color: #efefef;
+            transform: scale(1.01);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        .recentOrder select {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #f5f5f5;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .recentOrder select:hover {
+            background-color: #f7c883;
+        }
+        .recentOrder select:focus {
+            outline: none;
+            background-color: #d6d6d6;
+        }
+
+         .recentOrder select.status-PENDING {
+            background-color: #f1dc94;
+            color: #ffffff;
+        }
+        .recentOrder select.status-ON_DELIVERY {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+        .recentOrder select.status-DELIVERED {
+            background-color: #43bd2e;
+            color: #ffffff;
+        }
+
+
     </style>
 </head>
 <body>
@@ -381,13 +425,158 @@
                     </tr>
                 </thead>
                 <tbody id="recentOrdersTable">
-                    
+                    <tr>
+                        <td>1</td>
+                        <td>D001</td>
+                        <td>O1001</td>
+                        <td>$50</td>
+                        <td>
+                            <select onchange="updateStatusColor(this)">
+                                <option value="pending" class="status-pending">Pending</option>
+                                <option value="on_delivered" class="status-on_delivered">On Delivered</option>
+                                <option value="delivered" class="status-delivered">Delivered</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>D002</td>
+                        <td>O1002</td>
+                        <td>$75</td>
+                        <td>
+                            <select onchange="updateStatusColor(this)">
+                                <option value="pending" class="status-pending">Pending</option>
+                                <option value="on_delivered" class="status-on_delivered">On Delivered</option>
+                                <option value="delivered" class="status-delivered">Delivered</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>D003</td>
+                        <td>O1003</td>
+                        <td>$30</td>
+                        <td>
+                            <select onchange="updateStatusColor(this)">
+                                <option value="pending" class="status-pending">Pending</option>
+                                <option value="on_delivered" class="status-on_delivered">On Delivered</option>
+                                <option value="delivered" class="status-delivered">Delivered</option>
+                            </select>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-        </div>  
+        </div>
     </main> 
 </body>
-<script th:src="@{/js/adminSideBarNav.js}">
-</script> 
+<script th:src="@{/js/adminSideBarNav.js}"></script> 
+<script>
+    function updateStatusColor(select) {
+        select.className = '';
+        select.classList.add('status-' + select.value);
+    }
+     document.addEventListener("DOMContentLoaded", function() {
+        
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch('/delivery/getDeliveriesByUser')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById("recentOrdersTable");
+                tableBody.innerHTML = ""; // Clear existing rows
+
+                data.forEach((item, index) => {
+                    console.log(item); // Log each item for debugging
+
+                    const row = document.createElement("tr");
+
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>D00${item.deliveryId}</td>
+                        <td>${item.orderId}</td>
+                        <td>${item.amount}</td>
+                        <td>
+                            <select data-id="${item.deliveryId}" data-prev-status="${item.status}" onchange="handleStatusChange(this)">
+                                <option value="PENDING" ${item.status === 'PENDING' ? 'selected' : ''}>Pending</option>
+                                <option value="ON_DELIVERY" ${item.status === 'ON_DELIVERY' ? 'selected' : ''}>On Delivery</option>
+                                <option value="DELIVERED" ${item.status === 'DELIVERED' ? 'selected' : ''}>Delivered</option>
+                            </select>
+                        </td>
+                    `;
+
+                    tableBody.appendChild(row);
+                });
+
+                // Apply colors
+                document.querySelectorAll("#recentOrdersTable select").forEach(select => {
+                    updateStatusColor(select);
+                });
+            })
+            .catch(error => console.error("Error loading delivery items:", error));
+    });
+
+    // Function to handle status changes
+    function handleStatusChange(selectElement) {
+        const deliveryId = selectElement.getAttribute("data-id");
+        const newStatus = selectElement.value;
+        const previousStatus = selectElement.getAttribute("data-prev-status") || "PENDING";
+
+        // Restrict invalid transitions
+        if((previousStatus === "PENDING" && newStatus === "DELIVERED") || 
+            (previousStatus === "ON_DELIVERY" && newStatus === "PENDING") || 
+            (previousStatus === "DELIVERED" && newStatus !== "DELIVERED")){
+            alert("Invalid status change!");
+            selectElement.value = previousStatus; // Reset to previous valid value
+            return;
+        }
+
+        // Store the current status as the previous status
+        selectElement.setAttribute("data-prev-status", newStatus);
+
+        // Update the database with the new status
+        fetch(`/delivery/updateStatus/${deliveryId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ status: newStatus }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to update status");
+                }
+                return response.json();
+            })
+            .then(updatedItem => {
+                console.log("Status updated successfully:", updatedItem);
+                updateStatusColor(selectElement);
+            })
+            .catch(error => {
+                console.error("Error updating status:", error);
+                alert("Failed to update status. Please try again.");
+                selectElement.value = previousStatus; // Revert on error
+            });
+    }
+
+    function updateStatusColor(selectElement) {
+        switch (selectElement.value) {
+            case "PENDING":
+                selectElement.style.backgroundColor = "#FFA500"; // Orange
+                break;
+            case "ON_DELIVERY":
+                selectElement.style.backgroundColor = "#1E90FF"; // Blue
+                break;
+            case "DELIVERED":
+                selectElement.style.backgroundColor = "#43bd2e"; // Green
+                selectElement.style.color = "#FFFFFF"; //
+                selectElement.disabled = true; // Lock delivered status
+                break;
+        }
+    }
+
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </html>

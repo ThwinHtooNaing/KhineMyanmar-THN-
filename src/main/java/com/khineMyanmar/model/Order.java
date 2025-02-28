@@ -125,5 +125,11 @@ public class Order {
 	public Order() {
 		super();
 	}
+
+
+	@Override
+	public String toString() {
+		return "Order [orderId=" + orderId + ", user=" + user + ", status=" + status + ", amount=" + amount + "]";
+    }
 		
 }
