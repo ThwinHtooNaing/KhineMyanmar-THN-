@@ -178,6 +178,11 @@ public class ProductService {
         return productRepository.findByCategory_CategoryName(category, pageable).getContent();
     }
 
+    public List<Product> getProductsByShopId(Long shopId, int offset, int limit) {
+        List<Product> allProducts = productRepository.findProductsByShopId(shopId);
+        return allProducts.stream().skip(offset).limit(limit).toList();
+    }
+
 
 
 

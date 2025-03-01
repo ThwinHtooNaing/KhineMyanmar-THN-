@@ -335,6 +335,25 @@ public class UserController {
         
         return ResponseEntity.ok(products);
     }
+
+    @GetMapping("/shoploadmore")
+    public ResponseEntity<List<Product>> loadMoreShopProducts(
+            // Add shopId parameter
+            @RequestParam(defaultValue = "0") int offset,HttpSession session) {
+        Shop shop = (Shop) session.getAttribute("shop");
+        Long shopId = (Long) shop.getShopId();
+        List<Product> products = productService.getProductsByShopId(shopId, offset, 12);
+        return ResponseEntity.ok(products);
+    }
 	
+    @GetMapping("/shopP")
+    public String getShopPage(@RequestParam("shopId") Long shopId, Model model,HttpSession session) {
+        User user = (User) session.getAttribute("customerSession");
+        model.addAttribute("customer", user);
+        Shop shop = shopService.getShopById(shopId);
+        model.addAttribute("shop", shop);
+        session.setAttribute("shop",shop);
+        return "/customer/shop"; 
+    }
 	
 }

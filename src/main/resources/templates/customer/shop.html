@@ -1279,7 +1279,97 @@
         color: rgb(255, 132, 0);
       }
 
-      
+      .first-section{
+        width: 100%;
+        height: 200px;
+        /* background-color: ; */
+        background-color: #585858;
+      }
+
+      .shop-header {
+          display: flex;
+          align-items: center;
+          padding: 20px;
+          border-bottom: 2px solid #ddd;
+      }
+
+      .shop-image {
+          width: 170px; /* Adjust image size */
+          height: 170px;
+          border-radius: 10px; /* Rounded corners */
+          object-fit: cover; /* Ensure the image looks good */
+      }
+
+      .shop-info {
+          margin-left: 15px;
+      }
+
+      .shop-name {
+          font-size: 24px;
+          font-weight: bold;
+      }
+
+      .shop-address, .shop-phone {
+          font-size: 16px;
+          color: #555;
+      }
+
+      .container{
+        padding-bottom: 50px;
+      }
+
+      .container h2 {
+          padding-top: 25px;
+          padding-bottom: 25px;
+          font-size: 30px;
+          margin-top: 15px;
+          margin-bottom: 30px;
+      }
+      .product-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(275px, 1fr)); 
+          gap: 20px;
+      }
+      .product-card {
+          background: white;
+          padding: 15px;
+          border-radius: 10px;
+          box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+          text-align: center;
+      }
+
+      .product-card:hover {
+          box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.326);
+      }
+
+
+      .product-card img {
+          width: 100%;
+          height: 250px;
+          object-fit: cover;
+          border-radius: 8px;
+      }
+      .category {
+          font-size: 12px;
+          color: gray;
+          text-transform: uppercase;
+          margin-top: 10px;
+          text-align: left;
+      }
+      .product-name {
+          font-size: 16px;
+          font-weight: bold;
+          margin-top: 5px;
+          text-align: left;
+      }
+      .price {
+          font-size: 18px;
+          font-weight: bold;
+          color: #f5a623;
+          margin-top: 10px;
+          text-align: left;
+      }
+
 
     </style>
   </head>
@@ -1287,7 +1377,7 @@
     <header>
         <nav>
             <p id="name">Khine Myanmar</p>
-            <ul>
+            <ul style="opacity: 0;">
             <li class="active" onclick="navigateTo('/customer/index')">Home</li>
             <li onclick="navigateTo('/customer/product')">Products</li>
             <li onclick="navigateTo('/customer/shop')">Shops</li>
@@ -1314,38 +1404,32 @@
             </div>
         </nav>
     </header>
+    <section class="first-section">
 
-    <div class="slider">
-      <div class="slides-container">
-        <div class="slide">
-          <img
-            th:src="@{/img/asics_blog_hero_desktop_runningvstraining_022521.webp}"
-            alt="Slide 1"
-          />
+    </section>
+    <section class="shop-header">
+        <img th:src="${shop.shopImagePath}" alt="Shop Image" class="shop-image">
+        <div class="shop-info">
+            <h1 class="shop-name" th:text="${shop.shopName}">Ko Sai မဟာအောင်မြေ</h1>
+            <p class="shop-address" th:text="${shop.address}">Maha Aung Myay, Mandalay</p>
+            <p class="shop-phone" th:text="${shop.contactNumber}">📞 09-XXXXXXXXX</p>
         </div>
-        <div class="slide">
-          <img
-            th:src="@{/img/Here-are-all-the-expected-iPhone-15-design-changes-visualized.jpg}"
-            alt="Slide 2"
-          />
-        </div>
-        <div class="slide">
-          <img th:src="@{/img/hero-edited-3-1170x650.jpg}" alt="Slide 3" />
-        </div>
-        <div class="slide">
-          <img
-            th:src="@{/img/three-glasses-of-fizzy-drinks.jpg}"
-            alt="Slide 4"
-          />
+    </section>
+    <section class="section" id="section3">
+      <div class="container">
+          <h2>All Products</h2>
+          <div class="product-grid" id="product-twe">
+              
+          </div>
+      </div>
+      <div class="loadmore-container">
+        <div class="loadmore">
+          Load More Products
         </div>
       </div>
-      <div class="slider-indicators">
-        <div class="indicator"></div>
-        <div class="indicator"></div>
-        <div class="indicator"></div>
-        <div class="indicator"></div>
-      </div>
-    </div>
+    </section>
+
+
 
     <section id="available-services">
       <div class="service">
@@ -1521,27 +1605,6 @@
   </script>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      let slides = document.querySelectorAll(".slide");
-      let indicators = document.querySelectorAll(".indicator");
-      let currentIndex = 0;
-      const displayTime = 5000; // 5 seconds
-
-      slides[currentIndex].classList.add("active");
-      indicators[currentIndex].classList.add("active");
-
-      function updateSlide() {
-        slides[currentIndex].classList.remove("active");
-        indicators[currentIndex].classList.remove("active");
-
-        currentIndex = (currentIndex + 1) % slides.length;
-
-        slides[currentIndex].classList.add("active");
-        indicators[currentIndex].classList.add("active");
-      }
-
-      setInterval(updateSlide, displayTime);
-    });
 
     window.addEventListener("scroll", function () {
       document
@@ -2039,6 +2102,262 @@
     }});
     
     </script>
+    <script>
+    let offset = 0;
+    const limit = 12;
+    const loadMoreButton = document.querySelector(".loadmore");
+
+    function showSpinner() {
+      loadMoreButton.innerHTML = '<div class="loading-spinner"></div>';
+    }
+
+    function hideSpinner() {
+      loadMoreButton.innerHTML = 'Load More Products';
+    }
+
+    function loadMoreProducts() {
+      showSpinner();
+
+      fetch(`/customer/shoploadmore?offset=${offset}`)
+        .then(response => response.json())
+        .then(data => {
+          const productGrid = document.getElementById("product-twe");
+
+          // Append new products to the grid
+          data.forEach(product => {
+            // console.log(product);
+            const productCard = document.createElement("div");
+            productCard.setAttribute("data-id", product.productId);
+            productCard.classList.add("product-card");
+            productCard.innerHTML = `
+              <img src="${product.productImagePath}" alt="${product.productName}">
+              <div class="category">${product.category.categoryName}</div>
+              <div class="product-name">${product.productName}</div>
+              <div class="price">${new Intl.NumberFormat().format(product.productShops?.[0]?.shopPrice || 0)} Ks</div>
+            `;
+            productGrid.appendChild(productCard);
+            const stockQuantity = product.productShops?.[0]?.stockQuantity;
+            console.log(stockQuantity);
+            const modalCloseBtn = document.querySelector(".modal-close-btn");
+            const productModal = document.getElementById("product-modal");
+              modalCloseBtn.addEventListener("click", () => {
+                productModal.style.display = "none";
+              });
+              document.addEventListener("click", (event) => {
+                if (event.target === productModal) { 
+                    productModal.style.display = "none";
+                  }
+              });
+              productCard.addEventListener("click", () => {
+                      const productId = productCard.getAttribute("data-id");
+
+                      fetch(`/customer/product/${productId}`)
+                          .then(response => response.json())
+                          .then(productData => {
+                              updateModal(productData); 
+                              productModal.style.display = "flex"; 
+                          })
+                          .catch(error => {
+                              console.error("Error fetching product details:", error);
+                          });
+                  });
+          });
+
+          function updateModal(product) {
+          const productModal = document.getElementById("product-modal");
+          document.querySelector(".product-modal-image-container img").src = product.productImagePath;
+          document.querySelector(".product-modal-name-container h2").textContent = product.productName;
+          document.querySelector(".product-modal-description").textContent = product.description || "No description available";
+          document.querySelector(".product-modal-category-container span:nth-child(2)").textContent = product.category?.categoryName || "General";
+
+          const stockQuantity = product.productShops?.[0]?.stockQuantity;
+
+          document.querySelector(".stock-indicator-container").style.display = "none";
+          document.querySelector(".out-of-stock-indicator").style.display = "none";
+          document.querySelector(".stock-remaining-indicator").style.display = "none";
+
+          const addToCartBtn = document.querySelector(".add-to-cart-btn");
+          const buyNowBtn = document.querySelector(".buyNow-btn");
+          addToCartBtn.disabled = false;
+          buyNowBtn.disabled = false;
+          addToCartBtn.style.cursor = "pointer";
+          buyNowBtn.style.cursor = "pointer";
+
+          if (stockQuantity !== undefined) {
+              if (stockQuantity === 0) {
+                  console.log("out  of stock");
+                  document.querySelector(".stock-indicator-container").style.display = "block";
+                  document.querySelector(".out-of-stock-indicator").style.display = "block";
+                  document.querySelector(".add-to-cart-btn").style.cursor = "not-allowed";
+                  document.querySelector(".buyNow-btn").style.cursor = "not-allowed";
+                  addToCartBtn.disabled = true;
+                  buyNowBtn.disabled = true;
+              } else {
+                  document.querySelector(".stock-indicator-container").style.display = "block";
+                  document.querySelector(".stock-remaining-indicator span").textContent = stockQuantity;
+
+                  if (stockQuantity <= 10) {
+                      document.querySelector(".stock-remaining-indicator").style.display = "block";
+                  }
+              }
+          }
+          
+          document.querySelector(".product-modal-price-container span:nth-child(2)").innerHTML = 
+              `${new Intl.NumberFormat().format(product.productShops?.[0]?.shopPrice || 0)} <span>Ks</span>`;
+          console.log(product);
+
+          let quantity = 1; 
+
+          const qtyDisplay = document.getElementById("noOfQty");
+          const increaseBtn = document.getElementById("decreaseQty");
+          const decreaseBtn = document.getElementById("increaseQty");
+          function updateQuantityDisplay() {
+              increaseBtn.disabled = false;
+              if(stockQuantity === 0) {
+                  increaseBtn.disabled = true;
+                  decreaseBtn.disabled = quantity === 1;
+                  qtyDisplay.textContent = 0;
+                  return;
+              }
+              qtyDisplay.textContent = quantity;
+              decreaseBtn.disabled = quantity === 1; 
+          }
+
+          increaseBtn.addEventListener("click", () => {
+              if(stockQuantity > qtyDisplay.textContent) {
+                    quantity++;
+                    updateQuantityDisplay();
+                }else{
+                    increaseBtn.disabled = true;
+                }
+          });
+
+          decreaseBtn.addEventListener("click", () => {
+              if (quantity > 1) {
+                  quantity--;
+                  updateQuantityDisplay();
+              }
+          });
+          updateQuantityDisplay();
+          buyNowBtn.addEventListener("click", () => {
+            const cartItem = {
+                productId: product.productId, // product info from your modal or product object
+                quantity: quantity              // selected quantity from the modal
+            };
+
+            fetch('/customer/cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cartItem)
+            })
+            .then(response => response.json())
+            .then(cart => {
+                // After adding to cart, redirect to checkout
+                return fetch('/customer/checkout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Checkout failed');
+                }
+            })
+            .then(result => {
+                if (result === 'Order placed successfully') {
+                    productModal.style.display = "none";
+                    Swal.fire({
+                        title: "Order Placed Successfully",
+                        text: result,
+                        icon: "success",
+                        confirmButtonText: "OK"
+                    }).then(() => {
+                        console.log("Order Placed Successfully");
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Checkout Error',
+                        text: result,
+                        showConfirmButton: true
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to Complete Purchase',
+                    text: error.message,
+                    showConfirmButton: true
+                });
+            });
+        });
+          document.querySelector(".add-to-cart-btn").addEventListener("click", () => {
+                const cartItem = {
+                    productId: product.productId, // product info from your modal or product object
+                    quantity: quantity              // selected quantity from the modal
+                };
+
+                fetch('/customer/cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cartItem)
+                })
+                .then(response => response.json())
+                .then(cart => {
+                    productModal.style.display = "none";
+                    Swal.fire({
+                              title: "Product Added to Cart",
+                              text: "The product has been successfully added to your cart.",
+                              icon: "success",
+                              confirmButtonText: "OK"
+                          }).then(() => {
+                              
+                              location.reload();
+                          });
+                })
+                .catch(error => {
+                  Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to Add Product',
+                        text: error,
+                        showConfirmButton: true
+                    });
+                });
+            });
+          }
+          
+
+          offset += limit;
+
+          if (data.length < limit) {
+            loadMoreButton.remove();
+          } else {
+            hideSpinner();
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching products:", error);
+          hideSpinner();
+        });
+    }
+
+    // Load the initial 12 products
+    loadMoreProducts();
+
+    // Attach event listener to the load more button
+    loadMoreButton.addEventListener("click", loadMoreProducts);
+
+  </script>
 
 
 </html>

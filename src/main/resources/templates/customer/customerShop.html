@@ -954,7 +954,16 @@
             <div class="shop-phno">Phone: ${shop.contactNumber}</div>
             `;
             shopContainer.appendChild(shopCard);
-        });        
+        });  
+        const shopCards = document.querySelectorAll(".shop-card");  
+        shopCards.forEach(card => {
+          card.addEventListener("click", () => {
+            const shopId = card.getAttribute("data-id");
+            // console.log("hello world "+shopId);
+            window.location.href = `/customer/shopP?shopId=${shopId}`;
+          });
+
+        });    
       })
       .catch(error => console.error("Error fetching shops:", error));
     });
