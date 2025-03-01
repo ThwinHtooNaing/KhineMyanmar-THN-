@@ -386,18 +386,21 @@
     </aside>   
     <main class="main">
         <div class="card-container">
+
             <div class="card">
                 <h3>TOTAL AMOUNT OF DELIVERY</h3>
                 <p id="totaldeliveries">0</p>
                 <div class="stats" style="opacity:0;">5.3% <i>↑</i></div>
                 <div class="icon">📦</div>
             </div>
+
             <div class="card">
                 <h3>TOTAL DELIVERED</h3>
                 <p id="totaldelivered">0</p>
                 <div class="stats" style="opacity:0;">4.2% <i>↑</i></div>
                 <div class="icon">✅</div>
             </div>
+
             <div class="card" style="background-color: #f7f2d2;">
                 <h3 style="color: #5f4a10;">TOTAL PENDING</h3>
                 <p id="totalpendings" style="color: #a78528;">0 </p>
@@ -409,7 +412,9 @@
                 <p id="totalondeliveries" style="color: #a78528;">0 </p>
                 <div class="icon">🚚</div>
             </div>
+
         </div>
+
         <div class="recentOrder">
             <div class="recentOrder-header">
                 <h3>Delivery Items</h3>
@@ -467,6 +472,7 @@
                 </tbody>
             </table>
         </div>
+        
     </main> 
 </body>
 <script th:src="@{/js/adminSideBarNav.js}"></script> 
@@ -477,6 +483,20 @@
     }
      document.addEventListener("DOMContentLoaded", function() {
         
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch('/delivery/stats')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("totaldeliveries").textContent = 
+                    (data.DELIVERED || 0) + (data.PENDING || 0) + (data.ON_DELIVERY || 0);
+                document.getElementById("totaldelivered").textContent = data.DELIVERED || 0;
+                document.getElementById("totalpendings").textContent = data.PENDING || 0;
+                document.getElementById("totalondeliveries").textContent = data.ON_DELIVERY || 0;
+            })
+            .catch(error => console.error("Error fetching delivery stats:", error));
     });
 </script>
 <script>

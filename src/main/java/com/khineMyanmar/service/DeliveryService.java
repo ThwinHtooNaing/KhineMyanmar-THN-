@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -222,6 +223,13 @@ public class DeliveryService {
         }
 
         return ResponseEntity.ok(deliveryItem);
+    }
+
+    public Map<DeliveryStatus, Long> getDeliveryStatistics(Long deliveryId) {
+        List<DeliveryItem> deliveryItems = deliveryItemRepository.findByDeliveryPersonUserId(deliveryId);
+        
+        return deliveryItems.stream()
+                .collect(Collectors.groupingBy(DeliveryItem::getDeliveryStatus, Collectors.counting()));
     }
     
 }

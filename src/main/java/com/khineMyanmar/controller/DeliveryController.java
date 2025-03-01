@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.khineMyanmar.DTO.DeliveryItemDTO;
 import com.khineMyanmar.model.Delivery;
+import com.khineMyanmar.model.DeliveryStatus;
 import com.khineMyanmar.model.Shop;
 import com.khineMyanmar.model.User;
 import com.khineMyanmar.service.DeliveryService;
@@ -110,6 +111,14 @@ public class DeliveryController {
 	@PutMapping("/updateStatus/{id}")
     public ResponseEntity<?> updateDeliveryStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
         return deliveryService.updateDeliveryStatus(id, request);
+    }
+
+	@GetMapping("/stats")
+	@ResponseBody
+    public Map<DeliveryStatus, Long> getDeliveryStats(HttpSession session) { 
+		Delivery Delivery = (Delivery) session.getAttribute("deliverySession");
+		Long deliveryPersonId = Delivery.getUserId(); 
+        return deliveryService.getDeliveryStatistics(deliveryPersonId);
     }
 
 	
