@@ -13,6 +13,12 @@ public class TopSaleProductDTO {
         this.quantitySold = quantitySold;
     }
 
+    public TopSaleProductDTO(Long quantitySold,String productName,Double productPrice) {
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.quantitySold = quantitySold;
+    }
+
     // Getters and setters
     public String getProductName() {
         return productName;
