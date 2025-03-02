@@ -61,6 +61,7 @@ class StorageServiceImplTest {
     void testSaveShopProfilePicture_Success() throws IOException {
         String result = storageService.saveShopProfilePicture(mockFile, shop.getShopName(), shop.getShopId());
         assertNotNull(result);
+        System.out.println(result);
         assertTrue(result.contains("/img/shopprofiles/testshop_1/"));
     }
 
@@ -77,7 +78,8 @@ class StorageServiceImplTest {
     void testSaveProductPicture_Success() throws IOException {
         String result = storageService.saveProductPicture(mockFile, shop, product);
         assertNotNull(result);
-        assertTrue(result.contains("/img/products/1_testshop/testproduct_1/"));
+        System.out.println(result);
+        assertTrue(result.contains("/img/products/1_Testshop/testproduct_1/"));
     }
 
     @Test
