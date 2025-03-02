@@ -15,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.khineMyanmar.model.Role;
 import com.khineMyanmar.repository.IUserRoleRepository;
-// import com.khineMyanmar.service.RoleService;
 
 @ExtendWith(MockitoExtension.class)
 class RoleServiceTest {

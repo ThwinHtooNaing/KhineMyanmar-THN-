@@ -23,7 +23,7 @@ import com.khineMyanmar.repository.IUserRepository;
 import com.khineMyanmar.repository.IUserRoleRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceTest {
+class UserServiceTest {
     
     @InjectMocks
     private UserService userService;

@@ -17,7 +17,7 @@ import com.khineMyanmar.model.Product;
 import com.khineMyanmar.model.Shop;
 
 @ExtendWith(MockitoExtension.class)
-public class StorageServiceImplTest {
+class StorageServiceImplTest {
     
     @InjectMocks
     private StorageServiceImpl storageService;
