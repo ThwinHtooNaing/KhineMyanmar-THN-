@@ -79,7 +79,7 @@ class StorageServiceImplTest {
         String result = storageService.saveProductPicture(mockFile, shop, product);
         assertNotNull(result);
         System.out.println(result);
-        assertTrue(result.contains("/img/products/1_Testshop/testproduct_1/"));
+        assertTrue(result.contains("/img/products/1_TestShop/testproduct_1/"));
     }
 
     @Test

@@ -80,6 +80,8 @@ public class ShopOwnerService {
             String imageUrl = storageService.saveProfilePicture(profileImage, 
                 user.getFirstName(), user.getLastName(), user.getUserId(),user.getRole().getRoleName());
             user.setProfilePic(imageUrl);
+        } else if (user.getProfilePic() == null) {
+            user.setProfilePic("/img/profiles/default-profile.jpg");  // Ensure a default profile picture
         }
 
         return shopOwnerRep.save(user); 

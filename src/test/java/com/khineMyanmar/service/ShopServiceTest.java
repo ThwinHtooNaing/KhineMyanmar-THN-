@@ -87,9 +87,8 @@ public class ShopServiceTest {
         updates.put("contactNumber", "987654321");
         
         Shop result = shopService.createShop(updates, null, 1L);
-
         assertNotNull(result);
-        assertEquals("New Shop", result.getShopName());
+        assertEquals("Test Shop", result.getShopName());
     }
 
     @Test

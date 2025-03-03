@@ -121,6 +121,9 @@ public class ProductService {
         // Update category
         Long categoryId = Long.parseLong(updates.get("categoryId"));
         Category category = categoryService.getCategoryById(categoryId);
+        if (category == null) {
+            return null; // Return null if category is invalid
+        }
         product.setCategory(category);
 
         if (productImage != null && !productImage.isEmpty()) {

@@ -2,6 +2,8 @@ package com.khineMyanmar.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 import com.khineMyanmar.DTO.TopSaleProductDTO;
@@ -65,22 +67,31 @@ class OrderServiceTest {
     @SuppressWarnings("unchecked")
     @Test
     void testGetWeeklyOrderStats() {
-        // Ensure List<Object[]> is used
-        List<Object[]> results;
-        results = List.of(new Object[]{LocalDate.now().minusDays(1), 10}, new Object[]{LocalDate.now(), 20});
-        when(orderRepository.countOrdersLastWeek(any(LocalDate.class))).thenReturn(results);
+        Long shopId = 1L;
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minusDays(1);
+        
+        // Correct mock data: [Order count, Date]
+        List<Object[]> results = List.of(
+            new Object[]{10L, yesterday},
+            new Object[]{20L, today}
+        );
 
-        Map<String, Object> stats = orderService.getWeeklyOrderStats();
+        when(orderRepository.countOrdersLastWeek(eq(shopId), any(LocalDate.class))).thenReturn(results);
+
+        Map<String, Object> stats = orderService.getWeeklyOrderStats(shopId);
+        
         assertNotNull(stats);
         assertTrue(stats.containsKey("labels"));
         assertTrue(stats.containsKey("orderCounts"));
 
-        
         List<Integer> orderCounts = (List<Integer>) stats.get("orderCounts");
         assertNotNull(orderCounts);
-        assertFalse(orderCounts.isEmpty());
-        assertEquals(1, orderCounts.size());
-        assertEquals(10, orderCounts.get(0));
+        assertEquals(7, orderCounts.size()); // Should have 7 values for the 7 days
+
+        // Ensure the correct order count is present for today and yesterday
+        assertEquals(10, orderCounts.get(5)); // 6 days ago to today (index 5 corresponds to yesterday)
+        assertEquals(20, orderCounts.get(6)); // Today (index 6)
     }
 
     @Test
@@ -97,17 +108,40 @@ class OrderServiceTest {
 
     @Test
     void testCheckout() {
+        // Mock user session
         when(session.getAttribute("customerSession")).thenReturn(user);
+
+        // Mock cart session
         List<Map<String, Object>> cart = new ArrayList<>();
         Map<String, Object> item = new HashMap<>();
         item.put("productId", 1L);
         item.put("quantity", 2);
         cart.add(item);
         when(session.getAttribute("cart")).thenReturn(cart);
+
+        // Mock product service
         when(productService.getProductPrice(1L)).thenReturn(50.0);
-        when(orderRepository.save(any(Order.class))).thenReturn(order);
-        
+        Product mockProduct = new Product();
+        mockProduct.setProductId(1L);
+        when(productService.getProductById(1L)).thenReturn(mockProduct);
+
+        // Mock order repository
+        Order mockOrder = new Order();
+        mockOrder.setOrderId(100L); // Ensure order has an ID
+        mockOrder.setOrderProducts(new HashSet<>()); // Avoid null list issue
+        when(orderRepository.save(any(Order.class))).thenReturn(mockOrder);
+
+        // Mock order product repository
+        OrderProduct mockOrderProduct = new OrderProduct();
+        when(orderProductRepository.save(any(OrderProduct.class))).thenReturn(mockOrderProduct);
+
+        // Mock stock reduction
+        doNothing().when(productShopService).reduceStockQuantity(any(Product.class), anyInt());
+
+        // Call checkout
         String result = orderService.checkout(session);
+
+        // Validate response
         assertEquals("Order placed successfully", result);
     }
 

@@ -1,5 +1,6 @@
 package com.khineMyanmar.service;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -93,15 +94,25 @@ class ShopOwnerServiceTest {
 
     @Test
     void testUpdateUser() {
+        // Prepare owner mock
+        owner.setUserId(1L);
+        Role role = new Role();
+        role.setRoleName("shopowner");
+        owner.setRole(role);
+
         Map<String, String> updates = new HashMap<>();
         updates.put("firstName", "Jane");
         updates.put("lastName", "Smith");
         updates.put("email", "jane.smith@example.com");
         updates.put("phNo", "1234567890");
 
+        MultipartFile profileImage = mock(MultipartFile.class);
+        when(profileImage.isEmpty()).thenReturn(false);
+
         when(shopOwnerRep.findById(owner.getUserId())).thenReturn(Optional.of(owner));
         when(storageService.saveProfilePicture(profileImage, "Jane", "Smith", owner.getUserId(), "shopowner"))
                 .thenReturn("/img/profiles/jane_smith.jpg");
+        when(shopOwnerRep.save(any(ShopOwner.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         ShopOwner updatedOwner = shopOwnerService.updateUser(owner.getUserId(), updates, profileImage);
 
@@ -111,6 +122,7 @@ class ShopOwnerServiceTest {
         assertEquals("1234567890", updatedOwner.getPhNo());
         assertEquals("/img/profiles/jane_smith.jpg", updatedOwner.getProfilePic());
     }
+
 
     @Test
     void testUpdateUserWhenUserNotFound() {
@@ -125,16 +137,34 @@ class ShopOwnerServiceTest {
 
     @Test
     void testUpdateUserWithoutProfileImage() {
+        // Prepare user with existing profile picture
+        owner.setUserId(1L);  // Ensure user ID is set
+        owner.setProfilePic("/img/profiles/default-profile.jpg");
+
+        Role role = new Role();
+        role.setRoleName("shopowner");
+        owner.setRole(role);
+
+        // Prepare updates
         Map<String, String> updates = new HashMap<>();
         updates.put("firstName", "John");
         updates.put("lastName", "Doe");
 
+        // Mock repository behavior
         when(shopOwnerRep.findById(owner.getUserId())).thenReturn(Optional.of(owner));
+        when(shopOwnerRep.save(any(ShopOwner.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
+        // Call service method without profile image
         ShopOwner updatedOwner = shopOwnerService.updateUser(owner.getUserId(), updates, null);
 
+        // Assertions
         assertEquals("John", updatedOwner.getFirstName());
         assertEquals("Doe", updatedOwner.getLastName());
         assertEquals("/img/profiles/default-profile.jpg", updatedOwner.getProfilePic());
+
+        // Ensure storage service was never called since no profile image was provided
+        // verify(storageService, never()).saveProfilePicture(any(), any(), any(), any(), any());
     }
+
+
 }

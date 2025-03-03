@@ -1,6 +1,8 @@
 package com.khineMyanmar.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 import java.util.*;
@@ -86,6 +88,11 @@ class ProductServiceTest {
 
     @Test
     void testSaveProduct_DuplicateProduct() {
+        // Mock shop
+        Shop shop = new Shop();
+        shop.setShopId(1L);
+
+        // Mock input updates
         Map<String, String> updates = Map.of(
             "categoryId", "1",
             "productName", "Laptop",
@@ -94,11 +101,21 @@ class ProductServiceTest {
             "stockQuantity", "10"
         );
 
+        // Mock category service
+        Category mockCategory = new Category();
+        mockCategory.setCategoryId(1L);
+        when(categoryService.getCategoryById(1L)).thenReturn(mockCategory);
+
+        // Mock duplicate product check
         when(productShopService.existsByShopAndProductName(shop, "Laptop")).thenReturn(true);
 
+        // Call the method
         boolean result = productService.saveProduct(shop, updates, null);
+
+        // Verify result
         assertFalse(result);
     }
+
 
     @Test
     void testSaveProduct_InvalidCategory() {
@@ -186,15 +203,19 @@ class ProductServiceTest {
 
     @Test
     void testUpdateProduct_InvalidCategory() throws Exception {
+        // Mock input data
         Map<String, String> updates = Map.of(
             "categoryId", "99",
             "productName", "Gaming Laptop"
         );
 
+        // Mock behavior for an invalid category
         when(categoryService.getCategoryById(99L)).thenReturn(null);
 
+        // Call the method
         Product updatedProduct = productService.updateProduct(product, updates, null, shop);
 
+        // Assert that the update fails
         assertNull(updatedProduct);
     }
 
