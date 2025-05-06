@@ -49,19 +49,4 @@ public class SpringSecurity {
  
     }
 	 
-	 @Bean
-    public org.springframework.security.provisioning.InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
-        return new org.springframework.security.provisioning.InMemoryUserDetailsManager(
-        		org.springframework.security.core.userdetails.User.withUsername("admin")
-                .password(passwordEncoder.encode("admin123")) // Encrypted password
-                .roles("ADMIN") // Assign ADMIN role
-                .build()
-        );
-    }
-	 
-	 @Bean
-	    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-	        return authenticationConfiguration.getAuthenticationManager();
-	    }
-	 
 }
